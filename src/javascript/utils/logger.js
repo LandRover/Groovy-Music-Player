@@ -58,7 +58,9 @@ define([
          * @todo display on debug mode only - currently the whole mode is debug.
          */
         _log: function(sevirity, log) {
-            return console[sevirity]([sevirity, log]);
+            if ('undefined' !== typeof(console) && 'undefined' !== typeof(console[sevirity])) {
+                console[sevirity]([sevirity, log]);
+            }
         }
     };
     

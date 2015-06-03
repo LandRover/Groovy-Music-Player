@@ -6,7 +6,7 @@ define([
     
     console.log('CORE/INIT LOADED 05');
     
-    gPlayer.prototype = $.extend(true, {}, gPlayer.prototype, {
+    gPlayer.prototype = $.extend(true, gPlayer.prototype, {
         /**
          * Default options, can and will be overriden on invoke when params are passed.
          */
@@ -37,7 +37,8 @@ define([
             console.log('CORE/CREATE FIRED 06');
             
             this.options = $.extend(true, {},
-                this.options
+                this.options,
+                options
             );
             
             this.init();
@@ -56,7 +57,7 @@ define([
         }
     });
 
-    // bind back to create proto
+    // bind back to create proto, jquery style of invoker
     gPlayer.prototype.create.prototype = gPlayer.prototype;
     
     return gPlayer.prototype.create;
