@@ -1,0 +1,44 @@
+{
+  "name": "Groovy-Music-Player",
+  "version": "1.0.0-dev",
+  "description": "Yet another javascript audio player.",
+  "main": "dist/gplayer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LandRover/Groovy-Music-Player.git"
+  },
+  "author": "Oleg Glozman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LandRover/Groovy-Music-Player/issues"
+  },
+  "homepage": "https://github.com/LandRover/Groovy-Music-Player",
+  "devDependencies": {
+    "commitplease": "2.0.0",
+    "grunt": "0.4.5",
+    "grunt-cli": "0.1.13",
+    "grunt-compare-size": "0.4.0",
+    "grunt-contrib-compass": "1.0.1",
+    "grunt-contrib-jshint": "0.10.0",
+    "grunt-contrib-uglify": "0.7.0",
+    "grunt-contrib-watch": "0.6.1",
+    "grunt-text-replace": "0.3.12",
+    "grunt-jsonlint": "1.0.4",
+    "native-promise-only": "0.7.8-a",
+    "load-grunt-config": "0.16.0",
+    "load-grunt-tasks": "1.0.0",
+    "gzip-js": "0.3.2",
+    "q": "1.1.2",
+    "qunitjs": "1.17.1",
+    "requirejs": "2.1.17",
+    "sinon": "1.10.3",
+    "time-grunt": "1.0.0"
+  },
+  "jsdomVersions": {
+    "node": "3.1.2",
+    "iojs": "5.3.0"
+  }
+}
