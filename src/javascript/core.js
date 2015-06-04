@@ -1,10 +1,8 @@
 define([
     "./utils/event"
 ], function(Event) {
-    var
-        version = "@VERSION",
-        gPlayer,
-        options = {};
+    var version = "@VERSION",
+        gPlayer;
 
     console.log('LOAD CORE 01');
     
@@ -14,6 +12,8 @@ define([
     };
     
     gPlayer.prototype = {
+        options = {},
+        
         version: version,
         
         constructor: gPlayer
