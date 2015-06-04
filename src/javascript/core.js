@@ -22,7 +22,5 @@ define([
     console.log('END CORE LOADED 001');
     console.log(gPlayer.prototype);
     
-    window.ogEvent = Event;
-    
     return gPlayer;
 });
