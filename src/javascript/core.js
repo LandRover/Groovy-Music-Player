@@ -1,5 +1,6 @@
 define([
-], function(init) {
+    "./utils/event"
+], function(Event) {
     var
         version = "@VERSION",
         gPlayer,
@@ -20,6 +21,8 @@ define([
     
     console.log('END CORE LOADED 001');
     console.log(gPlayer.prototype);
+    
+    window.ogEvent = Event;
     
     return gPlayer;
 });
