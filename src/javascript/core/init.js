@@ -52,6 +52,14 @@ define([
          * Also triggering the view rendering and the beginning of the whole process.
          */
         init: function() {
+            this.start();
+        },
+        
+        
+        /**
+         * Start executes the flow.
+         */
+        start: function() {
             // call ui?
             // figure out where to place it.
         }

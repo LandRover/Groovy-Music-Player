@@ -12,7 +12,7 @@ define([
     };
     
     gPlayer.prototype = {
-        options = {},
+        options: {},
         
         version: version,
         

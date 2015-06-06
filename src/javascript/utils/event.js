@@ -10,7 +10,7 @@ define([
      *      console.log(arguments);
      *   });
      *
-     *   Event.onOnce('test_two_event', function() {
+     *   Event.once('test_two_event', function() {
      *      console.log('test 2 event fired, once.');
      *      console.log(arguments);
      *   });
@@ -22,64 +22,64 @@ define([
      *   Event.fire('test_one_event', {eventID: 1}); // fires ok
      *   Event.fire('test_two_event', {eventID: 2}); // fires ok
      *   Event.fire('test_two_event', {eventID: 3}); // didnt trigger the event since it was unsubscribed (subscribed once only)
-     *   three.remove(); // will remove the test_three_event
+     *   three.off(); // will remove the test_three_event
      *   Event.fire('test_three_event', {eventID: 4}); // didnt trigger, was remove line above.
      */
     var Event = {
         _subscriptions: {},
         
         /**
-        * Attach a callback to an eventName
+        * Attach a callback to an EventName
         * 
-        * @param {string} eventName
+        * @param {string} name
         * @param {function} callback
         */
-        on: function(eventName, callback) {
-            if ('undefined' === typeof(this._subscriptions[eventName]))
-                this._subscriptions[eventName] = [];
+        on: function(name, callback) {
+            if ('undefined' === typeof(this._subscriptions[name]))
+                this._subscriptions[name] = [];
             
-            var index = this._subscriptions[eventName].push(callback) - 1,
+            var index = this._subscriptions[name].push(callback) - 1,
                 self = this;
             
             // return back a clean remove function with the params encaspulated
-            return (function(eventName, callback) {
+            return (function(name, callback) {
                 return {
-                    remove: function() {
-                        return self.remove(eventName, callback);
+                    off: function() {
+                        return self.off(name, callback);
                     }
                 };
-            })(eventName, callback);
+            })(name, callback);
         },
         
         
         /**
-        * Attach a callback to an eventName, but once only. Will disapear after first execution.
+        * Attach a callback to an name, but once only. Will disapear after first execution.
         * 
-        * @param {string} eventName
+        * @param {string} name
         * @param {function} callback
         */
-        onOnce: function(eventName, callback) {
+        once: function(name, callback) {
             var self = this,
                 onceCallback = function() {
-                    self.remove(eventName, onceCallback);
+                    self.off(name, onceCallback);
                     callback.apply(this, arguments);
                 };
             
             // preserve the original callback to allow subscribe once method to be removed later if needed.
             onceCallback._originalCallback = callback;
             
-            this.on(eventName, onceCallback);
+            this.on(name, onceCallback);
         },
         
         
         /**
-        * Notify subscriptions by calling their eventName
+        * Notify subscriptions by calling their name
         * 
-        * @param {string} eventName
-        * @param params
+        * @param {string} name
+        * @param {object} params
         */
-        fire: function(eventName, params) {
-            var callbacks = this._subscriptions[eventName] || [];
+        fire: function(name, params) {
+            var callbacks = this._subscriptions[name] || [];
             
             callbacks.forEach(function(callback) {
                 callback(params);
@@ -88,13 +88,13 @@ define([
         
         
         /**
-        * Remove a specific eventName callback from the stack
+        * Remove a specific name callback from the stack
         * 
-        * @param {string} eventName
+        * @param {string} name
         * @param {function} callback
         */
-        remove: function(eventName, callback) {
-            var callbacks = this._subscriptions[eventName],
+        off: function(name, callback) {
+            var callbacks = this._subscriptions[name],
                 matchCallback = function(cb) {
                     return (cb === callback || cb._originalCallback === callback)
                 };
@@ -107,7 +107,7 @@ define([
             
             // if no callbacks left remove the event name from the tree completly.
             if (0 === callbacks.length) {
-                delete this._subscriptions[eventName];
+                delete this._subscriptions[name];
             }
         },
         
