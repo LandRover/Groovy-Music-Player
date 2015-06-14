@@ -24,6 +24,7 @@ define([
                 .setEl(this)
                 .bootstrap();
 
+            // @todo Change position, instance should be stored in a local scope rather than in jquert scope to have multiple instances
             jQuery.gPlayerInstance = instance;
         })();
         
