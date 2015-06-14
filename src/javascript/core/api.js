@@ -4,6 +4,11 @@ define([
 ], function(gPlayer, Logger) {
     console.log('CORE/API LOADED 05');
     
+    /**
+     * Public access point for object internals. The only exposed API.
+     *
+     * Subscribe to events and change internal settings via these methods.
+     */
     var API = {
         /**
          * API to On event subscribe method.
@@ -21,7 +26,7 @@ define([
         
         
         /**
-         * Begins playing.. wooohoo
+         * Begins playing.. Nyan Catttttttttttttttttttt
          *
          * @return this
          */
