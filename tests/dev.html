@@ -5,28 +5,36 @@
         <title>Test and Dev RequireJS</title>
     </head>
     <body id="body">
-    <script src="../node_modules/requirejs/require.js" type="text/javascript"></script>
-    
-    <script type="text/javascript">
-        require.config({
-            
-            paths: {
-                'jQuery': '../vendors/jquery/jquery-2.1.4.min',
-                'gPlayer': '../dist/gplayer'
-            },
-            
-            shim: {
-                'jQuery': {
-                    exports: '$'
-                }
-            }
-        });
+        <div id="gplayer_debug"></div>
+        <div id="gplayer_ui"></div>
         
-        require(['gPlayer'], function(gPlayer) {
-            console.log('OBJECTL LOADED! GPLAYER');
-            console.log(gPlayer);
-            window.og = gPlayer;
-        });
-    </script>
+    
+        <script src="../node_modules/requirejs/require.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            require.config({
+                
+                paths: {
+                    'jQuery': '../vendors/jquery/jquery-2.1.4.min',
+                    'gPlayer': '../dist/gplayer'
+                },
+                
+                shim: {
+                    'jQuery': {
+                        exports: '$'
+                    }
+                }
+            });
+            
+            require(['gPlayer'], function(gPlayer) {
+                console.log('OBJECTL LOADED! GPLAYER');
+                //console.log(gPlayer);
+                //window.og = gPlayer;
+            });
+        </script>
+    
+    
+    
+    
     </body>
 </html>

@@ -6,7 +6,8 @@ define([
     
     console.log('CORE/INIT LOADED 05');
     
-    gPlayer.prototype = $.extend(true, gPlayer.prototype, {
+    var Core = Core || {};
+    Core.init = {
         /**
          * Default options, can and will be overriden on invoke when params are passed.
          */
@@ -52,21 +53,23 @@ define([
          * Also triggering the view rendering and the beginning of the whole process.
          */
         init: function() {
-            this.start();
+            // constructor
         },
         
         
         /**
          * Start executes the flow.
          */
-        start: function() {
-            // call ui?
-            // figure out where to place it.
+        bootstrap: function() {
+            console.log('CORE/bootstrap FIRED 033');
         }
-    });
-
+    };
+    
     // bind back to create proto, jquery style of invoker
-    gPlayer.prototype.create.prototype = gPlayer.prototype;
+    Core.init.create.prototype = gPlayer.prototype = $.extend(true,
+        gPlayer.prototype,
+        Core.init
+    );
     
     return gPlayer.prototype.create;
 });

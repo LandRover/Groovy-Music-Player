@@ -1,6 +1,7 @@
 define([
-    "./utils/event"
-], function(Event) {
+    "./utils/event",
+    "./core/api"
+], function(Event, API) {
     var version = "@VERSION",
         gPlayer;
 
@@ -12,11 +13,40 @@ define([
     };
     
     gPlayer.prototype = {
+        /* active gplayer element on DOM */
+        el: null,
+        
+        /* options object */
         options: {},
         
+        /* gplayer version, set during build */
         version: version,
         
-        constructor: gPlayer
+        /* constructor */
+        constructor: gPlayer,
+        
+        
+        /**
+         * Set the active HTML element, gplayer will append the markup there.
+         * 
+         * @param {DOMElement} el
+         * @return {object} gPlayer instance
+         */
+        setEl: function(el) {
+            this.el = el;
+            
+            return this;
+        },
+        
+        
+        /**
+         * Get the active HTML elemnt gplayer is bound to
+         * 
+         * @return {DOMElement} referance
+         */
+        getEl: function() {
+            return this.el;
+        }
     };
     
     console.log('END CORE LOADED 001');
