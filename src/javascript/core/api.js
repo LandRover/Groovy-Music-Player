@@ -5,13 +5,55 @@ define([
     console.log('CORE/API LOADED 05');
     
     var API = {
-        entry: function() {
-            console.log('ON entry!');
-            console.log(arguments);
+        /**
+         * API to On event subscribe method.
+         * Allows to subscribe with a specific behaviour trigger action.
+         *
+         * @param {String} event
+         * @param {Mixed} data
+         * @return this
+         */
+        on: function(event, data) {
+            console.log('ON FIRED!');
+            
+            return this;
         },
         
-        on: function() {
-            console.log('ON FIRED!');
+        
+        /**
+         * Begins playing.. wooohoo
+         *
+         * @return this
+         */
+        play: function() {
+            console.log('PLAY FIRED!');
+            
+            return this;
+        },
+        
+        
+        
+        /**
+         * Pauses playing
+         *
+         * @return this
+         */
+        pause: function() {
+            console.log('PAUSE FIRED!');
+            
+            return this;
+        },
+        
+        
+        /**
+         * Stops playing
+         *
+         * @return this
+         */
+        stop: function() {
+            console.log('STOP FIRED!');
+            
+            return this;
         }
     };
     
