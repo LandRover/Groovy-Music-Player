@@ -62,6 +62,8 @@ define([
          */
         bootstrap: function() {
             console.log('CORE/bootstrap FIRED 033');
+            
+            return this;
         }
     };
     

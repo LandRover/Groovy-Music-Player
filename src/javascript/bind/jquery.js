@@ -15,14 +15,16 @@ define([
         console.log(jQuery.gPlayerInstance);
         console.log(gPlayer);
         
-        
         // bind instance if none found
         var create = (function() {
             // return if instance already exists
             if ('undefined' !== typeof(jQuery.gPlayerInstance)) return;
+            
+            var instance = new gPlayer(options || {})
+                .setEl(this)
+                .bootstrap();
 
-            jQuery.gPlayerInstance = new gPlayer(options || {}).setEl(this);
-            jQuery.gPlayerInstance.bootstrap();
+            jQuery.gPlayerInstance = instance;
         })();
         
         // object is passed only during the instance creation with options.. so anything else is a direct invoke.
