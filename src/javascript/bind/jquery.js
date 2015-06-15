@@ -7,9 +7,7 @@ define([
      * gPlayer: jQuery plugin register
      */
     jQuery.fn.gPlayer = function (options) {
-        // Helper strings to quickly perform functions on the draggable queue object.
-        var args = Array.prototype.slice.call(arguments).slice(1), //Convert it to a real Array object.
-            obj = null; 
+        var args = Array.prototype.slice.call(arguments).slice(1); //Convert it to a real Array object.
         
         // bind instance if none found
         var create = (function() {

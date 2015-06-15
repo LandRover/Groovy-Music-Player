@@ -59,6 +59,18 @@ define([
             console.log('STOP FIRED!');
             
             return this;
+        },
+        
+        
+        /**
+         * Remove player and clean scope
+         *
+         * @return this
+         */
+        remove: function() {
+            console.log('REMOVE FIRED!');
+            
+            return this;
         }
     };
     

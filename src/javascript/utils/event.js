@@ -25,7 +25,9 @@ define([
      *   three.off(); // will remove the test_three_event
      *   Event.fire('test_three_event', {eventID: 4}); // didnt trigger, was remove line above.
      */
-    var Event = {
+    var Event = function() {};
+    
+    Event.prototype = {
         _subscriptions: {},
         
         /**
