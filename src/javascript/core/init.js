@@ -1,26 +1,14 @@
 define([
     "../core",
+    "../controller/controller",
     "../utils/logger",
     "../bind/jquery", // bind object to the global scope - as a plugin.
-], function(gPlayer, Logger) {
+], function(gPlayer, Controller, Logger) {
     
     console.log('CORE/INIT LOADED 05');
     
-    var Core = Core || {};
-    Core.init = {
-        /**
-         * Default options, can and will be overriden on invoke when params are passed.
-         */
-        options: {
-            skin: 'orange',
-            
-            sortable: {
-                distance: 30,
-                tolerance: 'pointer',
-                zIndex: 200
-            }
-        },
-        
+    var Init = {
+        _controller: null,
         
         /**
          * Create method is the constructor method, called from the gPlayer object on invoke.
@@ -37,23 +25,9 @@ define([
             
             console.log('CORE/CREATE FIRED 06');
             
-            this.options = $.extend(true, {},
-                this.options,
-                options
-            );
-            
-            this.init();
+            this._controller = new Controller(options);
             
             return this;
-        },
-        
-        
-        /**
-         * Initiazlization method, adds event listeners, starting the player.
-         * Also triggering the view rendering and the beginning of the whole process.
-         */
-        init: function() {
-            // constructor
         },
         
         
@@ -62,15 +36,16 @@ define([
          */
         bootstrap: function() {
             console.log('CORE/bootstrap FIRED 033');
+            this._controller.bootstrap();
             
             return this;
         }
     };
     
     // bind back to create proto, jquery style of invoker
-    Core.init.create.prototype = gPlayer.prototype = $.extend(true,
+    Init.create.prototype = gPlayer.prototype = $.extend(true,
         gPlayer.prototype,
-        Core.init
+        Init
     );
     
     return gPlayer.prototype.create;

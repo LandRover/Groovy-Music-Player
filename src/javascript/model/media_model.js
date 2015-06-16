@@ -3,9 +3,9 @@ define([
     "./base_model",
     "../events/states",
 ], function(gPlayer, BaseModel, States) {
-    var MediaModel = $.extend(true, new BaseModel, {
+    var MediaModel = $.extend(true, {
         state: States.IDLE
-    });
+    }, new BaseModel);
     
     return MediaModel;
 });

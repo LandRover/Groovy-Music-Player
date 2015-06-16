@@ -1,6 +1,6 @@
 define([
     "../core",
-    "../events/event",
+    "../utils/event",
 ], function(gPlayer, Event) {
     /**
      * Base Model, all models inherit this shared and basic logic.
@@ -8,7 +8,17 @@ define([
      * Provides basic setter and getter capability
      * and on change broadcasts an event with the changes anyone can subscribe.
      */
-    var BaseModel = $.extend(true, {
+    var BaseModel = function() {
+        $.extend(true, this, new Event);
+        this.init();
+    };
+    
+    BaseModel.prototype = {
+        init: function() {
+            console.log('BASEMODEL::INIT FIRED!');
+        },
+        
+        
         /**
          * Getter for the model internals
          *
@@ -39,7 +49,7 @@ define([
             
             return this;
         }
-    }, new Event);
+    };
     
     return BaseModel;
 });
