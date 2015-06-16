@@ -37,6 +37,11 @@ define([
             playlist: []
         },
         
+        /**
+         * Current media model object, stores data for the current playing item.
+         */
+        mediaModel: new MediaModel(),
+        
         
         /**
          * Sets up the main model
