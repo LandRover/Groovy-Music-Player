@@ -1,8 +1,8 @@
 define([
     "../core",
-    "../events/states",
+    "../events/events",
     "../utils/logger",
-], function(gPlayer, States, Logger) {
+], function(gPlayer, Events, Logger) {
     /**
      * View
      */
