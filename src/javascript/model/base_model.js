@@ -1,8 +1,9 @@
 define([
     "../core",
     "../utils/event",
+    "../events/events",
     "../utils/logger",
-], function(gPlayer, Event, Logger) {
+], function(gPlayer, Event, Events, Logger) {
     /**
      * Base Model, all models inherit this shared and basic logic.
      *
@@ -40,7 +41,7 @@ define([
             //check same value exists, prevents the event from firing since nothing changed.
             if (value !== oldValue) {
                 this[key] = value;
-                this.on('change:'+ key, this, value, oldValue);
+                this.on(Events.CHANGE +':'+ key, this, value, oldValue);
             }
             
             return this;
