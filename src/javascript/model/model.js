@@ -37,6 +37,7 @@ define([
             playlist: []
         },
         
+        
         /**
          * Current media model object, stores data for the current playing item.
          */
