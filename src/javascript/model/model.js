@@ -57,17 +57,25 @@ define([
         
         
         /**
+         * Main gPlayer container object selector.
+         */
+        _container: null,
+        
+        
+        /**
          * Constructor method, called when object is created.
          *
          * @param {Object} config
+         * @param {HTMLDom} container
          * @return this for chaining
          */
-        init: function(config) {
+        init: function(config, container) {
             Logger.debug('MODEL::INIT FIRED');
             
             // external config data merge with defaults
             $.extend(true, this, this.config, config);
             
+            this._container = container;
             this._mediaModel = new MediaModel();
             
             return this;

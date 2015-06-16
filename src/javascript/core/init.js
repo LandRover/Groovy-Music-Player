@@ -25,7 +25,7 @@ define([
         create: function(options) {
             Logger.debug('CORE::INIT::CREATE FIRED');
             
-            this._controller = new Controller(options);
+            this._controller = new Controller(options, this.getEl());
             
             return this;
         },
