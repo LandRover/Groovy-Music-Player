@@ -41,7 +41,7 @@ define([
             //check same value exists, prevents the event from firing since nothing changed.
             if (value !== oldValue) {
                 this[key] = value;
-                this.on(Events.CHANGE +':'+ key, this, value, oldValue);
+                this.on(Events.CHANGE + key, this, value, oldValue);
             }
             
             return this;
