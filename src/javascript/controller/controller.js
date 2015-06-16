@@ -1,9 +1,11 @@
 define([
     "../core",
     "../model/model",
+    "../view/view",
     "../events/states",
+    "../utils/event",
     "../utils/logger",
-], function(gPlayer, Model, States, Logger) {
+], function(gPlayer, Model, View, States, Event, Logger) {
     /**
      * gPlayer main controller
      *
@@ -21,6 +23,18 @@ define([
         
         
         /**
+         * Notifications referance
+         */
+        _notifications: null,
+        
+        
+        /**
+         * View referance
+         */
+        _view: null,
+        
+        
+        /**
          * Constructor function for the main controller
          *
          * Registering important instances to hold here
@@ -33,6 +47,8 @@ define([
             Logger.debug('CONTROLLER::INIT FIRED');
             
             this._model = new Model(config);
+            this._notifications = new Event();
+            this._view = new View(this, this._model, this._notifications);
             
             return this;
         },
@@ -43,6 +59,7 @@ define([
          */
         bootstrap: function(container) {
             this._model.setup(container);
+            this._view.setup();
         }
     };
     

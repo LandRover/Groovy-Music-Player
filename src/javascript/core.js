@@ -13,7 +13,8 @@ define([
      */
     gPlayer = function(options) {
         Logger.debug('CORE::INIT FIRED');
-        return new gPlayer.prototype.create(options);
+        
+        return new gPlayer.prototype.create(options); // jquery like creation method, nice idea
     };
     
     gPlayer.prototype = {
