@@ -1,7 +1,8 @@
 define([
     "../core",
     "../utils/event",
-], function(gPlayer, Event) {
+    "../utils/logger",
+], function(gPlayer, Event, Logger) {
     /**
      * Base Model, all models inherit this shared and basic logic.
      *
@@ -15,7 +16,7 @@ define([
     
     BaseModel.prototype = {
         init: function() {
-            console.log('BASEMODEL::INIT FIRED!');
+            Logger.debug('BASEMODEL::INIT FIRED!');
         },
         
         

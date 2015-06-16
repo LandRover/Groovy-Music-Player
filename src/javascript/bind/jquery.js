@@ -2,7 +2,6 @@ define([
     "../core",
     "../core/api"
 ], function(gPlayer, API) {
-
     /**
      * gPlayer: jQuery plugin register
      */
@@ -14,10 +13,6 @@ define([
             // return if instance already exists
             if ('undefined' !== typeof(jQuery.gPlayerInstance)) return;
             
-            console.log('BIND/JQUERY - INIT 501');
-            console.log(jQuery.gPlayerInstance);
-            console.log(gPlayer);
-        
             var instance = new gPlayer(options || {})
                 .setEl(this)
                 .bootstrap();

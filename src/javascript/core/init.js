@@ -4,9 +4,11 @@ define([
     "../utils/logger",
     "../bind/jquery", // bind object to the global scope - as a plugin.
 ], function(gPlayer, Controller, Logger) {
-    
-    console.log('CORE/INIT LOADED 05');
-    
+    /**
+     * Init is responsible for the object creation process.
+     *
+     * Starts the flow for all the other components
+     */
     var Init = {
         _controller: null,
         
@@ -21,9 +23,7 @@ define([
          * @return {object}
          */
         create: function(options) {
-            Logger.info('gPlayer.prototype.create fired!');
-            
-            console.log('CORE/CREATE FIRED 06');
+            Logger.debug('CORE::INIT::CREATE FIRED');
             
             this._controller = new Controller(options);
             
@@ -35,7 +35,7 @@ define([
          * Start executes the flow.
          */
         bootstrap: function() {
-            console.log('CORE/bootstrap FIRED 033');
+            Logger.debug('CORE::INIT::BOOTSTRAP FIRED');
             this._controller.bootstrap();
             
             return this;

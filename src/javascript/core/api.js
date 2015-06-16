@@ -2,8 +2,6 @@ define([
     "../core",
     "../utils/logger"
 ], function(gPlayer, Logger) {
-    console.log('CORE/API LOADED 05');
-    
     /**
      * Public access point for object internals. The only exposed API.
      *
@@ -19,7 +17,7 @@ define([
          * @return this
          */
         on: function(event, data) {
-            console.log('ON FIRED!');
+            Logger.debug('ON FIRED!');
             
             return this;
         },
@@ -31,7 +29,7 @@ define([
          * @return this
          */
         play: function() {
-            console.log('PLAY FIRED!');
+            Logger.debug('PLAY FIRED!');
             
             return this;
         },
@@ -44,7 +42,7 @@ define([
          * @return this
          */
         pause: function() {
-            console.log('PAUSE FIRED!');
+            Logger.debug('PAUSE FIRED!');
             
             return this;
         },
@@ -56,7 +54,7 @@ define([
          * @return this
          */
         stop: function() {
-            console.log('STOP FIRED!');
+            Logger.debug('STOP FIRED!');
             
             return this;
         },
@@ -68,7 +66,7 @@ define([
          * @return this
          */
         remove: function() {
-            console.log('REMOVE FIRED!');
+            Logger.debug('REMOVE FIRED!');
             
             return this;
         }

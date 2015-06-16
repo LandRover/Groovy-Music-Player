@@ -56,9 +56,21 @@ define([
         _mediaModel: null,
         
         
+        /**
+         * Constructor method, called when object is created.
+         *
+         * @param {Object} config
+         * @return this for chaining
+         */
         init: function(config) {
-            Logger.info('MODEL::INIT FIRED');
+            Logger.debug('MODEL::INIT FIRED');
+            
+            // external config data merge with defaults
+            $.extend(true, this, this.config, config);
+            
             this._mediaModel = new MediaModel();
+            
+            return this;
         },
         
         
@@ -70,10 +82,7 @@ define([
          * @return this for chaining
          */
         setup: function(config) {
-            Logger.info('MODEL::SETUP FIRED');
-            
-            // external config data merge with defaults
-            $.extend(true, this.config, config);
+            Logger.debug('MODEL::SETUP FIRED');
             
             return this;
         }

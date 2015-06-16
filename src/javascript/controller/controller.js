@@ -2,24 +2,24 @@ define([
     "../core",
     "../model/model",
     "../events/states",
-], function(gPlayer, Model, States) {
-    
+    "../utils/logger",
+], function(gPlayer, Model, States, Logger) {
     /**
      * gPlayer main controller
      *
      * Responsible for the general flow and creation of the view and models
      */
-    var Controller = function(container) {
-        this.init(container);
+    var Controller = function(config) {
+        this.init(config);
     };
     
     Controller.prototype = {
         _model: null,
         
-        init: function(container) {
-            console.log('CONTROLLER::INIT FIRED');
+        init: function(config) {
+            Logger.debug('CONTROLLER::INIT FIRED');
             
-            this._model = new Model();
+            this._model = new Model(config);
         },
         
         
