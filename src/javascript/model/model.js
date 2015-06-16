@@ -8,7 +8,7 @@ define([
      *
      * Stores the current state of the player. Holds the playlist data the the current active media state.
      */
-    var Model = $.extend(true, BaseModel, {
+    var Model = $.extend(true, new BaseModel, {
         /**
          * Default config data
          */
