@@ -1,12 +1,12 @@
 define([
     "../core",
-    "../base_model",
-], function(gPlayer, BaseModel) {
-    
+    "./base_model",
+    "./media_model",
+], function(gPlayer, BaseModel, MediaModel) {
     /**
      * gPlayer Model
      *
-     * Stores the current state of the player. Holds the playlist data the the current active media state
+     * Stores the current state of the player. Holds the playlist data the the current active media state.
      */
     var Model = $.extend(true, BaseModel, {
         /**
