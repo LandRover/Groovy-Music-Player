@@ -13,19 +13,28 @@ define([
          * Default config data
          */
         config: {
+            // controls
             autoplay: false,
             controls: true,
             mute: false,
-            volume: 100,
+            
+            // skin
             skin: 'grooveshark',
-            playlist: [], // collection
-            state: States.IDLE,
+            
+            // features
             crossfade: false,
             waveform: false,
             spectrum: false,
+            
+            // player settings
+            state: States.IDLE,
             duration: -1,
             position: 0,
-            buffer: 0
+            volume: 100,
+            buffer: 0,
+            
+            // collection
+            playlist: []
         },
         
         
