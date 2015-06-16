@@ -1,14 +1,18 @@
 define([
     "./utils/event",
-    "./core/api"
-], function(Event, API) {
+    "./core/api",
+    "./utils/logger",
+], function(Event, API, Logger) {
     var version = "@VERSION",
         gPlayer;
 
-    console.log('LOAD CORE 01');
-    
+    /**
+     * gPlayer main object
+     *
+     * When called running the create method from the Core.init object.
+     */
     gPlayer = function(options) {
-        console.log('GPLAYER FUNC 02');
+        Logger.debug('CORE::INIT FIRED');
         return new gPlayer.prototype.create(options);
     };
     
@@ -48,9 +52,6 @@ define([
             return this.el;
         }
     };
-    
-    console.log('END CORE LOADED 001');
-    console.log(gPlayer.prototype);
     
     return gPlayer;
 });
