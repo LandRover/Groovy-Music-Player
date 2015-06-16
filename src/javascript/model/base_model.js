@@ -10,16 +10,11 @@ define([
      * and on change broadcasts an event with the changes anyone can subscribe.
      */
     var BaseModel = function() {
+        Logger.debug('BASEMODEL::CONSTRUCTOR FIRED!');
         $.extend(true, this, new Event);
-        this.init();
     };
     
     BaseModel.prototype = {
-        init: function() {
-            Logger.debug('BASEMODEL::INIT FIRED!');
-        },
-        
-        
         /**
          * Getter for the model internals
          *

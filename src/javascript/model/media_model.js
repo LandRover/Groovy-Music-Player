@@ -3,7 +3,13 @@ define([
     "./base_model",
     "../events/states",
 ], function(gPlayer, BaseModel, States) {
-    var MediaModel = $.extend(true, {
+    /**
+     * Media Model
+     */
+    var MediaModel = function() {
+    };
+    
+    MediaModel.prototype = $.extend(true, {
         state: States.IDLE
     }, new BaseModel);
     

@@ -9,8 +9,8 @@ define([
      *
      * Responsible for the general flow and creation of the view and models
      */
-    var Controller = function(config, container) {
-        this.init(config, container);
+    var Controller = function(config) {
+        this.init(config);
     };
     
     Controller.prototype = {
@@ -24,19 +24,25 @@ define([
          * Constructor function for the main controller
          *
          * Registering important instances to hold here
+         *
+         * @param {Object} config
+         * @param {Object}
+         * @return this for chaining
          */
-        init: function(config, container) {
+        init: function(config) {
             Logger.debug('CONTROLLER::INIT FIRED');
             
-            this._model = new Model(config, container);
+            this._model = new Model(config);
+            
+            return this;
         },
         
         
         /**
          * Bootstraps the main controller
          */
-        bootstrap: function(config) {
-            this._model.setup(config);
+        bootstrap: function(container) {
+            this._model.setup(container);
         }
     };
     

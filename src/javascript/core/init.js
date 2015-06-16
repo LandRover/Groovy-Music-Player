@@ -9,7 +9,7 @@ define([
      *
      * Starts the flow for all the other components
      */
-    var Init = {
+    $.extend(true, gPlayer.prototype, {
         _controller: null,
         
         /**
@@ -25,7 +25,7 @@ define([
         create: function(options) {
             Logger.debug('CORE::INIT::CREATE FIRED');
             
-            this._controller = new Controller(options, this.getEl());
+            this._controller = new Controller(options);
             
             return this;
         },
@@ -36,17 +36,14 @@ define([
          */
         bootstrap: function() {
             Logger.debug('CORE::INIT::BOOTSTRAP FIRED');
-            this._controller.bootstrap();
+            
+            this._controller.bootstrap(this.getEl());
             
             return this;
         }
-    };
+    });
     
-    // bind back to create proto, jquery style of invoker
-    Init.create.prototype = gPlayer.prototype = $.extend(true,
-        gPlayer.prototype,
-        Init
-    );
+    gPlayer.prototype.create.prototype = gPlayer.prototype;
     
     return gPlayer.prototype.create;
 });

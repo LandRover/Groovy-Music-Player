@@ -66,16 +66,14 @@ define([
          * Constructor method, called when object is created.
          *
          * @param {Object} config
-         * @param {HTMLDom} container
          * @return this for chaining
          */
-        init: function(config, container) {
+        init: function(config) {
             Logger.debug('MODEL::INIT FIRED');
             
             // external config data merge with defaults
             $.extend(true, this, this.config, config);
             
-            this._container = container;
             this._mediaModel = new MediaModel();
             
             return this;
@@ -85,12 +83,14 @@ define([
         /**
          * Sets up the main model
          *
-         * @param {Object} config
+         * @param {DOMElement} container
          * @todo add merge with localStorage data to store user preferences locally
          * @return this for chaining
          */
-        setup: function(config) {
+        setup: function(container) {
             Logger.debug('MODEL::SETUP FIRED');
+            
+            this._container = container;
             
             return this;
         }

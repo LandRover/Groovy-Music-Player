@@ -34,7 +34,7 @@ define([
          * Set the active HTML element, gplayer will append the markup there.
          * 
          * @param {DOMElement} el
-         * @return {object} gPlayer instance
+         * @return {Object} gPlayer instance
          */
         setEl: function(el) {
             this.el = el;
