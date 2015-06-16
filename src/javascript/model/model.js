@@ -20,6 +20,7 @@ define([
             skin: 'grooveshark',
             playlist: [], // collection
             state: States.IDLE,
+            crossfade: false,
             waveform: false,
             spectrum: false,
             duration: -1,
