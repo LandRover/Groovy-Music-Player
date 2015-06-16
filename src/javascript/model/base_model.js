@@ -9,8 +9,6 @@ define([
      * and on change broadcasts an event with the changes anyone can subscribe.
      */
     var BaseModel = $.extend(true, {
-        _data: {},
-        
         /**
          * Getter for the model internals
          *
@@ -19,7 +17,7 @@ define([
          * @return {Mixed} stored data or the default value is returned.
          */
         get: function(key, defaultValue) {
-            return ('undefined' !== typeof(this._data[key]) ? this._data[key] : defaultValue);
+            return ('undefined' !== typeof(this[key]) ? this[key] : defaultValue);
         },
         
         
@@ -31,11 +29,11 @@ define([
          * @return this for easy chaining.
          */
         set: function(key, value) {
-            var oldValue = this._data[key];
+            var oldValue = this[key];
             
             //check same value exists, prevents the event from firing since nothing changed.
             if (value !== oldValue) {
-                this._data[key] = value;
+                this[key] = value;
                 this.on('change:'+ key, this, value, oldValue);
             }
             

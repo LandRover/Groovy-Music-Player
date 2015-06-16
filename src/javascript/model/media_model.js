@@ -1,7 +1,8 @@
 define([
     "../core",
-    "../base_model",
-], function(gPlayer, BaseModel) {
+    "./base_model",
+    "../events/states",
+], function(gPlayer, BaseModel, States) {
     var MediaModel = $.extend(true, BaseModel, {
 
     });
