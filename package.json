@@ -28,6 +28,7 @@
     "grunt-contrib-watch": "0.6.1",
     "grunt-text-replace": "0.3.12",
     "grunt-jsonlint": "1.0.4",
+    "grunt-webpack": "1.0.8",
     "native-promise-only": "0.7.8-a",
     "load-grunt-config": "0.16.0",
     "load-grunt-tasks": "1.0.0",
@@ -37,8 +38,7 @@
     "requirejs": "2.1.17",
     "requirejs-handlebars": "0.1.1",
     "sinon": "1.10.3",
-    "time-grunt": "1.0.0",
-    "webpack": "1.9.11"
+    "time-grunt": "1.0.0"
   },
   "jsdomVersions": {
     "node": "3.1.2",
