@@ -6,3 +6,4 @@ dist
 _SpecRunner.html
 .grunt
 node_modules
+bower_components
