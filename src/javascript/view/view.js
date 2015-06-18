@@ -2,7 +2,8 @@ define([
     "../core",
     "../events/events",
     "../utils/logger",
-], function(gPlayer, Events, Logger) {
+    "../view/error",
+], function(gPlayer, Events, Logger, Error) {
     /**
      * View
      */
@@ -39,6 +40,8 @@ define([
          */
         setup: function() {
             Logger.debug('VIEW::SETUP FIRED');
+            var t = new Error(11, 'aaa', 'bbbb', 'ccccccccc');
+            console.log(t);
             
             return this;
         }
