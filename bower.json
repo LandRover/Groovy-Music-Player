@@ -1,0 +1,17 @@
+{
+  "name": "Groovy-Music-Player",
+  "version": "1.0.0",
+  "homepage": "https://github.com/LandRover/Groovy-Music-Player",
+  "authors": [
+    "Oleg Glozman"
+  ],
+  "devDependencies": {
+    "requirejs": "2.1.17",
+    "qunit": "1.18.0",
+    "requirejs-text": "2.0.12",
+    "handlebars": "3.0.3",
+    "requirejs-handlebars": "0.1.1",
+    "underscore": "1.8.3",
+    "jquery": "2.1.4"
+  }
+}
