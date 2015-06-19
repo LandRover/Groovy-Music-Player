@@ -7,10 +7,24 @@ module.exports = function(grunt, options) {
         options: {
             debug: true,
             resolve: {
+                fallback: __bower_dir,
+                
                 modulesDirectories: [
-                    options.build.src,
-                    options.build.src + '/..'
-                ]
+                    options.build.js,
+                    options.build.src
+                ],
+                
+                alias: {
+                    //jQuery: __bower_dir + '/jquery/dist/jquery.min.js',
+                    handlebars: __bower_dir + '/handlebars/handlebars.runtime.js'
+                }
+            },
+            
+            resolveLoader: {
+                fallback: __bower_dir,
+                alias: {
+                    hbs: __bower_dir + '/handlebars-loader/HandlebarsLoader.js'
+                }
             },
             
             devtool: 'cheap-source-map',
@@ -21,24 +35,13 @@ module.exports = function(grunt, options) {
                 reasons: true
             },
             
-            resolve: {
-                alias: {
-                    jQuery: __bower_dir + '/jquery/dist/jquery.min.js',
-                    hbs: __bower_dir + '/handlebars/handlebars.runtime.amd.min.js'
-                }
-            },
-            
             module: {
                 loaders: [
-                
+                    //{ test: /\.html$/, loader: 'handlebars-loader' }
                 ]
             },
             
             progress: true,
-            
-            amd: {
-                jQuery: true
-            },
             
             externals: {
                 jQuery: 'jQuery'
@@ -53,7 +56,7 @@ module.exports = function(grunt, options) {
             debug: true,
             
             entry: {
-                gplayer: options.build.src + '/gplayer.js'
+                gplayer: options.build.js + '/gplayer.js'
             },
             
             output: {
@@ -83,7 +86,7 @@ module.exports = function(grunt, options) {
          */
         release: {
             entry: {
-                gplayer: options.build.src + '/gplayer.js'
+                gplayer: options.build.js + '/gplayer.js'
             },
             
             output: {

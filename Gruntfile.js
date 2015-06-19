@@ -25,7 +25,8 @@ module.exports = function (grunt) {
             pkg: grunt.file.readJSON('package.json'),
             
             build: {
-                src: path.join(cwd, '/src/javascript'),
+                src: path.join(cwd, '/src'),
+                js: path.join(cwd, '/src/javascript'),
                 
                 dir: {
                     debug: path.join(cwd, '/dist/debug'),
