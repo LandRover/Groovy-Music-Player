@@ -16,14 +16,14 @@ module.exports = function(grunt, options) {
                 
                 alias: {
                     //jQuery: __bower_dir + '/jquery/dist/jquery.min.js',
-                    handlebars: __bower_dir + '/handlebars/handlebars.runtime.js'
+                    handlebars: __node_dir + '/handlebars/runtime.js'
                 }
             },
             
             resolveLoader: {
-                fallback: __bower_dir,
+                fallback: __node_dir,
                 alias: {
-                    hbs: __bower_dir + '/handlebars-loader/HandlebarsLoader.js'
+                    hbs: 'handlebars-template-loader'
                 }
             },
             
