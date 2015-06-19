@@ -23,7 +23,7 @@ module.exports = function(grunt, options) {
             
             resolve: {
                 alias: {
-                    'jquery': __bower_dir + '/jquery/dist/jquery.min.js'
+                    'jQuery': __bower_dir + '/jquery/dist/jquery.min.js'
                 }
             },
             
@@ -61,9 +61,9 @@ module.exports = function(grunt, options) {
                 }),
                 
                 new webpack.ProvidePlugin({
-                    $: "jquery",
-                    jquery: "jquery",
-                    "window.jQuery": "jquery"
+                    $: "jQuery",
+                    jQuery: "jQuery",
+                    "window.jQuery": "jQuery"
                 })
             ]
         },
