@@ -1,82 +1,97 @@
 module.exports = function(grunt, options) {
-    var webpack = require('webpack');
-    
+    var webpack = require('webpack'),
+        __bower_dir = __dirname + '/../../bower_components',
+        __node_dir = __dirname + '/../../node_modules';
+
     return {
-        /**
-         *
-         */
         options: {
+            debug: true,
             resolve: {
                 modulesDirectories: [
-                    'src/javascript/',
-                    'src'
+                    options.build.src,
+                    options.build.src + '/..'
                 ]
             },
             
             devtool: 'cheap-source-map',
             
             stats: {
-                timings: true
+                timings: true,
+                color: true,
+                reasons: true
+            },
+            
+            resolve: {
+                alias: {
+                    'jquery': __bower_dir + '/jquery/dist/jquery.min.js'
+                }
             },
             
             module: {
                 loaders: [
                 
                 ]
-            }
+            },
+            
+            progress: true
         },
         
         
         /**
          *
          */
-        debug : {
-            options: {
-                entry: {
-                    gplayer: './src/javascript/gplayer.js'
-                },
+        debug: {
+            debug: true,
+            
+            entry: {
+                gplayer: options.build.src + '/gplayer.js'
+            },
+            
+            output: {
+                path: options.build.dir.debug,
+                filename: 'gplayer.js',
+                library: 'gplayer',
+                libraryTarget: 'umd',
+                pathinfo: true
+            },
+            
+            plugins: [
+                new webpack.DefinePlugin({
+                    __DEBUG__: true
+                }),
                 
-                output: {
-                    path: 'dist/debug/',
-                    filename: 'gplayer.js',
-                    library: 'gplayer',
-                    libraryTarget: 'umd',
-                    pathinfo: true
-                },
-                
-                plugins: [
-                    new webpack.DefinePlugin({
-                        __DEBUG__: true
-                    })
-                ]
-            }
+                new webpack.ProvidePlugin({
+                    $: "jquery",
+                    jquery: "jquery",
+                    "window.jQuery": "jquery"
+                })
+            ]
         },
         
         
         /**
          *
          */
-        release : {
-            options: {
-                entry: {
-                    gplayer: './src/javascript/gplayer.js'
-                },
+        release: {
+            entry: {
+                gplayer: options.build.src + '/gplayer.js'
+            },
+            
+            output: {
+                path: options.build.dir.release,
+                filename: 'gplayer.js',
+                library: 'gplayer',
+                libraryTarget: 'umd',
+                pathinfo: true
+            },
                 
-                output: {
-                    path: 'dist/release/',
-                    filename: 'gplayer.js',
-                    library: 'gplayer',
-                    libraryTarget: 'umd'
-                },
+            plugins: [
+                new webpack.DefinePlugin({
+                    __DEBUG__: true
+                }),
                 
-                plugins: [
-                    new webpack.DefinePlugin({
-                        __DEBUG__: false
-                    }),
-                    
-                    new webpack.optimize.UglifyJsPlugin()
-                ]
-            }
+                new webpack.optimize.UglifyJsPlugin()
+            ]
         }
     };
 };

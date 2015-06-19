@@ -24,8 +24,13 @@ module.exports = function (grunt) {
             pkg: grunt.file.readJSON('package.json'),
             
             build: {
-                src: './src/javascript',
-                dest: 'dist',
+                src: path.join(process.cwd(), '/src/javascript'),
+                
+                dir: {
+                    debug: path.join(process.cwd(), '/dist/debug/'),
+                    release: path.join(process.cwd(), '/dist/release/')
+                },
+                
                 banner: require('fs').readFileSync(__dirname + '/build/banner.txt', 'utf8')
             }
         }
