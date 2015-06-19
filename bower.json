@@ -10,6 +10,7 @@
     "qunit": "1.18.0",
     "requirejs-text": "2.0.14",
     "handlebars": "3.0.3",
+    "handlebars-loader": "0.2.0",
     "underscore": "1.8.3",
     "jquery": "2.1.4"
   }
