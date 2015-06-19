@@ -33,7 +33,15 @@ module.exports = function(grunt, options) {
                 ]
             },
             
-            progress: true
+            progress: true,
+            
+            amd: {
+                jQuery: true
+            },
+            
+            externals: {
+                jQuery: 'jQuery'
+            }
         },
         
         
