@@ -23,7 +23,8 @@ module.exports = function(grunt, options) {
             
             resolve: {
                 alias: {
-                    jQuery: __bower_dir + '/jquery/dist/jquery.min.js'
+                    jQuery: __bower_dir + '/jquery/dist/jquery.min.js',
+                    hbs: __bower_dir + '/handlebars/handlebars.runtime.amd.min.js'
                 }
             },
             
@@ -96,9 +97,13 @@ module.exports = function(grunt, options) {
             plugins: [
                 new webpack.DefinePlugin({
                     __DEBUG__: true
-                }),
+                })
                 
-                new webpack.optimize.UglifyJsPlugin()
+                //new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"'}),
+                //new webpack.optimize.DedupePlugin(),
+                //new webpack.optimize.UglifyJsPlugin({ sourceMap: false }),
+                //new webpack.optimize.OccurenceOrderPlugin()
+                //new webpack.optimize.AggressiveMergingPlugin()
             ]
         }
     };

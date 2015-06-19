@@ -1,4 +1,5 @@
 define([
+    "hbs!src/html/layout/error.html"
 ], function(errorHTML) {
     /**
      * Error template
