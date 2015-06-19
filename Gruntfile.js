@@ -11,6 +11,7 @@ module.exports = function (grunt) {
         gem install image_optim
     */
     var path = require('path');
+    var cwd = process.cwd();
     
     // Print the execution time for the tasks
     require('time-grunt')(grunt);
@@ -19,16 +20,21 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
     
     require('load-grunt-config')(grunt, {
-        configPath: path.join(process.cwd(), '/build/tasks'),
+        configPath: path.join(cwd, '/build/tasks'),
         config: {
             pkg: grunt.file.readJSON('package.json'),
             
             build: {
-                src: path.join(process.cwd(), '/src/javascript'),
+                src: path.join(cwd, '/src/javascript'),
                 
                 dir: {
-                    debug: path.join(process.cwd(), '/dist/debug/'),
-                    release: path.join(process.cwd(), '/dist/release/')
+                    debug: path.join(cwd, '/dist/debug'),
+                    release: path.join(cwd, '/dist/release'),
+                    
+                    lib: {
+                        node: path.join(cwd, '/node_modules'),
+                        bower: path.join(cwd, '/bower_components')
+                    }
                 },
                 
                 banner: require('fs').readFileSync(__dirname + '/build/banner.txt', 'utf8')

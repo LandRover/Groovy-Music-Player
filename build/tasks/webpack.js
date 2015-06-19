@@ -1,7 +1,7 @@
 module.exports = function(grunt, options) {
     var webpack = require('webpack'),
-        __bower_dir = __dirname + '/../../bower_components',
-        __node_dir = __dirname + '/../../node_modules';
+        __node_dir = options.build.dir.lib.node,
+        __bower_dir = options.build.dir.lib.bower;
 
     return {
         options: {
@@ -23,7 +23,7 @@ module.exports = function(grunt, options) {
             
             resolve: {
                 alias: {
-                    'jQuery': __bower_dir + '/jquery/dist/jquery.min.js'
+                    jQuery: __bower_dir + '/jquery/dist/jquery.min.js'
                 }
             },
             
