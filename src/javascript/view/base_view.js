@@ -7,8 +7,18 @@ define([
      * Provides basic render and appenders for the view.
      */
     var ViewModel = {
-        render: function() {
-            Logger.debug('BASEVIEW::RENDER FIRED');
+        output: '',
+        
+        
+        /**
+         *
+         */
+        append: function(to) {
+            Logger.debug('BASEVIEW::APPEND FIRED', to);
+            
+            $(to).append(this.output);
+            
+            return this;
         }
     };
     

@@ -40,8 +40,8 @@ define([
          */
         setup: function() {
             Logger.debug('VIEW::SETUP FIRED');
-            var t = new Error(11, 'aaa', 'bbbb', 'ccccccccc');
-            console.log(t);
+            var t = Error.render(11, 'aaa', 'bbbb', 'ccccccccc');
+            t.append('body');
             
             return this;
         }
