@@ -15,8 +15,8 @@ module.exports = function(grunt, options) {
                 ],
                 
                 alias: {
-                    //jQuery: __bower_dir + '/jquery/dist/jquery.min.js',
-                    //lodash: __bower_dir + '/lodash/lodash.min.js'
+                    //jQuery: __bower_dir + '/jquery/dist/jquery.js',
+                    //lodash: __bower_dir + '/lodash/lodash.js'
                 }
             },
             
