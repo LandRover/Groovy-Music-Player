@@ -1,6 +1,6 @@
 define([
     "./base_view",
-    "html/layout/error.html"
+    "html/error.html"
 ], function(BaseView, errorHTML) {
     /**
      * Error template

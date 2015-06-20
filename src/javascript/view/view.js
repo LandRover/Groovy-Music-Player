@@ -2,8 +2,8 @@ define([
     "../core",
     "../events/events",
     "../utils/logger",
-    "../view/error",
-], function(gPlayer, Events, Logger, Error) {
+    "./markup",
+], function(gPlayer, Events, Logger, Markup) {
     /**
      * View
      */
@@ -35,13 +35,43 @@ define([
         
         /**
          * Sets the view up :)
-         *
+         *              
          * @return this for chaining
          */
         setup: function() {
             Logger.debug('VIEW::SETUP FIRED');
-            var t = Error.render(11, 'aaa', 'bbbb', 'ccccccccc');
-            t.append('body');
+            
+            this.layout();
+            
+            return this;
+        },
+        
+        
+        /**
+         * 
+         *
+         */
+        layout: function() {
+            Logger.debug('VIEW::LAYOUT FIRED');
+            
+            this._appender(Markup.render().output, 'body');
+            
+            return this;
+        },
+        
+        
+        /**
+         * Appending wrapper, used to inject HTML string to a target container.
+         *
+         * @param {string} source - string HTML structure to be inserted.
+         * @param {mixed} target - selector for the target of the host.
+         *
+         * @return {object} - source referance after injected to the DOM.
+         */
+        _appender: function(source, target) {
+            Logger.debug('VIEW::_APPEND FIRED');
+            console.log(arguments);
+            $(source).appendTo(target);
             
             return this;
         }

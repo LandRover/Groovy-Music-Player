@@ -44,7 +44,7 @@ module.exports = function (grunt) {
     });
         
     // load grunt folder tasks.
-    grunt.loadTasks('build');
+    grunt.loadTasks('webpack:debug');
 
     // Default task
     grunt.registerTask('default', [
