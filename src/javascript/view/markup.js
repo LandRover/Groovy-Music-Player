@@ -12,8 +12,8 @@ define([
         /**
          * not sure i like it :/
          */
-        render: function() {
-            this.output = _.template(markupHTML)();
+        render: function(ids) {
+            this.output = _.template(markupHTML)(ids);
             
             return this;
         }

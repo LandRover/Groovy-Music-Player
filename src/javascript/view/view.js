@@ -54,7 +54,8 @@ define([
         layout: function() {
             Logger.debug('VIEW::LAYOUT FIRED');
             
-            this._appender(Markup.render().output, 'body');
+            this._appender(Markup.render(this._model.ids).output, 'body');
+            console.log(this._model);
             
             return this;
         },
@@ -63,17 +64,17 @@ define([
         /**
          * Appending wrapper, used to inject HTML string to a target container.
          *
-         * @param {string} source - string HTML structure to be inserted.
-         * @param {mixed} target - selector for the target of the host.
+         * @param {String} source - string HTML structure to be inserted.
+         * @param {Mixed} target - selector for the target of the host.
          *
-         * @return {object} - source referance after injected to the DOM.
+         * @return {Object} - source referance after injected to the DOM.
          */
         _appender: function(source, target) {
             Logger.debug('VIEW::_APPEND FIRED');
-            console.log(arguments);
-            $(source).appendTo(target);
             
-            return this;
+            console.log(arguments);
+            
+            return $(source).appendTo(target);
         }
     };
     

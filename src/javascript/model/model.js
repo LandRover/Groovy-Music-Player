@@ -14,11 +14,18 @@ define([
         this.init(config);
     };
     
-    Model.prototype = $.extend(true, {
+    Model.prototype = _.extend({
         /**
          * Default config data
          */
         config: {
+            ids: {
+                gPlayer: 'gplayer',
+                player_container: 'gplayer-player-container',
+                player_row: 'player-row'
+            },
+            
+            
             // controls
             autoplay: false,
             controls: true,
@@ -73,7 +80,7 @@ define([
             Logger.debug('MODEL::INIT FIRED');
             
             // external config data merge with defaults
-            $.extend(true, this, this.config, config);
+            _.extend(this, this.config, config);
             
             this._mediaModel = new MediaModel();
             
