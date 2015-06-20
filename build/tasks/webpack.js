@@ -12,12 +12,11 @@ module.exports = function(grunt, options) {
                 modulesDirectories: [
                     options.build.js,
                     options.build.src
-                    
                 ],
                 
                 alias: {
                     //jQuery: __bower_dir + '/jquery/dist/jquery.min.js',
-                    lodash: __bower_dir + '/lodash/lodash.min.js'
+                    //lodash: __bower_dir + '/lodash/lodash.min.js'
                 }
             },
             
@@ -92,7 +91,7 @@ module.exports = function(grunt, options) {
                 libraryTarget: 'umd',
                 pathinfo: true
             },
-                
+            
             plugins: [
                 new webpack.DefinePlugin({
                     __DEBUG__: true
