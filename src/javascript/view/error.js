@@ -11,7 +11,9 @@ define([
      * @param {String} skin
      */
     var Error = _.extend(BaseView, {
-        
+        /**
+         * not sure i like it :/
+         */
         render: function(id, title, error, skin) {
             this.output = _.template(errorHTML)({
                 errID: id,
@@ -19,11 +21,9 @@ define([
                 error: error,
                 skin: skin
             });
-
+            
             return this;
-        },
-        
-
+        }
     });
     
     return Error;
