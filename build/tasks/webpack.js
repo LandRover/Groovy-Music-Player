@@ -12,18 +12,12 @@ module.exports = function(grunt, options) {
                 modulesDirectories: [
                     options.build.js,
                     options.build.src
+                    
                 ],
                 
                 alias: {
                     //jQuery: __bower_dir + '/jquery/dist/jquery.min.js',
-                    handlebars: __node_dir + '/handlebars/runtime.js'
-                }
-            },
-            
-            resolveLoader: {
-                fallback: __node_dir,
-                alias: {
-                    hbs: 'handlebars-template-loader'
+                    lodash: __bower_dir + '/lodash/lodash.min.js'
                 }
             },
             
@@ -37,14 +31,15 @@ module.exports = function(grunt, options) {
             
             module: {
                 loaders: [
-                    //{ test: /\.html$/, loader: 'handlebars-loader' }
+                    { test: /\.html$/, loader: 'html-loader' }
                 ]
             },
             
             progress: true,
             
             externals: {
-                jQuery: 'jQuery'
+                jQuery: 'jQuery',
+                lodash: 'lodash'
             }
         },
         
@@ -75,7 +70,8 @@ module.exports = function(grunt, options) {
                 new webpack.ProvidePlugin({
                     $: "jQuery",
                     jQuery: "jQuery",
-                    "window.jQuery": "jQuery"
+                    "window.jQuery": "jQuery",
+                    _: "lodash"
                 })
             ]
         },

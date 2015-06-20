@@ -9,7 +9,7 @@ define([
     var MediaModel = function() {
     };
     
-    MediaModel.prototype = $.extend(true, {
+    MediaModel.prototype = _.extend({
         state: States.IDLE
     }, new BaseModel);
     

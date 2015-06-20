@@ -1,5 +1,5 @@
 define([
-    "hbs!html/layout/error.html"
+    "html/layout/error.html"
 ], function(errorHTML) {
     /**
      * Error template
@@ -10,7 +10,7 @@ define([
      * @param {String} skin
      */
     var Error = function(id, title, error, skin) {
-        return errorHTML({
+        return _.template(errorHTML, {
             id: id,
             title: title,
             error: error,

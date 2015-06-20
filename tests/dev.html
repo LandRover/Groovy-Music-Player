@@ -16,13 +16,16 @@
                 
                 paths: {
                     'jQuery': '../bower_components/jquery/dist/jquery.min',
-                    'hbs': '../node_modules/requirejs-handlebars/hb',
+                    'lodash': '../bower_components/lodash/lodash.min',
                     'gPlayer': '../dist/debug/gplayer'
                 },
                 
                 shim: {
                     'jQuery': {
                         exports: '$'
+                    },
+                    'lodash': {
+                        exports: '_'
                     }
                 }
             });
