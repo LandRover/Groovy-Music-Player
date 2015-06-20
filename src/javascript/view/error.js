@@ -12,20 +12,18 @@ define([
      */
     var Error = _.extend(BaseView, {
         
-        error: function(id, title, error, skin) {
-            return _.template(errorHTML, {
-                id: id,
+        render: function(id, title, error, skin) {
+            this.output = _.template(errorHTML)({
+                errID: id,
                 title: title,
                 error: error,
                 skin: skin
-            })
+            });
+
+            return this;
         },
         
-        render: function(id, title, error, skin) {
-            this.output = this.error(id, title, error, skin);
-            
-            return this;
-        }
+
     });
     
     return Error;
