@@ -1,9 +1,8 @@
 define([
-    "../core",
     "../events/events",
     "../utils/logger",
-    "./player",
-], function(gPlayer, Events, Logger, Player) {
+    "./gplayer_view",
+], function(Events, Logger, gPlayerView) {
     /**
      * View
      */
@@ -54,7 +53,7 @@ define([
         layout: function() {
             Logger.debug('VIEW::LAYOUT FIRED');
             
-            var player = new Player(this).append(this.getModel().getContainer());
+            var gPlayer = new gPlayerView(this).append(this.getModel().getContainer());
             
             $(this.getModel().getContainer())
                 .addClass(this.getModel().classes.gPlayer)

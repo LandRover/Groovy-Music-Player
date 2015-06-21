@@ -51,7 +51,6 @@ div.gplayer div.playlist ol.queue li.item-wrapper .widget-item .widget-item-labe
 div.gplayer div.playlist ol.queue li.item-wrapper .widget-item .widget-item-label > strong { margin-top: 3px; color: white; font-weight: normal; font-size: 10px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
 div.gplayer div.playlist ol.queue li.item-wrapper .widget-item .widget-item-label > strong:hover { text-decoration: underline; }
 
-
 /* skin: orange */
 div.gplayer.orange div.playlist ol.queue li.item-wrapper { background-color: #2d2d2d; border-top-color: #363636; }
 div.gplayer.orange div.playlist ol.queue li.item-wrapper .widget-item .widget-item-label > em { border-bottom-color: #3d3d3d; }
@@ -59,7 +58,6 @@ div.gplayer.orange div.playlist ol.queue li.item-wrapper .widget-item .widget-it
 div.gplayer.orange div.playlist ol.queue li.item-wrapper.active { border-top-color: #FAAD00; background: #f89200; background: -moz-linear-gradient(top,  #f89200 0%, #f66c00 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f89200), color-stop(100%,#f66c00)); background: -webkit-linear-gradient(top,  #f89200 0%,#f66c00 100%); background: -o-linear-gradient(top,  #f89200 0%,#f66c00 100%); background: -ms-linear-gradient(top,  #f89200 0%,#f66c00 100%); background: linear-gradient(to bottom,  #f89200 0%,#f66c00 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f89200', endColorstr='#f66c00',GradientType=0); }
 div.gplayer.orange div.playlist ol.queue li.item-wrapper.active .widget-item .widget-item-label > em { background-color: #C65F00; border-bottom-color: #F9A100; }
 div.gplayer.orange div.playlist ol.queue li.item-wrapper.active .widget-item .widget-item-label > strong{ color: white; }
-
 
 div.gplayer.small { height: 128px; }
 div.gplayer.small div.playlist { height: 66px; }
