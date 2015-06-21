@@ -1,7 +1,6 @@
 define([
     "./core",
-    "./player",
-    "./exports/amd"
+    "./player"
 ], function(gPlayer, Player) {
     /* global __webpack_public_path__:true */
     __webpack_public_path__ = 'get current path here! @todo';
