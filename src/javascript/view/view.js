@@ -2,7 +2,8 @@ define([
     "../events/events",
     "../utils/logger",
     "./gplayer_view",
-], function(Events, Logger, gPlayerView) {
+    "./player/player",
+], function(Events, Logger, gPlayerView, Player) {
     /**
      * View
      */
@@ -61,7 +62,10 @@ define([
                 .addClass(this.getModel().classes.size)
                 .addClass(this.getModel().classes.empty);
             
-            console.log(this.getModel());
+            var PlayerView = new Player(this).append('.'+this.getModel().classes.player_wrapper);
+            
+            console.log(this.getModel().classes.player_wrapper);
+            console.log(this.getModel().classes);
             
             return this;
         },

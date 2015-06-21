@@ -15,7 +15,7 @@ define([
         this.init();
     };
     
-    gPlayerView.prototype = _.extend(BaseView.prototype, {
+    gPlayerView.prototype = _.extend(new BaseView(), {
         _view: null,
         
         /**

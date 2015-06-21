@@ -14,7 +14,7 @@ define([
         this.init();
     };
     
-    Player.prototype = _.extend(BaseView.prototype, {
+    Player.prototype = _.extend(new BaseView(), {
         _view: null,
         
         /**
@@ -25,8 +25,6 @@ define([
                 this._view.getModel().classes
             );
         }
-        
-        
     });
     
     return Player;

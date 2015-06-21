@@ -6,12 +6,12 @@ define([
      *
      * Provides basic render and appenders for the view.
      */
-    
-    var ViewModel = function() {
+    var BaseView = function() {
         Logger.debug('BASEVIEW::CONSTRUCTOR FIRED');
     };
     
-    ViewModel.prototype = {
+    
+    BaseView.prototype = {
         output: '',
         
         
@@ -19,7 +19,7 @@ define([
          *
          */
         append: function(to) {
-            Logger.debug('BASEVIEW::APPEND FIRED', to);
+            Logger.debug(['BASEVIEW::APPEND FIRED', to, this.output]);
             
             $(to).append(this.output);
             
@@ -27,5 +27,5 @@ define([
         }
     };
     
-    return ViewModel;
+    return BaseView;
 });

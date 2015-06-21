@@ -21,6 +21,7 @@ define([
         config: {
             classes: {
                 gPlayer: 'gplayer',
+                namespace: 'g',
                 
                 empty: 'empty',
                 size: 'medium',
