@@ -6,7 +6,12 @@ define([
      *
      * Provides basic render and appenders for the view.
      */
-    var ViewModel = {
+    
+    var ViewModel = function() {
+        Logger.debug('BASEVIEW::CONSTRUCTOR FIRED');
+    };
+    
+    ViewModel.prototype = {
         output: '',
         
         

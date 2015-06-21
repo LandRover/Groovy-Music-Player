@@ -54,7 +54,12 @@ define([
         layout: function() {
             Logger.debug('VIEW::LAYOUT FIRED');
             
-            this._appender(Markup.render(this._model.ids).output, 'body');
+            
+            var params = _.extend(this._model.ids, this._model.classes);
+            console.log([this._model, params]);
+            
+            this._appender(new Markup().render(params).output, this._model._container);
+            
             console.log(this._model);
             
             return this;

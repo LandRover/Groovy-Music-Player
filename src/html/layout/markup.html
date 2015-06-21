@@ -1,14 +1,13 @@
-<div id="<%- gPlayer %>" class="droppableQueue medium empty">
-    <div id="'+ api.ids.playerBox +'" class="player-box">
-        <div id="'+ api.ids.player +'">
-            <div id="'+ api.ids.nowStreaming +'">
-            </div>
+<div id="<%- gPlayer %>" class="gplayer <%- draggable_queue %> <%- medium %> <%- empty %>">
+    <div class="<%- player %>">
+        <div class="<%- player_container %>">
+            <div class="<%- player_wrapper %>"></div>
         </div>
 
-        <div id="' + api.ids.playerBack + '" class="player-back"></div>
+        <div class="<%- player_background %>"></div>
     </div>
     
-    <div id="' + api.ids.queueListWrapper + '" class="queue-list-wrapper">
-        <ol id="' + api.ids.queueList + '" class="queue-list"></ol>
+    <div class="<%- playlist %>">
+        <ol class="<%- queue %>"></ol>
     </div>
 </div>

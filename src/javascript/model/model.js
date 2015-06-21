@@ -20,9 +20,22 @@ define([
          */
         config: {
             ids: {
-                gPlayer: 'gplayer',
-                player_container: 'gplayer-player-container',
-                player_row: 'player-row'
+                gPlayer: 'gplayer'
+            },
+            classes: {
+                empty: 'empty',
+                medium: 'medium',
+                draggable_queue: 'draggable-queue',
+                
+                //player stuff
+                player: 'player',
+                player_container: 'player-container',
+                player_wrapper: 'player-wrapper',
+                player_background: 'player-background',
+                
+                //queue
+                playlist: 'playlist',
+                queue: 'queue'
             },
             
             
