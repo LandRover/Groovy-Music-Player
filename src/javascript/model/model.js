@@ -19,12 +19,11 @@ define([
          * Default config data
          */
         config: {
-            ids: {
-                gPlayer: 'gplayer'
-            },
             classes: {
+                gPlayer: 'gplayer',
+                
                 empty: 'empty',
-                medium: 'medium',
+                size: 'medium',
                 draggable_queue: 'draggable-queue',
                 
                 //player stuff
@@ -114,6 +113,14 @@ define([
             this._container = container;
             
             return this;
+        },
+        
+        
+        /**
+         *
+         */
+        getContainer: function() {
+            return this._container;
         }
     }, new BaseModel);
     

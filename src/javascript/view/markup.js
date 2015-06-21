@@ -9,19 +9,27 @@ define([
     *
     * @return {string} HTML
      */
-    var Markup = function() {
+    var Markup = function(view) {
         Logger.debug('MARKUP::CONSTRUCTOR FIRED');
+        
+        this._view = view;
+        
+        this.init();
     };
     
     Markup.prototype = _.extend(BaseView.prototype, {
+        _view: null,
+        
         /**
-         * not sure i like it :/
+         * Constructor, actually generates the output from a template;
          */
-        render: function(ids) {
-            this.output = _.template(markupHTML)(ids);
-            
-            return this;
+        init: function() {
+            this.output = _.template(markupHTML)(
+                this._view.getModel().classes
+            );
         }
+        
+        
     });
     
     return Markup;

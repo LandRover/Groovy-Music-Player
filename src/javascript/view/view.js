@@ -54,17 +54,27 @@ define([
         layout: function() {
             Logger.debug('VIEW::LAYOUT FIRED');
             
+            var markup = new Markup(this).append(this.getModel().getContainer());
             
-            var params = _.extend(this._model.ids, this._model.classes);
-            console.log([this._model, params]);
+            $(this.getModel().getContainer())
+                .addClass(this.getModel().classes.gPlayer)
+                .addClass(this.getModel().classes.draggable_queue)
+                .addClass(this.getModel().classes.size)
+                .addClass(this.getModel().classes.empty);
             
-            this._appender(new Markup().render(params).output, this._model._container);
-            
-            console.log(this._model);
+            console.log(this.getModel());
             
             return this;
         },
         
+        
+        /**
+         *
+         *
+         */
+        getModel: function() {
+            return this._model;
+        },
         
         /**
          * Appending wrapper, used to inject HTML string to a target container.
