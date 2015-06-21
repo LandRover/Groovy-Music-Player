@@ -2,8 +2,8 @@ define([
     "../core",
     "../events/events",
     "../utils/logger",
-    "./markup",
-], function(gPlayer, Events, Logger, Markup) {
+    "./player",
+], function(gPlayer, Events, Logger, Player) {
     /**
      * View
      */
@@ -54,7 +54,7 @@ define([
         layout: function() {
             Logger.debug('VIEW::LAYOUT FIRED');
             
-            var markup = new Markup(this).append(this.getModel().getContainer());
+            var player = new Player(this).append(this.getModel().getContainer());
             
             $(this.getModel().getContainer())
                 .addClass(this.getModel().classes.gPlayer)

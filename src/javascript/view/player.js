@@ -9,7 +9,7 @@ define([
     *
     * @return {string} HTML
      */
-    var Markup = function(view) {
+    var Player = function(view) {
         Logger.debug('MARKUP::CONSTRUCTOR FIRED');
         
         this._view = view;
@@ -17,7 +17,7 @@ define([
         this.init();
     };
     
-    Markup.prototype = _.extend(BaseView.prototype, {
+    Player.prototype = _.extend(BaseView.prototype, {
         _view: null,
         
         /**
@@ -32,5 +32,5 @@ define([
         
     });
     
-    return Markup;
+    return Player;
 });
