@@ -30,11 +30,11 @@
                 }
             });
             
-            require(['gPlayer'], function(gPlayer) {
+            require(['gPlayer'], function() {
                 console.log('OBJECTL LOADED! GPLAYER');
-                $('#gplayer_debug').gPlayer();
+                var gPlayer = $('#gplayer_ui').gPlayer();
                 
-                //console.log(gPlayer);
+                console.log(gPlayer);
                 //window.og = gPlayer;
             });
         </script>

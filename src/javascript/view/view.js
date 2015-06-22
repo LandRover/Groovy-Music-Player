@@ -64,9 +64,6 @@ define([
             
             var PlayerView = new Player(this).append('.'+this.getModel().classes.player_wrapper);
             
-            console.log(this.getModel().classes.player_wrapper);
-            console.log(this.getModel().classes);
-            
             return this;
         },
         

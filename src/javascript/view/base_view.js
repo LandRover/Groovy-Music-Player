@@ -19,7 +19,7 @@ define([
          *
          */
         append: function(to) {
-            Logger.debug(['BASEVIEW::APPEND FIRED', to, this.output]);
+            Logger.debug('BASEVIEW::APPEND FIRED '+ to);
             
             $(to).append(this.output);
             
