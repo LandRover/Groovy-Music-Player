@@ -1,10 +1,9 @@
 define([
-    "../core",
     "./base_model",
     "./media_model",
     "../events/states",
     "../utils/logger",
-], function(gPlayer, BaseModel, MediaModel, States, Logger) {
+], function(BaseModel, MediaModel, States, Logger) {
     /**
      * gPlayer Model
      *
