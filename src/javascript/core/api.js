@@ -1,6 +1,6 @@
 define([
     "../core",
-    "../utils/logger"
+    "../utils/logger",
 ], function(gPlayer, Logger) {
     console.log(gPlayer);
     

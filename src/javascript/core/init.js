@@ -4,6 +4,7 @@ define([
     "../utils/logger",
     "../bind/jquery", // bind object to the global scope - as a plugin.
 ], function(gPlayer, Controller, Logger) {
+    console.log(gPlayer);
     /**
      * Init is responsible for the object creation process.
      *
