@@ -21,7 +21,7 @@ define([
         config: {
             classes: {
                 gPlayer: 'gplayer',
-                namespace: 'g',
+                namespace: 'groovy',
                 
                 empty: 'empty',
                 size: 'medium',
