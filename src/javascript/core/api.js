@@ -69,6 +69,18 @@ define([
             Logger.debug('REMOVE FIRED!');
             
             return this;
+        },
+        
+        
+        /**
+         * add item to the queue.
+         */
+        addItem: function(itemsList) {
+            console.log(JSON.stringify(gPlayer));
+            var x = [gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer()];
+            
+            console.log(itemsList);
+            console.log(x);
         }
     };
     

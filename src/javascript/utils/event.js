@@ -1,6 +1,4 @@
-define([
-    "../core",
-], function(gPlayer) {
+define([], function() {
     /**
      * Event based module, publish / subscribe with herarchical events and notifiations.
      * 

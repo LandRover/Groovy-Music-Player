@@ -12,9 +12,14 @@ define([
      * When called running the create method from the Core.init object.
      */
     gPlayer = function(options) {
+        if (!arguments.callee._singletonInstance) {
+            arguments.callee._singletonInstance = new gPlayer.prototype.create(options); // jquery like creation method, nice idea
+            Logger.debug('CORE::NEW CREATED!!! SHOULD HAPPEN ONCE');
+        }
+        
         Logger.debug('CORE::INIT FIRED');
         
-        return new gPlayer.prototype.create(options); // jquery like creation method, nice idea
+        return arguments.callee._singletonInstance;
     };
     
     gPlayer.prototype = {

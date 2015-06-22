@@ -1,6 +1,4 @@
-define([
-    "../core",
-], function(gPlayer) {
+define([], function() {
     /**
      * Basic Logger
      * 

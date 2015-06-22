@@ -116,14 +116,22 @@
                     console.log('queue');
                     
                     var item = $(this).parent();
+                    var song = item.data('song');
+                    
+                    console.log(song);
+                    
+                    gPlayer.addItem(song);
                 });
                 
                 $('#album > #songs-list .play-now').click(function() {
                     console.log('play now');
                     
                     var item = $(this).parent();
+                    var song = item.data('song');
                     
-                    console.log(item.data('song'));
+                    console.log(song);
+                    
+                    gPlayer.addItem(song);
                 });
                 
                 console.log(gPlayer);

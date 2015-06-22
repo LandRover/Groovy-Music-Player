@@ -9,7 +9,7 @@ define([
      *
      * Starts the flow for all the other components
      */
-    $.extend(true, gPlayer.prototype, {
+    _.extend(gPlayer.prototype, {
         _controller: null,
         
         /**
@@ -19,8 +19,8 @@ define([
          * One import note is the create is actually is the function that is new`ed
          * into an object.
          * 
-         * @param {object} options, overrides the default options
-         * @return {object}
+         * @param {Object} options, overrides the default options
+         * @return {Object}
          */
         create: function(options) {
             Logger.debug('CORE::INIT::CREATE FIRED');
