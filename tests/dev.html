@@ -6,10 +6,9 @@
         <link  media="all" rel="stylesheet" href="../src/skin/gray.grooveshark/css.tmp/style.tmp.css" />
     </head>
     <body id="body">
-        <div id="tmp_list">
-            <ul>
-                <li></li>
-                
+        <div id="album">
+            <h1>Album: Amazing Horse</h1>
+            <ul id="songs-list">
             </ul>
         </div>
         
@@ -17,6 +16,76 @@
         <div id="gplayer_ui"></div>
         
         <script src="../bower_components/requirejs/require.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            var albumSongsList = {
+                songs: [
+                    // song 1
+                    {
+                        artist: {
+                            id: 1,
+                            title: 'VA'
+                        },
+                        
+                        album: {
+                            id: 5,
+                            title: 'Amazing Horse'
+                        },
+                        
+                        song: {
+                            id: 1,
+                            title: '01 - Amazing Horse'
+                        }
+                    },
+                    // song 2
+                    {
+                        artist: {
+                            id: 1,
+                            title: 'VA'
+                        },
+                        
+                        album: {
+                            id: 5,
+                            title: 'Amazing Horse'
+                        },
+                        
+                        song: {
+                            id: 2,
+                            title: '02 - Amazing Horse (Distrance Remix)'
+                        }
+                    }
+                ],
+                
+                render: function(to) {
+                    var html,
+                        output;
+                    
+                    this.songs.forEach(function(song) {
+                        html = [
+                            '<li>',
+                                '<span><img width="30"/></span>',
+                                '<strong></strong>',
+                                '[<a class="add-queue">+ Add Queue</a>]',
+                                '[<a class="play-now">* Play Now</a>]',
+                            '</li>',
+                        ];
+                        
+                        output = $(html.join('')).appendTo(to);
+                        
+                        $(output).attr({
+                            'data-artist': song.artist,
+                            'data-album': song.album,
+                            'data-song': song.song,
+                        });
+                        
+                        $(output).find('span img').attr('src', '_mp3/'+ song.song.title +'.jpg');
+                        $(output).find('strong').html(song.song.title);
+                    });
+                    
+                    return this;
+                }
+            };
+        </script>
         
         <script type="text/javascript">
             require.config({
@@ -39,6 +108,10 @@
             require(['gPlayer'], function() {
                 console.log('OBJECTL LOADED! GPLAYER');
                 var gPlayer = $('#gplayer_ui').gPlayer();
+                
+                //append tmp list
+                var albumSongs = albumSongsList.render('#album > #songs-list');
+                
                 
                 console.log(gPlayer);
                 //window.og = gPlayer;
