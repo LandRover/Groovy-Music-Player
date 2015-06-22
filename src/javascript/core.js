@@ -1,8 +1,7 @@
 define([
     "./utils/event",
-    "./core/api",
     "./utils/logger",
-], function(Event, API, Logger) {
+], function(Event, Logger) {
     var version = "@VERSION",
         gPlayer;
 
@@ -58,6 +57,8 @@ define([
             return this.el;
         }
     };
+    
+    console.log(gPlayer);
     
     return gPlayer;
 });
