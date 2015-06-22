@@ -2,6 +2,8 @@ define([
     "../core",
     "../utils/logger"
 ], function(gPlayer, Logger) {
+    console.log(gPlayer);
+    
     /**
      * Public access point for object internals. The only exposed API.
      *
@@ -76,7 +78,7 @@ define([
          * add item to the queue.
          */
         addItem: function(itemsList) {
-            console.log(JSON.stringify(gPlayer));
+            console.log(gPlayer);
             var x = [gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer()];
             
             console.log(itemsList);

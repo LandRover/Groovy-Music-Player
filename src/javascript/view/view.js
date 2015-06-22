@@ -54,7 +54,7 @@ define([
         layout: function() {
             Logger.debug('VIEW::LAYOUT FIRED');
             
-            var gPlayer = new gPlayerView(this).append(this.getModel().getContainer());
+            var gPlayerViewLayout = new gPlayerView(this).append(this.getModel().getContainer());
             
             $(this.getModel().getContainer())
                 .addClass(this.getModel().classes.gPlayer)
