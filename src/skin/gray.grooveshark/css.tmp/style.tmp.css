@@ -1,4 +1,6 @@
+.clear { clear: both; }
 .hide { display: none !important; }
+
 .player-widget-drag { border-radius: 4px; background-color: #f5f5f5; border: 1px solid #ddd; display: inline-block; width: auto !important; height: auto !important; font-size: 12px; padding: 4px 13px; cursor: -webkit-grabbing; }
 .player-widget-drag div.widget-drag-status { position: absolute; left: -10px; top: -10px; background-color: green; width: 18px; height: 18px; background: transparent url( '/resources/images/icons-drag.png') no-repeat left top; }
 .player-widget-drag div.widget-drag-status.invalid { background-position: left bottom;}
@@ -88,9 +90,6 @@ div.gplayer.medium div.playlist ol.queue li.item-wrapper { width: 84px; height: 
 
 
 /*****************/
-
-body { background: gray; }
-.clear { clear: both; }
 
 .groovy-gui { margin-top: 2px; }
 .groovy-gui .groovy-icons em { background: transparent url('../images/groovy-player-controls.png') no-repeat 100px 100px; }
