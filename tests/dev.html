@@ -107,7 +107,7 @@
             
             require(['gPlayer'], function() {
                 console.log('OBJECTL LOADED! GPLAYER');
-                var gPlayer = $('#gplayer_ui').gPlayer();
+                var gPlayerAPI = $('#gplayer_ui').gPlayer();
                 
                 //append tmp list
                 var albumSongs = albumSongsList.render('#album > #songs-list');
@@ -120,7 +120,7 @@
                     
                     console.log(song);
                     
-                    gPlayer.addItem(song);
+                    gPlayerAPI.addItem(song);
                 });
                 
                 $('#album > #songs-list .play-now').click(function() {
@@ -131,7 +131,7 @@
                     
                     console.log(song);
                     
-                    gPlayer.addItem(song);
+                    gPlayerAPI.addItem(song);
                 });
                 
                 console.log(gPlayer);
