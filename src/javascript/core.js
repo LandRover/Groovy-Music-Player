@@ -12,8 +12,9 @@ define([
      */
     gPlayer = function(options) {
         if (!arguments.callee._singletonInstance) {
+            Logger.debug('CORE::INIT::CREATION OF SINGLETON GPLAYER!');
+            
             arguments.callee._singletonInstance = new gPlayer.prototype.create(options); // jquery like creation method, nice idea
-            Logger.debug('CORE::NEW CREATED!!! SHOULD HAPPEN ONCE');
         }
         
         Logger.debug('CORE::INIT FIRED');
