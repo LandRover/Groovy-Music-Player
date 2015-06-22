@@ -1,12 +1,11 @@
 define([
-    "../core",
     "../model/model",
     "../view/view",
     "../events/events",
     "../events/states",
     "../utils/event",
     "../utils/logger",
-], function(gPlayer, Model, View, Events, States, Event, Logger) {
+], function(Model, View, Events, States, Event, Logger) {
     /**
      * gPlayer main controller
      *

@@ -1,9 +1,8 @@
 define([
-    "../core",
     "../utils/event",
     "../events/events",
     "../utils/logger",
-], function(gPlayer, Event, Events, Logger) {
+], function(Event, Events, Logger) {
     /**
      * Base Model, all models inherit this shared and basic logic.
      *
