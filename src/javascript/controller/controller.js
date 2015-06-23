@@ -1,11 +1,12 @@
 define([
     "../model/model",
     "../view/view",
+    "../queue/queue",
     "../events/events",
     "../events/states",
     "../utils/event",
     "../utils/logger",
-], function(Model, View, Events, States, Event, Logger) {
+], function(Model, View, Queue, Events, States, Event, Logger) {
     /**
      * gPlayer main controller
      *
@@ -17,21 +18,12 @@ define([
     
     Controller.prototype = {
         /**
-         * Main model referance
-         */
-        _model: null,
-        
-        
-        /**
-         * Notifications referance
-         */
-        _notifications: null,
-        
-        
-        /**
-         * View referance
+         * Referances
          */
         _view: null,
+        _model: null,
+        _queue: null,
+        _notifications: null,
         
         
         /**
@@ -49,6 +41,7 @@ define([
             this._model = new Model(config);
             this._notifications = new Event();
             this._view = new View(this, this._model, this._notifications);
+            this._queue = new Queue(this._notifications);
             
             return this;
         },
