@@ -79,7 +79,9 @@ define([
             Logger.debug('ADDITEM FIRED!');
             var queue = gPlayer().getController().getQueue();
             
-            console.log(queue);
+            queue.add(itemsList);
+            
+            return this;
         }
     };
     
