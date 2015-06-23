@@ -116,9 +116,27 @@
                     console.log('queue');
                     
                     var item = $(this).parent();
-                    var song = item.data('song');
                     
-                    console.log(song);
+                    var artist = item.data('artist'),
+                        album = item.data('album'),
+                        song = item.data('song');
+                    
+                    var artistLink = '<a href="#/artist/'+ artist.title +'">'+ artist.title +'</a>',
+                        albumThumbnailUrl = '_mp3/'+ song.title +'.jpg',
+                        mp3Url = '_mp3/'+ song.title +'.mp3',
+                        waveformUrl = '_mp3/'+ song.id +'/';
+                    
+                    var song = {
+                        type: 'mp3',
+                        artist: artistLink,
+                        song: song.title,
+                        file: mp3Url,
+                        thumbnail: albumThumbnailUrl,
+                        scrub: {
+                            bg: waveformUrl +'active.png',
+                            progress: waveformUrl +'progress.png'
+                        }
+                    };
                     
                     gPlayerAPI.addItem(song);
                 });
