@@ -73,14 +73,10 @@ define([
         
         
         /**
-         * add item to the queue.
+         * Add item to the queue.
          */
         addItem: function(itemsList) {
-            console.log(gPlayer);
-            var x = [gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer(), gPlayer()];
-            
-            console.log(itemsList);
-            console.log(x);
+            Logger.debug('ADDITEM FIRED!');
         }
     };
     

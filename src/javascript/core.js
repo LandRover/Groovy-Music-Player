@@ -56,6 +56,16 @@ define([
          */
         getEl: function() {
             return this.el;
+        },
+        
+        
+        /**
+         * Get the controller instance, set during the init
+         *
+         * @return {Object} Controller
+         */
+        getController: function() {
+            return this._controller;
         }
     };
     
