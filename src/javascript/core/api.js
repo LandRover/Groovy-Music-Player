@@ -75,11 +75,11 @@ define([
         /**
          * Add item to the queue.
          */
-        addItem: function(itemsList) {
+        addItem: function(items) {
             Logger.debug('ADDITEM FIRED!');
             var queue = gPlayer().getController().getQueue();
             
-            queue.add(itemsList);
+            queue.add(items);
             
             return this;
         }

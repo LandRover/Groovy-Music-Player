@@ -5,6 +5,8 @@ define([
 ], function(BaseView, Logger, playerHTML) {
     /**
     * Controls
+    *
+    * @todo: very important - decouple the view thing, this object should get data rather than object
     */
     var Player = function(view) {
         Logger.debug('PLAYER::CONSTRUCTOR FIRED');

@@ -1,8 +1,9 @@
 define([
+    "../core",
     "../events/events",
     "../events/states",
     "../utils/logger",
-], function(Events, States, Logger) {
+], function(gPlayer, Events, States, Logger) {
     /**
      *
      */
@@ -17,6 +18,11 @@ define([
         
         init: function() {
             Logger.debug('QUEUE::INIT FIRED');
+        },
+        
+        
+        add: function(items) {
+            
         }
     };
     
