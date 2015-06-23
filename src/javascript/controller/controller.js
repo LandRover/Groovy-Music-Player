@@ -57,6 +57,14 @@ define([
         
         
         /**
+         * Getter for the Queue object, set on constructor
+         */
+        getQueue: function() {
+            return this._queue;
+        },
+        
+        
+        /**
          * Random ID generator for appended objects.
          *
          * Math.random should be unique because of its seeding algorithm.
