@@ -9,6 +9,7 @@
     "requirejs": "2.1.17",
     "qunit": "1.18.0",
     "lodash": "3.9.3",
-    "jquery": "2.1.4"
+    "jquery": "2.1.4",
+    "nativesortable": "0.1.0"
   }
 }
