@@ -10,6 +10,7 @@
     "qunit": "1.18.0",
     "lodash": "3.9.3",
     "jquery": "2.1.4",
-    "nativesortable": "0.1.0"
+    "nativesortable": "0.1.0",
+    "malihu-custom-scrollbar-plugin": "3.0.9"
   }
 }

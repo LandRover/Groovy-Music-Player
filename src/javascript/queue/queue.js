@@ -22,12 +22,23 @@ define([
         },
         
         
-        add: function(item) {
+        /**
+         *
+         */
+        add: function(item, to) {
             var itemHTML = new Item(item).render();
             
-            itemHTML.append('.queue');
+            itemHTML.append('.'+ this.getDomParent());
             
             return this;
+        },
+        
+        
+        /**
+         *
+         */
+        getDomParent: function() {
+            return gPlayer().getController().getModel().classes.queue;
         }
     };
     

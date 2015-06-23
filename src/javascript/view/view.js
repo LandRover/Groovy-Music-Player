@@ -3,7 +3,8 @@ define([
     "../utils/logger",
     "./gplayer_view",
     "./player/player",
-], function(Events, Logger, gPlayerView, Player) {
+    "nativesortable"
+], function(Events, Logger, gPlayerView, Player, NativeSortable) {
     /**
      * View
      */
@@ -57,12 +58,20 @@ define([
             var gPlayerViewLayout = new gPlayerView(this).append(this.getModel().getContainer());
             
             $(this.getModel().getContainer())
+                .addClass('orange')
                 .addClass(this.getModel().classes.gPlayer)
                 .addClass(this.getModel().classes.draggable_queue)
                 .addClass(this.getModel().classes.size)
                 .addClass(this.getModel().classes.empty);
             
             var PlayerView = new Player(this).append('.'+this.getModel().classes.player_wrapper);
+            
+            NativeSortable(document.querySelector('.queue'), {
+                change: onchange,
+                childClass: 'sortable-child',
+                draggingClass: 'sortable-dragging',
+                overClass: 'sortable-over'
+            });
             
             return this;
         },
