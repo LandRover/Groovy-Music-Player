@@ -1,8 +1,8 @@
 define([
-    "../base_view",
-    "../events/events",
-    "../events/states",
-    "../utils/logger",
+    "../../base_view",
+    "../../events/events",
+    "../../events/states",
+    "../../utils/logger",
     "html/queue/item.html",
 ], function(BaseView, Events, States, Logger, itemHTML) {
     /**
