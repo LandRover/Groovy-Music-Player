@@ -1,5 +1,5 @@
 define([
-    "../../base_view",
+    "../../view/base_view",
     "../../events/events",
     "../../events/states",
     "../../utils/logger",

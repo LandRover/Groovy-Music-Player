@@ -1,9 +1,10 @@
 define([
     "../core",
+    "./view/item",
     "../events/events",
     "../events/states",
     "../utils/logger",
-], function(gPlayer, Events, States, Logger) {
+], function(gPlayer, Item, Events, States, Logger) {
     /**
      *
      */
@@ -22,7 +23,7 @@ define([
         
         
         add: function(items) {
-            
+            console.log(items);
         }
     };
     

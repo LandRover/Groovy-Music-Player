@@ -17,8 +17,6 @@ define([
             arguments.callee._singletonInstance = new gPlayer.prototype.create(options); // jquery like creation method, nice idea
         }
         
-        Logger.debug('CORE::INIT FIRED');
-        
         return arguments.callee._singletonInstance;
     };
     
