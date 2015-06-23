@@ -24,6 +24,14 @@ define([
             $(to).append(this.output);
             
             return this;
+        },
+        
+        
+        /**
+         *
+         */
+        toString: function() {
+            return this.output;
         }
     };
     

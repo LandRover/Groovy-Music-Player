@@ -20,13 +20,15 @@ define([
         
         init: function() {
             Logger.debug('ITEM::INIT FIRED');
-            
-            console.log(itemHTML);
         },
         
         
         render: function() {
+            this.output = _.template(itemHTML)(
+                this._item
+            );
             
+            return this;
         }
     });
     

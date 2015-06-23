@@ -79,7 +79,14 @@ define([
             Logger.debug('ADDITEM FIRED!');
             var queue = gPlayer().getController().getQueue();
             
-            queue.add(items);
+            // must be an array.. to smooth things
+            if ('object' === typeof(items)) {
+                items = [items];
+            }
+            
+            _.each(items, function(item) {
+                queue.add(item);
+            });
             
             return this;
         }

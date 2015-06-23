@@ -22,8 +22,12 @@ define([
         },
         
         
-        add: function(items) {
-            console.log(items);
+        add: function(item) {
+            var itemHTML = new Item(item).render();
+            
+            itemHTML.append('.queue');
+            
+            return this;
         }
     };
     

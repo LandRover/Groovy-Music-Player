@@ -1,10 +1,12 @@
-<div class="widget-item">
-    <div class="widget-action remove"></div>
-    <div class="widget-action play"></div>
-    <div class="widget-action pause hide"></div>
-    <div class="widget-item-label" title="' + album.title + '">
-        <em><figure><img src="' + imagePath + '" alt=""/></figure></em>
-        <h4>' + song.title + '</h4>
-        <strong>' + artist.title + '</strong>
+<li class="item-wrapper ui-draggable">
+    <div class="widget-item">
+        <div class="widget-action remove"></div>
+        <div class="widget-action play"></div>
+        <div class="widget-action pause hide"></div>
+        <div class="widget-item-label">
+            <em><figure><img src="<%- thumbnail %>" alt=""/></figure></em>
+            <h4><%- song %></h4>
+            <strong><%- artist %></strong>
+        </div>
     </div>
-</div>
+</li>
