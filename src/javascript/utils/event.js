@@ -81,7 +81,9 @@ define([], function() {
         fire: function(name, params) {
             var callbacks = this._subscriptions[name] || [];
             
-            callbacks.forEach(function(callback) {
+            console.log(['EVENT::FIRE', name, params]);
+            
+            _.each(callbacks, function(callback) {
                 callback(params);
             });
         },
