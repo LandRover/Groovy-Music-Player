@@ -66,6 +66,7 @@ define([
             
             var PlayerView = new Player(this).append('.'+this.getModel().classes.player_wrapper);
             
+            // @todo move this out.. to queue as it should append itself
             NativeSortable(document.querySelector('.queue'), {
                 change: onchange,
                 childClass: 'sortable-child',
@@ -78,6 +79,7 @@ define([
             return this;
         },
         
+        // @todo move this out.. to queue as it should append itself
         horizontalScrollInit: function() {
             mCustomScrollbar($); // @todo Figure what's the deal with the mouseheel plugin.. 
             
@@ -98,7 +100,7 @@ define([
             this.horizontalScrollUpdate();
         },
         
-        
+        // @todo move this out.. to queue as it should append itself
         horizontalScrollUpdate: function() {
             $('.queue-container').mCustomScrollbar('update');
             
