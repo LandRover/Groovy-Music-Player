@@ -9,7 +9,7 @@
 .player-widget-drag div.drag-label em { display: block; font-style: normal; }
 
 /** prevent select on drag **/
-div.gplayer {
+[draggable], div.gplayer {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -18,7 +18,7 @@ div.gplayer {
   user-select: none;
 }
 
-div.gplayer * {
+[draggable] *, div.gplayer * {
   -moz-user-drag: none;
   -khtml-user-drag: none;
   -webkit-user-drag: none;
@@ -107,7 +107,16 @@ div.gplayer div.playlist ol.queue li.drop-indicator { background-color: red; flo
 /* uncomment the following lines if using bootstrap.css lib */
 div.gplayer.medium div.playlist ol.queue li.item-wrapper { width: 84px; height: 122px; }
 
-
+li.sortable-dragging {
+  opacity: .25;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  -moz-transition: -moz-transform 0.2s ease-out;
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+}
+.sortable li.sortable-over {
+  opacity: .25;
+}
 
 
 /*****************/
