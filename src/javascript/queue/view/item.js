@@ -24,12 +24,45 @@ define([
         
         
         render: function() {
-            this.output = _.template(itemHTML)(
+            this.output = this.subscribe($(_.template(itemHTML)(
                 this._item
-            );
+            )));
             
             return this;
+        },
+        
+        
+        /**
+         *
+         */
+        subscribe: function(html) {
+            var item = this._item,
+                self = this;
+            
+            html.attr({
+                'id': this._generateUniqueID()
+            });
+            
+            $(html).find('.play').on('click', function () {
+                self.getNotifications().fire('QUEUE_ITEM_CLICK_PLAY', item);
+            });
+            
+            $(html).find('.pause').on('click', function () {
+                self.getNotifications().fire('QUEUE_ITEM_CLICK_PAUSE', item);
+            });
+            
+            $(html).find('.remove').on('click', function () {
+                self.getNotifications().fire('QUEUE_ITEM_CLICK_REMOVE', item);
+                self.remove();
+            });
+            
+            $(html).find('strong').on('click', function () {
+                self.getNotifications().fire('QUEUE_ITEM_CLICK_ARTIST', item);
+            });
+            
+            return html;
         }
+        
     });
     
     return Item;
