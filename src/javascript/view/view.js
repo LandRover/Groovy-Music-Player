@@ -74,11 +74,15 @@ define([
                 overClass: 'sortable-over'
             });
             
+            this.horizontalScrollInit();
+            
             return this;
         },
         
         horizontalScrollInit: function() {
-            $('.queue').mCustomScrollbar({
+            mCustomScrollbar($);
+            
+            $('.playlist').mCustomScrollbar({
                     scrollInertia: 150,
                     
                     onTotalScrollOffset: 40,
@@ -97,7 +101,7 @@ define([
         
         
         horizontalScrollUpdate: function() {
-            $('.queue').mCustomScrollbar('update');
+            $('.playlist').mCustomScrollbar('update');
             
             if ($('.mCustomScrollBox .mCSB_container')) {
                 var width = $('.mCustomScrollBox .mCSB_container').css('width') || '0px';
