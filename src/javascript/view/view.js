@@ -80,7 +80,7 @@ define([
         },
         
         horizontalScrollInit: function() {
-            mCustomScrollbar($);
+            mCustomScrollbar($); // @todo Figure what's the deal with the mouseheel plugin.. 
             
             $('.playlist').mCustomScrollbar({
                     scrollInertia: 150,
