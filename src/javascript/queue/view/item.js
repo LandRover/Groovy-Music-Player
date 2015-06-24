@@ -44,20 +44,20 @@ define([
             });
             
             $(html).find('.play').on('click', function () {
-                self.getNotifications().fire('QUEUE_ITEM_CLICK_PLAY', item);
+                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_PLAY, item);
             });
             
             $(html).find('.pause').on('click', function () {
-                self.getNotifications().fire('QUEUE_ITEM_CLICK_PAUSE', item);
+                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_PAUSE, item);
             });
             
             $(html).find('.remove').on('click', function () {
-                self.getNotifications().fire('QUEUE_ITEM_CLICK_REMOVE', item);
+                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_REMOVE, item);
                 self.remove();
             });
             
             $(html).find('strong').on('click', function () {
-                self.getNotifications().fire('QUEUE_ITEM_CLICK_ARTIST', item);
+                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_ARTIST, item);
             });
             
             return html;
