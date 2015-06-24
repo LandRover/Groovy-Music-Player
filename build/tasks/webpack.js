@@ -17,7 +17,9 @@ module.exports = function(grunt, options) {
                 alias: {
                     //jQuery: __bower_dir + '/jquery/src/jquery.js',
                     //lodash: __bower_dir + '/lodash/lodash.js'
-                    nativesortable: __bower_dir + '/nativesortable/nativesortable.js'
+                    'jquery-mousewheel': __bower_dir + '/jquery-mousewheel/jquery.mousewheel.js',
+                    nativesortable: __bower_dir + '/nativesortable/nativesortable.js',
+                    mCustomScrollbar: __bower_dir + '/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js'
                 }
             },
             
@@ -38,7 +40,7 @@ module.exports = function(grunt, options) {
             progress: true,
             
             externals: {
-                jQuery: 'jQuery',
+                jquery: 'jquery',
                 lodash: 'lodash'
             }
         },
@@ -68,9 +70,9 @@ module.exports = function(grunt, options) {
                 }),
                 
                 new webpack.ProvidePlugin({
-                    $: "jQuery",
-                    jQuery: "jQuery",
-                    "window.jQuery": "jQuery",
+                    $: "jquery",
+                    jquery: "jquery",
+                    "window.jQuery": "jquery",
                     _: "lodash"
                 })
             ]

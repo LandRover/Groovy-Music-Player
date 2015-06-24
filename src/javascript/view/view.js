@@ -3,8 +3,9 @@ define([
     "../utils/logger",
     "./gplayer_view",
     "./player/player",
-    "nativesortable"
-], function(Events, Logger, gPlayerView, Player, NativeSortable) {
+    "nativesortable",
+    "mCustomScrollbar"
+], function(Events, Logger, gPlayerView, Player, NativeSortable, mCustomScrollbar) {
     /**
      * View
      */
@@ -74,6 +75,38 @@ define([
             });
             
             return this;
+        },
+        
+        horizontalScrollInit: function() {
+            $('.queue').mCustomScrollbar({
+                    scrollInertia: 150,
+                    
+                    onTotalScrollOffset: 40,
+                    onTotalScrollBackOffset: 20,
+                    
+                    mouseWheel: true,
+                    horizontalScroll: true,
+                    
+                    advanced:{
+                        autoExpandHorizontalScroll: true
+                    }
+            });
+            
+            this.horizontalScrollUpdate();
+        },
+        
+        
+        horizontalScrollUpdate: function() {
+            $('.queue').mCustomScrollbar('update');
+            
+            if ($('.mCustomScrollBox .mCSB_container')) {
+                var width = $('.mCustomScrollBox .mCSB_container').css('width') || '0px';
+                var widthPX = Number(width.replace('px', ''));
+                
+                if (widthPX <= window.innerWidth) {
+                    $('.mCustomScrollBox .mCSB_container').css('width', '100%');
+                }
+            }
         },
         
         
