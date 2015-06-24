@@ -65,24 +65,17 @@ define([
         
         
         /**
-         * Getter for the Queue object, set on constructor
+         * Getter for the Model object, set on constructor
          */
         getModel: function() {
             return this._model;
         },
         
-        
         /**
-         * Random ID generator for appended objects.
-         *
-         * Math.random should be unique because of its seeding algorithm.
-         * Convert it to base 36 (numbers + letters), and grab
-         * the first 9 characters after the decimal.
-         *
-         * @return {String} - Sample ID looks like: "_619z73eci"
+         * Getter for the Notifications object, set on constructor
          */
-        _generateUniqueID: function () {
-            return '_' + Math.random().toString(36).substr(2, 9);
+        getNotifications: function() {
+            return this._notifications;
         }
     };
     
