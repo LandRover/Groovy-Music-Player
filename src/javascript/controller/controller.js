@@ -40,7 +40,7 @@ define([
             
             this._model = new Model(config);
             this._notifications = new Event();
-            this._view = new View(this, this._model, this._notifications);
+            this._view = new View(this, this._notifications);
             this._queue = new Queue(this._notifications);
             
             return this;

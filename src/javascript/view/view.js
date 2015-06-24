@@ -9,8 +9,7 @@ define([
     /**
      * View
      */
-    var View = function(controller, model, notifications) {
-        this._model = model;
+    var View = function(controller, notifications) {
         this._controller = controller;
         this._notifications = notifications;
         
@@ -119,7 +118,7 @@ define([
          *
          */
         getModel: function() {
-            return this._model;
+            return this._controller.getModel();
         },
         
         /**
