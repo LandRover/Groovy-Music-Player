@@ -83,7 +83,7 @@ define([
         horizontalScrollInit: function() {
             mCustomScrollbar($); // @todo Figure what's the deal with the mouseheel plugin.. 
             
-            $('.queue-container').mCustomScrollbar({
+            $('.'+this.getModel().classes.queue_container).mCustomScrollbar({
                     scrollInertia: 150,
                     
                     onTotalScrollOffset: 40,
@@ -102,7 +102,7 @@ define([
         
         // @todo move this out.. to queue as it should append itself
         horizontalScrollUpdate: function() {
-            $('.queue-container').mCustomScrollbar('update');
+            $('.'+this.getModel().classes.queue_container).mCustomScrollbar('update');
             
             if ($('.mCustomScrollBox .mCSB_container')) {
                 var width = $('.mCustomScrollBox .mCSB_container').css('width') || '0px';
