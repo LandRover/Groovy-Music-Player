@@ -9,7 +9,7 @@
 .player-widget-drag div.drag-label em { display: block; font-style: normal; }
 
 /** prevent select on drag **/
-[draggable], div.gplayer {
+div.gplayer {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -18,7 +18,7 @@
   user-select: none;
 }
 
-[draggable] *, div.gplayer * {
+div.gplayer * {
   -moz-user-drag: none;
   -khtml-user-drag: none;
   -webkit-user-drag: none;
