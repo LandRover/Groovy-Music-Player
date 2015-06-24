@@ -82,7 +82,7 @@ define([
         horizontalScrollInit: function() {
             mCustomScrollbar($); // @todo Figure what's the deal with the mouseheel plugin.. 
             
-            $('.playlist').mCustomScrollbar({
+            $('.queue-container').mCustomScrollbar({
                     scrollInertia: 150,
                     
                     onTotalScrollOffset: 40,
@@ -101,7 +101,7 @@ define([
         
         
         horizontalScrollUpdate: function() {
-            $('.playlist').mCustomScrollbar('update');
+            $('.queue-container').mCustomScrollbar('update');
             
             if ($('.mCustomScrollBox .mCSB_container')) {
                 var width = $('.mCustomScrollBox .mCSB_container').css('width') || '0px';

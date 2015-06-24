@@ -33,7 +33,7 @@ define([
                 player_background: 'player-background',
                 
                 //queue
-                playlist: 'playlist',
+                queue_container: 'queue-container',
                 queue: 'queue'
             },
             
