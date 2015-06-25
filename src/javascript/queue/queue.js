@@ -26,6 +26,20 @@ define([
          */
         init: function() {
             Logger.debug('QUEUE::INIT FIRED');
+            
+            this.subscribe();
+        },
+        
+        
+        /**
+         *
+         */
+        subscribe: function() {
+            var self = this;
+            
+            this._notifications.on(Events.QUEUE_ITEM_ADDED, function() {
+                
+            });
         },
         
         
@@ -41,10 +55,10 @@ define([
                     .render()
                     .append('.'+ self.getDomParent());
                 
-                self.getController().getNotifications().fire(Events.QUEUE_ITEM_ADDED, itemObj);
+                self._notifications.fire(Events.QUEUE_ITEM_ADDED, itemObj);
             });
             
-            this.getController().getNotifications().fire(Events.QUEUE_ITEM_ADD_COMPLETE, items.length);
+            this._notifications.fire(Events.QUEUE_ITEM_ADD_COMPLETE, items.length);
             
             return this;
         },

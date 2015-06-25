@@ -45,6 +45,11 @@ define([
         },
         
         
+        getPosition: function() {
+            return this.el.index();
+        },
+
+        
         /**
          *
          */
