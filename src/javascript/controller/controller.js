@@ -1,11 +1,11 @@
 define([
-    "../model/model",
-    "../view/view",
-    "../queue/queue",
-    "../events/events",
-    "../events/states",
-    "../utils/event",
-    "../utils/logger",
+    "model/model",
+    "view/view",
+    "queue/queue",
+    "events/events",
+    "events/states",
+    "utils/event",
+    "utils/logger",
 ], function(Model, View, Queue, Events, States, Event, Logger) {
     /**
      * gPlayer main controller

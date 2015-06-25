@@ -17,6 +17,10 @@ define([
     Queue.prototype = {
         _notifications: null,
         
+        
+        /**
+         *
+         */
         init: function() {
             Logger.debug('QUEUE::INIT FIRED');
         },
