@@ -37,8 +37,13 @@ define([
         subscribe: function() {
             var self = this;
             
-            this._notifications.on([Events.QUEUE_ITEM_ADDED, Events.QUEUE_ITEM_REMOVED], function() {
+            this._notifications.on([Events.QUEUE_ITEM_ADDED, Events.QUEUE_ITEM_REMOVED], function(item) {
+                console.log(item);
                 self._notifications.fire(Events.QUEUE_ITEM_UPDATED);
+            });
+            
+            this._notifications.on(Events.QUEUE_ITEM_UPDATED, function() {
+                self.updateList();
             });
         },
         
@@ -60,6 +65,14 @@ define([
             this._notifications.fire(Events.QUEUE_ITEM_ADD_COMPLETE, items.length);
             
             return this;
+        },
+        
+        
+        /**
+         *
+         */
+        updateList: function() {
+            console.log('LIST UPDATED');
         },
         
         

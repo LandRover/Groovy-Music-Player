@@ -45,8 +45,7 @@ define([
          *
          */
         subscribe: function(html) {
-            var item = this._model,
-                self = this;
+            var self = this;
             
             html.attr({
                 'id': this._id
@@ -54,20 +53,20 @@ define([
             
             // @todo split to more methods.. this will become a mess very quickly
             $(html).find('.play').on('click', function () {
-                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_PLAY, item);
+                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_PLAY, self);
             });
             
             $(html).find('.pause').on('click', function () {
-                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_PAUSE, item);
+                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_PAUSE, self);
             });
             
             $(html).find('.remove').on('click', function () {
-                self.getNotifications().fire(Events.QUEUE_ITEM_REMOVED, item);
+                self.getNotifications().fire(Events.QUEUE_ITEM_REMOVED, self);
                 self.remove();
             });
             
             $(html).find('strong').on('click', function () {
-                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_ARTIST, item);
+                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_ARTIST, self);
             });
             
             return html;
