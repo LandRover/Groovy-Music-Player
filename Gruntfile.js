@@ -43,9 +43,6 @@ module.exports = function (grunt) {
         }
     });
         
-    // load grunt folder tasks.
-    grunt.loadTasks('webpack:debug');
-
     // Default task
     grunt.registerTask('default', [
         'jshint:src',

@@ -6,7 +6,7 @@ module.exports = function(grunt, options) {
         files: [
             'src/javascript'
         ],
-        tasks: ['build'],
+        tasks: ['webpack:debug'],
         options: {
             spawn: false
         }
