@@ -61,8 +61,8 @@ define([
             });
             
             $(html).find('.remove').on('click', function () {
-                self.getNotifications().fire(Events.QUEUE_ITEM_REMOVED, self);
                 self.remove();
+                self.getNotifications().fire(Events.QUEUE_ITEM_REMOVED, self);
             });
             
             $(html).find('strong').on('click', function () {

@@ -71,8 +71,6 @@ define([
          *
          */
         updateList: function(item) {
-            console.log('LIST UPDATED');
-            
             var size = this.getSize(),
                 itemPosition = item.getPosition();
             
