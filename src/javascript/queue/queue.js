@@ -38,11 +38,11 @@ define([
             var self = this;
             
             this._notifications.on([Events.QUEUE_ITEM_ADDED, Events.QUEUE_ITEM_REMOVED], function(item) {
-                self._notifications.fire(Events.QUEUE_ITEM_UPDATED);
+                self._notifications.fire(Events.QUEUE_ITEM_UPDATED, item);
             });
             
-            this._notifications.on(Events.QUEUE_ITEM_UPDATED, function() {
-                self.updateList();
+            this._notifications.on(Events.QUEUE_ITEM_UPDATED, function(item) {
+                self.updateList(item);
             });
         },
         
@@ -70,8 +70,8 @@ define([
         /**
          *
          */
-        updateList: function() {
-            console.log('LIST UPDATED');
+        updateList: function(item) {
+
         },
         
         
