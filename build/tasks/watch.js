@@ -3,7 +3,7 @@ module.exports = function(grunt, options) {
         // watch js files and run jshint
         scripts: {
             files: [
-                'src/**/*.js'
+                'src/**/*'
             ],
             
             tasks: ['webpack:debug'],
