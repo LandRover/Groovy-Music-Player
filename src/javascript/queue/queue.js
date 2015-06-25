@@ -1,9 +1,9 @@
 define([
-    "../core",
-    "./view/item",
-    "../events/events",
-    "../events/states",
-    "../utils/logger",
+    "core",
+    "queue/view/item",
+    "events/events",
+    "events/states",
+    "utils/logger",
 ], function(gPlayer, Item, Events, States, Logger) {
     /**
      *
