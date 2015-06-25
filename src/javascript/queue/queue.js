@@ -48,6 +48,16 @@ define([
         
         
         /**
+         * Gets the queue size, length of the current list
+         *
+         * @return {Number}
+         */
+        getSize: function () {
+            return this.getDomParent().find('li:not(.cancel)').size();
+        },
+        
+        
+        /**
          *
          */
         getDomParent: function() {
