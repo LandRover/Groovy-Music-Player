@@ -38,7 +38,6 @@ define([
             var self = this;
             
             this._notifications.on([Events.QUEUE_ITEM_ADDED, Events.QUEUE_ITEM_REMOVED], function(item) {
-                console.log(item);
                 self._notifications.fire(Events.QUEUE_ITEM_UPDATED);
             });
             
