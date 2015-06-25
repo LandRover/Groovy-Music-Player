@@ -37,9 +37,8 @@ define(function() {
         on: function(name, callback) {
             // allows to subscribe multiple events for the same callback as single events. Clears the syntax on the other end.
             if (_.isArray(name)) {
-                var self = this;
-                _.each(name, function(eventName) {
-                    this.on(name, callback);
+                return _.each(name, function(eventName) {
+                    this.on(eventName, callback);
                 }, this);
             }
             
