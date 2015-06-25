@@ -42,7 +42,7 @@ define([
             });
             
             this._notifications.on(Events.QUEUE_ITEM_UPDATED, function(item) {
-                self.updateList(item);
+                self.updateQueueList(item);
             });
             
             this._notifications.on(Events.QUEUE_ITEM_CLICK_PLAY, function(item) {
@@ -78,7 +78,7 @@ define([
         /**
          *
          */
-        updateList: function(item) {
+        updateQueueList: function(item) {
             var size = this.getSize(),
                 itemPosition = item.getPosition(); // @todo unable to get proper position as the item was already removed inside the item.
             
