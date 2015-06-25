@@ -31,10 +31,18 @@ define(function() {
         /**
         * Attach a callback to an EventName
         * 
-        * @param {string} name
+        * @param {string/array} name
         * @param {function} callback
         */
         on: function(name, callback) {
+            // allows to subscribe multiple events for the same callback as single events. Clears the syntax on the other end.
+            if (_.isArray(name)) {
+                var self = this;
+                _.each(name, function(eventName) {
+                    this.on(name, callback);
+                }, this);
+            }
+            
             if ('undefined' === typeof(this._subscriptions[name]))
                 this._subscriptions[name] = [];
             
@@ -101,7 +109,7 @@ define(function() {
                     return (cb === callback || cb._originalCallback === callback)
                 };
             
-            callbacks.forEach(function(eventCallback, i) {
+            _.each(callbacks, function(eventCallback, i) {
                 if (matchCallback(eventCallback)) {
                     callbacks.splice(i, 1);
                 }
