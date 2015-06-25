@@ -9,23 +9,32 @@ define([
      *
      */
     var Item = function(item) {
-        this._item = item;
+        this._model = item;
         
         this.init();
     };
     
     Item.prototype = _.extend(new BaseView(), {
-        _item: null,
+        _id: null,
+        _model: null,
         
         
+        /**
+         *
+         */
         init: function() {
+            this._id = this._generateUniqueID();
+            
             Logger.debug('ITEM::INIT FIRED');
         },
         
         
+        /**
+         *
+         */
         render: function() {
             this.output = this.subscribe($(_.template(itemHTML)(
-                this._item
+                this._model
             )));
             
             return this;
@@ -36,11 +45,11 @@ define([
          *
          */
         subscribe: function(html) {
-            var item = this._item,
+            var item = this._model,
                 self = this;
             
             html.attr({
-                'id': this._generateUniqueID()
+                'id': this._id
             });
             
             $(html).find('.play').on('click', function () {
@@ -52,7 +61,7 @@ define([
             });
             
             $(html).find('.remove').on('click', function () {
-                self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_REMOVE, item);
+                self.getNotifications().fire(Events.QUEUE_ITEM_REMOVED, item);
                 self.remove();
             });
             

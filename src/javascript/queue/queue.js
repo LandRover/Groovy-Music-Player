@@ -30,14 +30,18 @@ define([
          *
          */
         add: function(items, to) {
-            var itemHTML,
+            var itemObj,
                 self = this;
             
             _.each(items, function(item) {
-                itemHTML = new Item(item)
+                itemObj = new Item(item)
                     .render()
                     .append('.'+ self.getDomParent());
+                
+                self.getController().getNotifications().fire(Events.QUEUE_ITEM_ADDED, itemObj);
             });
+            
+            this.getController().getNotifications().fire(Events.QUEUE_ITEM_ADD_COMPLETE, items.length);
             
             return this;
         },
@@ -47,7 +51,15 @@ define([
          *
          */
         getDomParent: function() {
-            return gPlayer().getController().getModel().classes.queue;
+            return this.getController().getModel().classes.queue;
+        },
+        
+        
+        /**
+         *
+         */
+        getController: function() {
+            return gPlayer().getController();
         }
     };
     
