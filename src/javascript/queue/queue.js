@@ -47,16 +47,15 @@ define([
          *
          */
         add: function(items, to) {
-            var itemObj,
-                self = this;
+            var itemObj;
             
             _.each(items, function(item) {
                 itemObj = new Item(item)
                     .render()
-                    .append('.'+ self.getDomParent());
+                    .append('.'+ this.getDomParent());
                 
-                self._notifications.fire(Events.QUEUE_ITEM_ADDED, itemObj);
-            });
+                this._notifications.fire(Events.QUEUE_ITEM_ADDED, itemObj);
+            }, this);
             
             this._notifications.fire(Events.QUEUE_ITEM_ADD_COMPLETE, items.length);
             
