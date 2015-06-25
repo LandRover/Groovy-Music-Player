@@ -80,7 +80,7 @@ define([
          */
         updateQueueList: function(item) {
             var size = this.getSize(),
-                itemPosition = item.getPosition(); // @todo unable to get proper position as the item was already removed inside the item.
+                itemPosition = item.getPosition();
             
             if (this.isEmpty()) {
                 this._notifications.fire(Events.QUEUE_EMPTY);
