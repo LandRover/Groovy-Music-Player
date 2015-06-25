@@ -6,7 +6,10 @@ define([
     "utils/logger",
 ], function(gPlayer, Item, Events, States, Logger) {
     /**
+     * Main queue controller
      *
+     * Acts as the view controller, fetching and adding models and causing changes to the UI
+     * from this object.
      */
     var Queue = function(notifications) {
         this._notifications = notifications;
@@ -53,7 +56,9 @@ define([
          * @return {Number}
          */
         getSize: function () {
-            return this.getDomParent().find('li:not(.cancel)').size();
+            return this.getDomParent()
+                .find('li:not(.cancel)')
+                .size();
         },
         
         
@@ -61,7 +66,10 @@ define([
          *
          */
         getDomParent: function() {
-            return this.getController().getModel().classes.queue;
+            return this.getController()
+                .getModel()
+                .classes
+                .queue;
         },
         
         
@@ -69,7 +77,8 @@ define([
          *
          */
         getController: function() {
-            return gPlayer().getController();
+            return gPlayer()
+                .getController();
         }
     };
     
