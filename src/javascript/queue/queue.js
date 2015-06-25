@@ -47,6 +47,11 @@ define([
             
             this._notifications.on(Events.QUEUE_ITEM_CLICK_PLAY, function(item) {
                 self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, item);
+                self.setPlayPauseMode(1, false, item);
+            });
+            
+            this._notifications.on(Events.QUEUE_ITEM_CLICK_PAUSE, function(item) {
+                self.setPlayPauseMode(0, false, item);
             });
             
             this._notifications.on(Events.QUEUE_ITEM_SET_ACTIVE, function(item) {
@@ -55,7 +60,7 @@ define([
             
             this._notifications.on(Events.QUEUE_ITEM_CHANGED_ACTIVE, function(item) {
                 var activeItem = item || self.getActive();
-
+                
                 self.setPlayPauseMode(0, true, activeItem); //clears from the lastActiveItem the play / pause modes for default UI.
                 self._lastActiveItem = activeItem;
             });
