@@ -69,6 +69,8 @@ define([
                 self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_ARTIST, self);
             });
             
+            $(html).data('object', this);
+            
             return html;
         }
         

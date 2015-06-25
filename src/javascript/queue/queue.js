@@ -44,6 +44,14 @@ define([
             this._notifications.on(Events.QUEUE_ITEM_UPDATED, function(item) {
                 self.updateList(item);
             });
+            
+            this._notifications.on(Events.QUEUE_ITEM_CLICK_PLAY, function(item) {
+                self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, item);
+            });
+            
+            this._notifications.on(Events.QUEUE_ITEM_SET_ACTIVE, function(item) {
+                self.setActive(item.getPosition());
+            });
         },
         
         
@@ -138,7 +146,7 @@ define([
             item.addClass('active');
         
             // Fires the event notifying the item change.
-            this._notifications.fire(Events.QUEUE_ITEM_CHANGE_ACTIVE, item);
+            this._notifications.fire(Events.QUEUE_ITEM_CHANGED_ACTIVE, item.data('object'));
             
             return item;
         },
