@@ -1,4 +1,4 @@
-define([], function() {
+define(function() {
     /**
      * Event based module, publish / subscribe with herarchical events and notifiations.
      * 

@@ -1,6 +1,6 @@
 define([
-    "../core",
-    "../utils/logger",
+    "core",
+    "utils/logger",
 ], function(gPlayer, Logger) {
     /**
      * Public access point for object internals. The only exposed API.

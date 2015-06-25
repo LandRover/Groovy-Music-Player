@@ -1,5 +1,5 @@
 define([
-    "./base_view",
+    "view/base_view",
     "html/error.html"
 ], function(BaseView, errorHTML) {
     /**

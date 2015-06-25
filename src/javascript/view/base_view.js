@@ -1,6 +1,6 @@
 define([
-    "../core",
-    "../utils/logger"
+    "core",
+    "utils/logger"
 ], function(gPlayer, Logger) {
     /**
      * Base View, all views inherit this shared and basic logic.

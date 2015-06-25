@@ -1,8 +1,8 @@
 define([
-    "../events/events",
-    "../utils/logger",
-    "./gplayer_view",
-    "./player/player",
+    "events/events",
+    "utils/logger",
+    "view/gplayer_view",
+    "view/player/player",
     "nativesortable",
     "mCustomScrollbar"
 ], function(Events, Logger, gPlayerView, Player, NativeSortable, mCustomScrollbar) {

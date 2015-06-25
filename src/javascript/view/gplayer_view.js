@@ -1,6 +1,6 @@
 define([
-    "./base_view",
-    "../utils/logger",
+    "view/base_view",
+    "utils/logger",
     "html/layout/gplayer.html",
 ], function(BaseView, Logger, gPlayerHTML) {
     /**

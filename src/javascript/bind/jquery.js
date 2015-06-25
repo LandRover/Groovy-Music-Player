@@ -1,6 +1,6 @@
 define([
-    "../core",
-    "../core/api"
+    "core",
+    "core/api"
 ], function(gPlayer, API) {
     /**
      * gPlayer: jQuery plugin register

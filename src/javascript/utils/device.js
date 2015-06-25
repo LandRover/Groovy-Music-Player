@@ -1,4 +1,4 @@
-define([], function() {
+define(function() {
     // is device ios.. etc.
     var Device = {
         isTouch: ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch,

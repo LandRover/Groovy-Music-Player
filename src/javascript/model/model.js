@@ -1,8 +1,8 @@
 define([
-    "./base_model",
-    "./media_model",
-    "../events/states",
-    "../utils/logger",
+    "model/base_model",
+    "model/media_model",
+    "events/states",
+    "utils/logger",
 ], function(BaseModel, MediaModel, States, Logger) {
     /**
      * gPlayer Model

@@ -1,7 +1,7 @@
 define([
-    "../utils/event",
-    "../events/events",
-    "../utils/logger",
+    "utils/event",
+    "events/events",
+    "utils/logger",
 ], function(Event, Events, Logger) {
     /**
      * Base Model, all models inherit this shared and basic logic.

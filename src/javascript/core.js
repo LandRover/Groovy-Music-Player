@@ -1,6 +1,6 @@
 define([
-    "./utils/event",
-    "./utils/logger",
+    "utils/event",
+    "utils/logger",
 ], function(Event, Logger) {
     var version = "@VERSION",
         gPlayer;

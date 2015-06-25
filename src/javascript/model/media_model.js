@@ -1,6 +1,6 @@
 define([
-    "./base_model",
-    "../events/states",
+    "model/base_model",
+    "events/states",
 ], function(BaseModel, States) {
     /**
      * Media Model
