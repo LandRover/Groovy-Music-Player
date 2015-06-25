@@ -84,9 +84,7 @@ define([
                 items = [items];
             }
             
-            _.each(items, function(item) {
-                queue.add(item);
-            });
+            queue.add(items);
             
             return this;
         }

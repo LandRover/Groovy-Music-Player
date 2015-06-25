@@ -25,10 +25,15 @@ define([
         /**
          *
          */
-        add: function(item, to) {
-            var itemHTML = new Item(item).render();
+        add: function(items, to) {
+            var itemHTML,
+                self = this;
             
-            itemHTML.append('.'+ this.getDomParent());
+            _.each(items, function(item) {
+                itemHTML = new Item(item)
+                    .render()
+                    .append('.'+ self.getDomParent());
+            });
             
             return this;
         },
