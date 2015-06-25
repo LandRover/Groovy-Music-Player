@@ -13,8 +13,8 @@ define([
     
     
     BaseView.prototype = {
-        output: '',
         el: null,
+        output: '',
         _position: null,
         
         /**

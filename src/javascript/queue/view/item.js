@@ -23,9 +23,9 @@ define([
          *
          */
         init: function() {
-            this._id = this._generateUniqueID();
-            
             Logger.debug('ITEM::INIT FIRED');
+            
+            this._id = this._generateUniqueID();
         },
         
         
@@ -48,7 +48,7 @@ define([
             var self = this;
             
             html.attr({
-                'id': this._id
+                id: this._id
             });
             
             // @todo split to more methods.. this will become a mess very quickly
