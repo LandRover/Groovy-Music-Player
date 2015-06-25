@@ -15,7 +15,7 @@ define([
     BaseView.prototype = {
         output: '',
         el: null,
-        
+        _position: null,
         
         /**
          * Adds element to the dom
@@ -46,9 +46,19 @@ define([
         
         
         getPosition: function() {
-            return this.el.index();
+            return (null !== this._position) ? this._position : this.el.index();
         },
 
+        
+        /**
+         *
+         */
+        cachePosition: function() {
+            this._position = this.el.index();
+            
+            return this;
+        },
+        
         
         /**
          *

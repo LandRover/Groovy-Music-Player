@@ -61,6 +61,7 @@ define([
             });
             
             $(html).find('.remove').on('click', function () {
+                self.cachePosition();
                 self.remove();
                 self.getNotifications().fire(Events.QUEUE_ITEM_REMOVED, self);
             });
@@ -73,7 +74,6 @@ define([
             
             return html;
         }
-        
     });
     
     return Item;
