@@ -19,7 +19,7 @@ define([
     
     Queue.prototype = {
         _notifications: null,
-        
+        _lastActiveItem: null,
         
         /**
          *
@@ -52,6 +52,16 @@ define([
             this._notifications.on(Events.QUEUE_ITEM_SET_ACTIVE, function(item) {
                 self.setActive(item.getPosition());
             });
+            
+            this._notifications.on(Events.QUEUE_ITEM_CHANGED_ACTIVE, function(item) {
+                var activeItem = item || self.getActive();
+
+                self.setPlayPauseMode(0, true, activeItem); //clears from the lastActiveItem the play / pause modes for default UI.
+                self._lastActiveItem = activeItem;
+            });
+            
+            
+            
         },
         
         
@@ -80,7 +90,7 @@ define([
          */
         updateQueueList: function(item) {
             var size = this.getSize(),
-                itemPosition = item.getPosition();
+                position = item.getPosition();
             
             if (this.isEmpty()) {
                 this._notifications.fire(Events.QUEUE_EMPTY);
@@ -89,12 +99,12 @@ define([
             //active song has been changed, set the next on active mode.
             if (null === this.getActive()) {
                 //the active was the last on the playlist, select the new last.
-                if (itemPosition === size)
-                    itemPosition = size - 1;
+                if (position === size)
+                    position = size - 1;
                 
                 if (!this.isEmpty()) {
-                    this.setActive(itemPosition);
-                    //this._onPlay(this._getItemByIndex(itemPosition)); //@todo activate.
+                    this.setActive(position);
+                    //this._onPlay(this._getItemByIndex(position)); //@todo activate.
                 }
             }
         },
@@ -137,18 +147,55 @@ define([
             // verify if index exists.
             if (null === item || (null !== this.getActive() && (
                 //prevent from re-setting the current active item again.
-                this.getActive().index() === item.index() &&
+                this.getActive().getPosition() === item.getPosition() &&
                 true === this.isPlaying()
             ))) return null; //now playing similar to currently playing song.
             
             // Sets active flag on the index
             this.getDomParent().find('li').removeClass('active');
-            item.addClass('active');
+            item.getEl().addClass('active');
         
             // Fires the event notifying the item change.
-            this._notifications.fire(Events.QUEUE_ITEM_CHANGED_ACTIVE, item.data('object'));
+            this._notifications.fire(Events.QUEUE_ITEM_CHANGED_ACTIVE, item);
             
             return item;
+        },
+        
+        
+        /**
+         * Check the state of the song, if playing or not.
+         *
+         * @return {bool} 
+         */
+        isPlaying: function () {
+            var playing = this.getDomParent().find('li.active').find('.play.hide').index();
+
+            return (0 > playing) ? false : true;
+        },
+        
+        
+        /**
+         *
+         */
+        setPlayPauseMode: function (playMode, revert, item) {
+            var activeItem = item || this.getActive(),
+                mode = playMode || 0, // 1 - play, 0 - pause
+                revertMode = revert || false;
+
+            if (null !== this._lastActiveItem && true === revertMode) {
+                this._lastActiveItem.getEl().find('.pause').addClass('hide');
+                this._lastActiveItem.getEl().find('.play').removeClass('hide');
+            }
+
+            if (1 === mode) {
+                activeItem.getEl().find('.pause').removeClass('hide');
+                activeItem.getEl().find('.play').addClass('hide');
+            } else {
+                activeItem.getEl().find('.play').removeClass('hide');
+                activeItem.getEl().find('.pause').addClass('hide');
+            }
+
+            return this;
         },
         
         
@@ -200,7 +247,7 @@ define([
                 .find('li:not(.cancel)')
                 .eq(index);
         
-            return (0 > item.index()) ? null : item;
+            return (0 > item.index()) ? null : item.data('object');
         }
     };
     

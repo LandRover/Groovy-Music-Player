@@ -63,6 +63,14 @@ define([
         /**
          *
          */
+        getEl: function() {
+            return this.el;
+        },
+        
+        
+        /**
+         *
+         */
         toString: function() {
             return this.output;
         },
