@@ -52,6 +52,7 @@ define([
                 'id': this._id
             });
             
+            // @todo split to more methods.. this will become a mess very quickly
             $(html).find('.play').on('click', function () {
                 self.getNotifications().fire(Events.QUEUE_ITEM_CLICK_PLAY, item);
             });
