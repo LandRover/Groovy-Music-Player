@@ -53,9 +53,17 @@ define([
          *
          */
         subscribe: function() {
+            var self = this;
+            
             this.getNotifications().on(Events.PLAY, function(item) {
                 console.log(['CONTROLLER::ITEM ARRIVED', item]);
             });
+            
+            $(window).bind('resize', function() {
+                self.getNotifications().fire(Events.RESIZE);
+            });
+            
+            return this;
         },
         
         /**

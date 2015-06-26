@@ -5,6 +5,7 @@ define(function() {
     var Events = {
         CHANGE: "CHANGE:",
         PLAYER_READY: "PLAYER_READY",
+        RESIZE: "RESIZE",
         PLAY: "PLAY",
         PLAY_NEXT: "PLAY_NEXT",
         PLAY_PREVIOUS: "PLAY_PREVIOUS",

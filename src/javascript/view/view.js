@@ -30,6 +30,8 @@ define([
         init: function() {
             Logger.debug('VIEW::INIT FIRED');
             
+            this.subscribe();
+            
             return this;
         },
         
@@ -44,6 +46,15 @@ define([
             
             this.layout();
             
+            return this;
+        },
+        
+        
+        /**
+         *
+         */
+        subscribe: function() {
+
             return this;
         },
         

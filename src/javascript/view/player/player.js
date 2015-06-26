@@ -39,7 +39,8 @@ define([
             
             this.getNotifications().on(Events.PLAY, function(item) {
                 self.setIsPlaying(true)
-                    .playPauseButtonToggle();
+                    .playPauseButtonToggle()
+                    .setMediaProperties(item);
             });
             
             this.getNotifications().on(Events.PAUSE, function() {
@@ -96,6 +97,20 @@ define([
             
             this._toggleIf(!isPlaying, $('.'+namespace +'-play'));
             this._toggleIf(isPlaying, $('.'+namespace +'-pause'));
+            
+            return this;
+        },
+        
+        
+        /**
+         *
+         */
+        setMediaProperties: function(item) {
+            var namespace = this._view.getModel().classes.namespace;
+            
+            $('.'+ namespace +'-song-artist').html($(item._model.artist));
+            $('.'+ namespace +'-song-name').html(item._model.song);
+            $('.'+ namespace +'-thumbnail img').attr({src: item._model.thumbnail});
             
             return this;
         },
