@@ -55,7 +55,9 @@ define([
         layout: function() {
             Logger.debug('VIEW::LAYOUT FIRED');
             
-            var gPlayerViewLayout = new gPlayerView(this).append(this.getModel().getContainer());
+            var gPlayerViewLayout = new gPlayerView(this)
+                .append(this.getModel()
+                .getContainer());
             
             $(this.getModel().getContainer())
                 .addClass('orange')
@@ -64,7 +66,9 @@ define([
                 .addClass(this.getModel().classes.size)
                 .addClass(this.getModel().classes.empty);
             
-            var PlayerView = new Player(this).append('.'+this.getModel().classes.player_wrapper);
+            var PlayerView = new Player(this)
+                .render()
+                .append('.'+this.getModel().classes.player_wrapper);
             
             // @todo move this out.. to queue as it should append itself
             NativeSortable(document.querySelector('.queue'), {
@@ -78,6 +82,7 @@ define([
             
             return this;
         },
+        
         
         // @todo move this out.. to queue as it should append itself
         horizontalScrollInit: function() {
@@ -122,6 +127,16 @@ define([
         getModel: function() {
             return this._controller.getModel();
         },
+        
+        
+        /**
+         *
+         *
+         */
+        getNotifications: function() {
+            return this._notifications;
+        },
+        
         
         /**
          * Appending wrapper, used to inject HTML string to a target container.

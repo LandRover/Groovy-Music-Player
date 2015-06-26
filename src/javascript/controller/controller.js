@@ -43,9 +43,20 @@ define([
             this._view = new View(this, this._notifications);
             this._queue = new Queue(this._notifications);
             
+            this.subscribe();
+            
             return this;
         },
         
+        
+        /**
+         *
+         */
+        subscribe: function() {
+            this.getNotifications().on(Events.PLAY, function(item) {
+                console.log(['CONTROLLER::ITEM ARRIVED', item]);
+            });
+        },
         
         /**
          * Bootstraps the main controller

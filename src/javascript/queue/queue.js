@@ -56,7 +56,11 @@ define([
             });
             
             this._notifications.on(Events.QUEUE_ITEM_CLICK_PAUSE, function(item) {
-                self.setPlayPauseMode(0, false, item);
+                self._notifications.fire(Events.PAUSE);
+            });
+            
+            this._notifications.on(Events.PAUSE, function() {
+                self.setPlayPauseMode(0, false);
             });
             
             this._notifications.on(Events.QUEUE_ITEM_SET_ACTIVE, function(item) {
@@ -71,9 +75,6 @@ define([
                 
                 self._notifications.fire(Events.QUEUE_PLAY_ACTIVE);
             });
-            
-            
-            
         },
         
         

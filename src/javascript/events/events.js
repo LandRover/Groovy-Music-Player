@@ -6,6 +6,7 @@ define(function() {
         CHANGE: "CHANGE:",
         PLAYER_READY: "PLAYER_READY",
         PLAY: "PLAY",
+        PAUSE: "PAUSE",
         
         QUEUE_EMPTY: "QUEUE_EMPTY",
         QUEUE_PLAY_ACTIVE: "QUEUE_PLAY_ACTIVE",

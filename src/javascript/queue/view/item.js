@@ -33,7 +33,7 @@ define([
          *
          */
         render: function() {
-            this.output = this.subscribe($(_.template(itemHTML)(
+            this.output = this.bindActions($(_.template(itemHTML)(
                 this._model
             )));
             
@@ -44,7 +44,7 @@ define([
         /**
          *
          */
-        subscribe: function(html) {
+        bindActions: function(html) {
             var self = this;
             
             html.attr({
