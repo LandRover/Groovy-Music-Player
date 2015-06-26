@@ -37,16 +37,14 @@ define([
         subscribe: function() {
             var self = this;
             
-            this.getNotifications().on(Events.PLAY, function() {
-                self._isPlaying = true;
-                self.playPauseButtonToggle();
-                console.log('BOOYA-play');
+            this.getNotifications().on(Events.PLAY, function(item) {
+                self.setIsPlaying(true)
+                    .playPauseButtonToggle();
             });
             
             this.getNotifications().on(Events.PAUSE, function() {
-                self._isPlaying = false;
-                self.playPauseButtonToggle();
-                console.log('BOOYA-pause');
+                self.setIsPlaying(false)
+                    .playPauseButtonToggle();
             });
         },
         
@@ -81,11 +79,11 @@ define([
             });
             
             $(html).find('.'+namespace +'-previous').on('click', function() {
-                this.parent._onPrevious(e);
+                self.getNotifications().fire(Events.PLAY_PREVIOUS);
             });
             
             $(html).find('.'+namespace +'-next').on('click', function() {
-                this.parent._onNext(e);
+                self.getNotifications().fire(Events.PLAY_NEXT);
             });
             
             return html;
@@ -108,6 +106,16 @@ define([
          */
         isPlaying: function() {
             return this._isPlaying;
+        },
+        
+        
+        /**
+         *
+         */
+        setIsPlaying: function(state) {
+            this._isPlaying = state;
+            
+            return this;
         },
         
         

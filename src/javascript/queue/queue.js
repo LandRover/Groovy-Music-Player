@@ -75,6 +75,14 @@ define([
                 
                 self._notifications.fire(Events.QUEUE_PLAY_ACTIVE);
             });
+            
+            this._notifications.on(Events.PLAY_NEXT, function() {
+                self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, self.getActive(1));
+            });
+            
+            this._notifications.on(Events.PLAY_PREVIOUS, function() {
+                self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, self.getActive(-1));
+            });
         },
         
         
