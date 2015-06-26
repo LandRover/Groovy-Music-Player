@@ -111,6 +111,20 @@ define([
          */
         _generateUniqueID: function () {
             return '_' + Math.random().toString(36).substr(2, 9);
+        },
+        
+        
+        /**
+         *
+         */
+        _toggleIf: function(condition, el) {
+            if (condition) { 
+                el.show(); 
+            } else {
+                el.hide();
+            }
+            
+            return this;
         }
     };
     

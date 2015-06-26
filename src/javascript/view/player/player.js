@@ -21,7 +21,7 @@ define([
     
     Player.prototype = _.extend(new BaseView(), {
         _view: null,
-        
+        _isPlaying: false,
         
         /**
          *
@@ -35,7 +35,19 @@ define([
          *
          */
         subscribe: function() {
-
+            var self = this;
+            
+            this.getNotifications().on(Events.PLAY, function() {
+                self._isPlaying = true;
+                self.playPauseButtonToggle();
+                console.log('BOOYA-play');
+            });
+            
+            this.getNotifications().on(Events.PAUSE, function() {
+                self._isPlaying = false;
+                self.playPauseButtonToggle();
+                console.log('BOOYA-pause');
+            });
         },
         
         
@@ -77,6 +89,25 @@ define([
             });
             
             return html;
+        },
+
+
+        playPauseButtonToggle: function() {
+            var isPlaying = this.isPlaying(),
+                namespace = this._view.getModel().classes.namespace;
+            
+            this._toggleIf(!isPlaying, $('.'+namespace +'-play'));
+            this._toggleIf(isPlaying, $('.'+namespace +'-pause'));
+            
+            return this;
+        },
+        
+        
+        /**
+         *
+         */
+        isPlaying: function() {
+            return this._isPlaying;
         },
         
         
