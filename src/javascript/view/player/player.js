@@ -33,7 +33,7 @@ define([
         
         
         /**
-         *
+         * Called during construction, subscribe to Events that inveret the Player
          */
         subscribe: function() {
             var self = this;
@@ -47,11 +47,6 @@ define([
                 self.setMediaProperties(item);
             });
             
-            this.getNotifications().on(Events.PAUSE, function() {
-                //pause
-                
-            });
-            
             this.getNotifications().on(Events.RESIZE, function() {
                 self.resizeComponents();
             });
@@ -59,7 +54,10 @@ define([
         
         
         /**
-         * 
+         * Structures the HTML template and gets ready to render.
+         * Must happen before this.append did.
+         *
+         * @return this
          */
         render: function() {
             var self = this;
@@ -73,7 +71,10 @@ define([
         
         
         /**
+         * Binds actions to the HTML view, attaching events on UI actions.
          *
+         * @param {String} html
+         * @return {String} html with binds
          */
         bindActions: function(html) {
             var self = this,
@@ -97,8 +98,14 @@ define([
             
             return html;
         },
-
-
+        
+        
+        /**
+         * Changes the view of the Play/Pause buttons according to the state of the player
+         * Called when state is changed to adjust the view.
+         *
+         * @return this
+         */
         playPauseButtonToggle: function() {
             var namespace = this._view.getModel().classes.namespace;
             
@@ -110,7 +117,10 @@ define([
         
         
         /**
-         *
+         * Updates the view UI with Item's data such as artist, song and thumbnail
+         * 
+         * @param {Object} Item Object
+         * @return {Object} this aka. Player instance
          */
         setMediaProperties: function(item) {
             var namespace = this._view.getModel().classes.namespace;
@@ -124,7 +134,8 @@ define([
         
         
         /**
-         *
+         * Resize Components is called when a resize event is fired. Adjusting the Player ClassName according to the
+         * size that most appropriate allowing CSS to alter the view
          */
         resizeComponents: function() {
             var model = this._view.getModel();
@@ -156,6 +167,7 @@ define([
                 elSize += namespace + '-size-xxs';
             }
             
+            //set the class property on the player to allow CSS alter the view
             $('.'+className).attr({'class': className + ' ' + elSize});
             
             //this.setDynamicElementsWidth(elSize); // @todo figure out.. move else where
@@ -163,7 +175,9 @@ define([
         
         
         /**
+         * Calculates the actual player width
          *
+         * @return {Number}
          */
         getWidth: function() {
             return $(this._view.getModel().getContainer()).width();
@@ -171,7 +185,9 @@ define([
         
         
         /**
+         * Is currently playing, based on states
          *
+         * @return {Bool}
          */
         isPlaying: function() {
             return (States.PLAYING === this._state);
