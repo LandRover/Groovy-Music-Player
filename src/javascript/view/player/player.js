@@ -21,7 +21,6 @@ define([
     
     Player.prototype = _.extend(new BaseView(), {
         _view: null,
-        _isPlaying: false,
         _state: States.IDLE,
         
         /**
