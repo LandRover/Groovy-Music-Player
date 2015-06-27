@@ -279,18 +279,19 @@ define([
             
             var self = this;
             var eventsList = {
-                'timeupdate': '',
-                'durationchange': '',
-                'play': '',
-                'playing': '',
-                'pause': '',
-                'waiting': '',
-                'seeking': '',
-                'seeked': '',
-                'volumechange': '',
-                'ratechange': '',
-                'suspend': '',
-                'ended': function(e) {
+                timeupdate: '',
+                durationchange: '',
+                play: '',
+                playing: '',
+                pause: '',
+                waiting: '',
+                seeking: '',
+                seeked: '',
+                volumechange: '',
+                ratechange: '',
+                suspend: '',
+                
+                ended: function(e) {
                     self.audioEl.currentTime = 0;
                     
                     if (true !== self.channelEndTriggered) {
