@@ -26,6 +26,8 @@ define([
             this.el = this.output;
             $(to).append(this.el);
             
+            this.onAppend();
+            
             return this;
         },
         
@@ -125,7 +127,15 @@ define([
             }
             
             return this;
-        }
+        },
+        
+        
+        /**
+         * On append is fired right after the el was added to the dom.
+         *
+         * This method is intended to be overridden
+         */
+        onAppend: function() {}
     };
     
     return BaseView;

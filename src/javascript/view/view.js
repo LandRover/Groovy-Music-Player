@@ -54,7 +54,12 @@ define([
          *
          */
         subscribe: function() {
-
+            var self = this;
+            
+            this.getNotifications().on(Events.RESIZE, function() {
+                
+            });
+            
             return this;
         },
         

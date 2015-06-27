@@ -47,6 +47,10 @@ define([
                 self.setIsPlaying(false)
                     .playPauseButtonToggle();
             });
+            
+            this.getNotifications().on(Events.RESIZE, function() {
+                self.resizeComponents();
+            });
         },
         
         
@@ -119,6 +123,53 @@ define([
         /**
          *
          */
+        resizeComponents: function() {
+            var model = this._view.getModel();
+            var namespace = model.classes.namespace;
+            var width = this.getWidth(),
+                className = namespace +'-gui',
+                elSize = '';
+            
+            // toggle view based on options.
+            //this._toggleIf(model.waveform || model.spectrum, $('.groovy-interactive'));
+            
+            // toggle features based on condition
+            // @todo move toggles to a proper location.. else where, where it handdles all the other stuff related to these buttons
+            this._toggleIf(model.waveform, $('.groovy-scrubber'));
+            this._toggleIf(model.spectrum, $('.groovy-spectrum'));
+            
+            if (900 <= width) {
+                elSize += namespace + '-size-lg';
+            } else
+            if (700 <= width) {
+                elSize += namespace + '-size-md';
+            } else
+            if (600 <= width) {
+                elSize += namespace + '-size-sm';
+            } else
+            if (400 <= width) {
+                elSize += namespace + '-size-xs';
+            } else {
+                elSize += namespace + '-size-xxs';
+            }
+            
+            $('.'+className).attr({'class': className + ' ' + elSize});
+            
+            //this.setDynamicElementsWidth(elSize); // @todo figure out.. move else where
+        },
+        
+        
+        /**
+         *
+         */
+        getWidth: function() {
+            return $(this._view.getModel().getContainer()).width();
+        },
+        
+        
+        /**
+         *
+         */
         isPlaying: function() {
             return this._isPlaying;
         },
@@ -139,6 +190,14 @@ define([
          */
         getNotifications: function() {
             return this._view.getNotifications();
+        },
+        
+        
+        /**
+         * Fired after the el added to the DOM, called by the BaseView
+         */
+        onAppend: function() {
+            this.resizeComponents();
         }
     });
     
