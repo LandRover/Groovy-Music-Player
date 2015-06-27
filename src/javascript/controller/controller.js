@@ -1,4 +1,5 @@
 define([
+    "controller/channel",
     "model/model",
     "view/view",
     "queue/queue",
@@ -6,7 +7,7 @@ define([
     "events/states",
     "utils/event",
     "utils/logger",
-], function(Model, View, Queue, Events, States, Event, Logger) {
+], function(Channel, Model, View, Queue, Events, States, Event, Logger) {
     /**
      * gPlayer main controller
      *
