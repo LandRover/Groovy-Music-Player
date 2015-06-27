@@ -22,6 +22,7 @@ define([
     Player.prototype = _.extend(new BaseView(), {
         _view: null,
         _isPlaying: false,
+        _state: States.IDLE,
         
         /**
          *
@@ -37,15 +38,18 @@ define([
         subscribe: function() {
             var self = this;
             
+            this.getNotifications().on(Events.STATE_CHANGED, function(state) {
+                self._state = state;
+                self.playPauseButtonToggle();
+            });
+            
             this.getNotifications().on(Events.PLAY, function(item) {
-                self.setIsPlaying(true)
-                    .playPauseButtonToggle()
-                    .setMediaProperties(item);
+                self.setMediaProperties(item);
             });
             
             this.getNotifications().on(Events.PAUSE, function() {
-                self.setIsPlaying(false)
-                    .playPauseButtonToggle();
+                //pause
+                
             });
             
             this.getNotifications().on(Events.RESIZE, function() {
@@ -96,11 +100,10 @@ define([
 
 
         playPauseButtonToggle: function() {
-            var isPlaying = this.isPlaying(),
-                namespace = this._view.getModel().classes.namespace;
+            var namespace = this._view.getModel().classes.namespace;
             
-            this._toggleIf(!isPlaying, $('.'+namespace +'-play'));
-            this._toggleIf(isPlaying, $('.'+namespace +'-pause'));
+            this._toggleIf(!this.isPlaying(), $('.'+ namespace +'-play'));
+            this._toggleIf(this.isPlaying(), $('.'+ namespace +'-pause'));
             
             return this;
         },
@@ -171,17 +174,7 @@ define([
          *
          */
         isPlaying: function() {
-            return this._isPlaying;
-        },
-        
-        
-        /**
-         *
-         */
-        setIsPlaying: function(state) {
-            this._isPlaying = state;
-            
-            return this;
+            return (States.PLAYING === this._state);
         },
         
         

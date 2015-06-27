@@ -24,6 +24,7 @@ define([
         _model: null,
         _queue: null,
         _notifications: null,
+        _state: States.IDLE,
         
         
         /**
@@ -55,8 +56,17 @@ define([
         subscribe: function() {
             var self = this;
             
+            this.getNotifications().on(Events.STATE_CHANGED, function(state) {
+                self._state = state;
+            });
+            
             this.getNotifications().on(Events.PLAY, function(item) {
                 console.log(['CONTROLLER::ITEM ARRIVED', item]);
+                self.changeState(States.PLAYING);
+            });
+            
+            this.getNotifications().on(Events.PAUSE, function() {
+                self.changeState(States.PAUSED);
             });
             
             $(window).bind('resize', function() {
@@ -65,6 +75,7 @@ define([
             
             return this;
         },
+        
         
         /**
          * Bootstraps the main controller
@@ -90,12 +101,24 @@ define([
             return this._model;
         },
         
+        
         /**
          * Getter for the Notifications object, set on constructor
          */
         getNotifications: function() {
             return this._notifications;
+        },
+        
+        
+        /**
+         *
+         */
+        changeState: function(newState) {
+            if (newState === this._state) return;
+            
+            this.getNotifications().fire(Events.STATE_CHANGED, newState);
         }
+        
     };
     
     return Controller;
