@@ -25,7 +25,10 @@ define([
         _model: null,
         _queue: null,
         _notifications: null,
+        
+        _channels: [],
         _state: States.IDLE,
+        
         
         
         /**
@@ -118,8 +121,48 @@ define([
             if (newState === this._state) return;
             
             this.getNotifications().fire(Events.STATE_CHANGED, newState);
-        }
+        },
         
+        
+        isPlaying: function() {
+            for (var i = 0, len = this.channels.length; i < len; i++) {
+                if ('undefined' !== typeof(this.channels[i]) && true === this.channels[i].isPlaying())
+                    return true;
+            }
+        
+            return false;
+        },
+        
+        
+        /**
+         *
+         */
+        channelAdd: function (item) {
+            var channelNew = new Channel({
+                parent: this,
+                item: item,
+            });
+            
+            this._channels.push(channelNew);
+            channelNew.mediaPlay();
+            
+            return this;
+        },
+        
+        /**
+         *
+         */
+        getActiveChannel: function() {
+            return this._channels[0]; //channel 0 is the active.. 1 is usually created only while crossfading and even then.. 0 is the active.
+        },
+        
+        
+        /**
+         *
+         */
+        getActiveAudio: function() {
+            return this.getActiveChannel().audioEl;
+        }
     };
     
     return Controller;

@@ -13,7 +13,7 @@ define([
     };
     
     Channel.prototype = {
-        fileMeta: null,
+        item: null,
         parent: null,
         audioCtx: null,
         lasttime_inseconds: 0,
@@ -47,7 +47,7 @@ define([
          */
         mediaPause: function(pargs) {
             var margs = {
-                'audioapi_setlasttime' : true
+                audioapi_setlasttime: true
             };
             
             if (pargs) {
@@ -302,7 +302,7 @@ define([
             };
             
             this.audioEl = document.createElement('audio');
-            this.audioEl.src = this.fileMeta.file;
+            this.audioEl.src = this.item.file;
             this.setVolume();
            
             _.each(eventsList, $.proxy(function(id, callback) {

@@ -16,6 +16,28 @@ define(function() {
         
         
         /**
+         *
+         *
+         */
+        formatTime: function(time) {
+            //formats the time
+            var s = Math.round(time),
+                m = 0;
+            
+            if (0 < s) {
+                while (59 < s) {
+                    m++;
+                    s -= 60;
+                }
+                
+                return String((10 > m ? '0' : '') + m + ':' + (10 > s ? '0' : '') + s);
+            }
+            
+            return '00:00';
+        },
+        
+        
+        /**
          * Trim is removing white spaces from the beginning and then end
          *
          * @return {string}

@@ -20,6 +20,7 @@ define([
         _model: null,
         _controller: null,
         _notifications: null,
+        playerView: null,
         
         
         /**
@@ -82,7 +83,7 @@ define([
                 .addClass(this.getModel().classes.size)
                 .addClass(this.getModel().classes.empty);
             
-            var PlayerView = new Player(this)
+            this.playerView = new Player(this)
                 .render()
                 .append('.'+this.getModel().classes.player_wrapper);
             
@@ -151,6 +152,14 @@ define([
          */
         getNotifications: function() {
             return this._notifications;
+        },
+        
+        
+        /**
+         *
+         */
+        getPlayerView: function() {
+            return this.playerView;
         },
         
         

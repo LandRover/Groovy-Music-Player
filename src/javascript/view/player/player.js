@@ -128,6 +128,10 @@ define([
             $('.'+ namespace +'-song-name').html(item._model.song);
             $('.'+ namespace +'-thumbnail img').attr({src: item._model.thumbnail});
             
+            // scrub
+            $('.'+ namespace +'-scrubber-bg img').attr({src: item._model.scrub.bg});
+           	$('.'+ namespace +'-scrubber-progress img').attr({src: item._model.scrub.progress});
+            
             return this;
         },
         
