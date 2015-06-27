@@ -33,7 +33,7 @@ define([
         
         
         /**
-         * Called during construction, subscribe to Events that inveret the Player
+         * Called during construction, subscribe to Events that interest the Player
          */
         subscribe: function() {
             var self = this;
