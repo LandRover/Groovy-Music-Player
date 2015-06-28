@@ -97,14 +97,14 @@ module.exports = function(grunt, options) {
             
             plugins: [
                 new webpack.DefinePlugin({
-                    __DEBUG__: true
-                })
+                    __DEBUG__: false
+                }),
                 
-                //new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"'}),
-                //new webpack.optimize.DedupePlugin(),
-                //new webpack.optimize.UglifyJsPlugin({ sourceMap: false }),
-                //new webpack.optimize.OccurenceOrderPlugin()
-                //new webpack.optimize.AggressiveMergingPlugin()
+                new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"'}),
+                new webpack.optimize.DedupePlugin(),
+                new webpack.optimize.UglifyJsPlugin({ sourceMap: false }),
+                new webpack.optimize.OccurenceOrderPlugin(),
+                new webpack.optimize.AggressiveMergingPlugin()
             ]
         }
     };
