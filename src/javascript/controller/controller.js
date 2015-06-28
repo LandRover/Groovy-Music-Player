@@ -66,6 +66,7 @@ define([
             
             this.getNotifications().on(Events.PLAY, function(item) {
                 console.log(['CONTROLLER::ITEM ARRIVED', item]);
+                self.channelAdd(item);
                 self.changeState(States.PLAYING);
             });
             
@@ -125,8 +126,8 @@ define([
         
         
         isPlaying: function() {
-            for (var i = 0, len = this.channels.length; i < len; i++) {
-                if ('undefined' !== typeof(this.channels[i]) && true === this.channels[i].isPlaying())
+            for (var i = 0, len = this._channels.length; i < len; i++) {
+                if ('undefined' !== typeof(this._channels[i]) && true === this._channels[i].isPlaying())
                     return true;
             }
         

@@ -9,12 +9,15 @@ define([
      *
      */
     var Channel = function(options) {
-        _.extend(options);//extend options with this.
+        _.extend(options); // extend options with this.
+        
+        this.init();
     };
     
     Channel.prototype = {
         item: null,
         parent: null,
+        
         audioCtx: null,
         lasttime_inseconds: 0,
         audioBuffer: null,
@@ -26,6 +29,14 @@ define([
         audioEl: undefined,
         isReadyInterval: null,
         channelEndTriggered: false,
+        
+        
+        /**
+         *
+         */
+        init: function() {
+            console.log(this.item);
+        },
         
         
         /**
@@ -302,7 +313,7 @@ define([
             };
             
             this.audioEl = document.createElement('audio');
-            this.audioEl.src = this.item.file;
+            this.audioEl.src = this.item._model.file;
             this.setVolume();
            
             _.each(eventsList, $.proxy(function(id, callback) {
