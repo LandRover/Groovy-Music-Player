@@ -29,6 +29,8 @@ define([
         _channels: [],
         _state: States.IDLE,
         
+        mute: false,
+        volume: 1,
         
         
         /**
@@ -116,7 +118,10 @@ define([
         
         
         /**
-         *
+         * Changes the state of the player by boardcasting the proper event on change.
+         * This is the only place modifies the state of the player
+         * 
+         * @param {String} newState (ENUM from States object)
          */
         changeState: function(newState) {
             if (newState === this._state) return;
@@ -153,11 +158,295 @@ define([
             return this;
         },
         
+        
         /**
          *
          */
         getActiveChannel: function() {
             return this._channels[0]; //channel 0 is the active.. 1 is usually created only while crossfading and even then.. 0 is the active.
+        },
+        
+        
+        /**
+         *
+         */
+        getVolume: function() {
+            return this.volume;
+        },
+        
+        
+        /**
+         *
+         */
+        setVolume: function(volume) {
+            this.volume = (1 <= volume) ? 1 : volume; // can not be greater than 1
+            this.mute = (0 >= volume) ? true : false;
+            
+            //update view.
+            this._view.setVolumeBar();
+
+            //updates the channel with volume value.
+            for (var i = 0, len = this._channels.length; i < len; i++) {
+                if ('undefined' !== typeof(this._channels[i]))
+                    this._channels[i].setVolume();
+            } 
+            
+            /*
+            var interactiveObj = $('.groovy-interactive');
+            interactiveObj.find('.groovy-scrubber').find('img').eq(0).css({
+                transform: 'scaleY('+arg+')'
+            });
+            
+            if(arg == 0){
+                cthis.find('.scrub-bg-img-reflect').fadeOut('slow');
+            } else {
+                cthis.find('.scrub-bg-img-reflect').fadeIn('slow');
+            }
+            last_vol = arg;
+            */
+        },
+        
+        
+        /*
+         *
+         */
+        mouseVolumeControl: function(e) {
+            var mouseX = e.pageX,
+                volumeObj = $('.groovy-volume'),
+                volume = 0;
+            
+            switch(e.type) {
+                case 'mousemove':
+                case 'mouseleave':
+                    break;
+                
+                case 'click': 
+                    volume = (mouseX - (volumeObj.find('.groovy-volume-progress-bg').offset().left)) / (volumeObj.find('.groovy-volume-progress-bg').width());
+                    this.setVolume(volume);
+                    muted = false;
+                    
+                    break;
+            }
+        },
+        
+        
+        /**
+         *
+         */
+        mouseScrubbar: function(e) {
+            var mouseX = e.pageX,
+                interactiveObj = $('.groovy-interactive'),
+                scrubberWidth = this._view.getScrubberWidth();
+            
+            switch(e.type) {
+                case 'mousemove':
+                    interactiveObj.children('.groovy-scrubber-hover').css({
+                        left: (mouseX - interactiveObj.offset().left)
+                    });
+                    
+                    break;
+                
+                case 'click': 
+                    var timeTotal = this.getActiveAudio().duration;
+                    var position = ((e.pageX - (interactiveObj.offset().left)) / scrubberWidth * timeTotal);
+                    this.getActiveChannel().mediaPlay(position);
+                    
+                    if (true !== this.isPlaying()) {
+                        this.getActiveChannel().mediaPlay();
+                    }
+                    
+                    break;
+            }
+        },
+        
+        
+        /**
+         *
+         */
+        loop: function() {
+            // verify everything needed for the loop exists. Run loop only when playing.
+            if ('undefined' === typeof(this.getActiveChannel()) || !this.isPlaying()) {
+                return this._runLoop();
+            }
+            
+            var scrubberWidth = this._view.getScrubberWidth(),
+                currentTime = $('.groovy-current-time'),
+                duration = $('.groovy-duration'),
+                scrubberOffset = 0,
+                scrubberOffsetPercent = 0,
+                scrubberOffsetPixels = 0,
+                timeTotal = this.getActiveAudio().duration,
+                timeCurr = this.getActiveAudio().currentTime,
+                timeOffset = 3;
+            
+            /*
+            // might not work.. audiobuffer is per channel.. odd location for referances, check!.
+            if (this.audioBuffer && 'placeholder' !== this.audioBuffer) {
+                timeTotal = this.audioBuffer.duration;
+                timeCurr = this.audioCtx.currentTime;
+                //console.log(this.audioBuffer.currentTime);
+            }*/
+            
+            scrubberOffset = ((timeCurr - this._model.style.interactiveSelectOffset) / timeTotal);
+            scrubberOffsetPercent = scrubberOffset * 100;
+            
+            // console.log(_scrubbar.children('.scrub-prog'), scrubberOffsetPercent, timeTotal, '-timecurr ', timeCurr, scrubberWidth);
+            if (null == this.audioBuffer) {
+                $('body').find('.groovy-spectrum-progress').css({
+                    width: scrubberOffsetPercent + '%'
+                });
+                
+                $('body').find('.groovy-scrubber-progress').css({
+                    width: scrubberOffsetPercent + '%'
+                });
+                
+                $('body').find('.groovy-play-bar').css({
+                    width: scrubberOffsetPercent + '%'
+                });
+            }
+
+            if (true === this._model.spectrum.enabled)
+                this.drawSpectrum();
+            
+            if (true === this._model.timerDynamic) {
+                scrubberOffsetPixels = scrubberOffset * scrubberWidth;
+                
+                currentTime.css({
+                    left: scrubberOffsetPercent + '%'
+                });
+                
+                if (scrubberOffsetPixels > scrubberWidth - 30) {
+                    currentTime.css({
+                        opacity: 1 - (((scrubberOffsetPixels - (scrubberWidth - 30)) / 30))
+                    });
+                } else {
+                    if (1 !== Number(currentTime.css('opacity'))) {
+                        currentTime.css({
+                            opacity: 1
+                        });
+                    }
+                };
+            };
+            
+            //console.info(_currTime, timeCurr, this.formatTime(timeCurr))
+            currentTime.text(this.formatTime(timeCurr));
+            duration.text(this.formatTime(timeTotal));
+            
+            // notify channel
+            for (var i = 0, len = this._channels.length; i < len; i++) {
+                if ('undefined' !== typeof(this._channels[i])) {
+                    this._channels[i].loop();
+                } else {
+                    console.log(['DEBUG', this._channels, i]);
+                }
+            }
+            
+            this._runLoop();
+        },
+        
+        
+        /**
+         *
+         */
+        _runLoop: function() {
+            requestAnimFrame($.proxy(function() {
+                this.loop();
+            }, this));
+            
+            return this;
+        },
+        
+        
+        /**
+         *
+         */
+        activeChannelCleanup: function() {
+            if ('undefined' !== typeof(this.getActiveChannel())) {
+                this.getActiveChannel().destory();
+                console.log(this._channels);
+                this._channels.shift();
+            }
+
+            return this;
+        },
+        
+        
+        /**
+         *
+         */
+        pause: function() {
+            this.activeChannelCleanup();
+            
+            return this;
+        },
+        
+        
+        /**
+         *
+         */
+        getCtx: function() {
+            if (null === this.audioCtx) {
+                this.audioCtx = new window.AudioContext;
+            }
+            
+            return this.audioCtx;
+        },
+        
+        
+        /**
+         * Based on a Fiddle I wrote: http://jsfiddle.net/Fc8Jr/
+        **/
+        drawSpectrum: function() {
+            var frequencyByteData = this.getActiveChannel().frequencyByteData,
+                canvas = this._view.getCanvasReferances();
+            
+            var width = canvas.el.active.background.width,
+                height = canvas.el.active.background.height;
+            
+            var BAR_WIDTH = 3,
+                SPACER_WIDTH = 1;
+            
+            /* test.. disabled.
+            var gradient = canvas.context.active.background.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(1,'#000000');
+            gradient.addColorStop(0.75,'#ff0000');
+            gradient.addColorStop(0.25,'#ffff00');
+            gradient.addColorStop(0,'#ffffff');
+            */
+            
+            //canvas.el.active.background.width = width;
+            canvas.context.active.background.clearRect(0, 0, width, height);
+            canvas.context.active.background.fillStyle = '#'+ this._model.spectrum.color.bg;
+            
+            canvas.context.active.progress.clearRect(0, 0, width, height);
+            canvas.context.active.progress.fillStyle = '#'+ this._model.spectrum.color.progress;
+
+            for (var i = 0, magnitude = 0, len = frequencyByteData.length; i < len; i++) {
+                magnitude = Math.ceil(frequencyByteData[i] * height / 256);
+                if (2 > magnitude) magnitude = 2;
+                
+                canvas.context.active.background.fillRect(i * (SPACER_WIDTH + BAR_WIDTH), height, BAR_WIDTH, -magnitude);
+                canvas.context.active.progress.fillRect(i * (SPACER_WIDTH + BAR_WIDTH), height, BAR_WIDTH, -magnitude);
+                
+                //canvas.context.active.background.fillRect(i/256 * width, height, width/len, -magnitude);
+                //canvas.context.active.progress.fillRect(i/256 * width, height, width/len, -magnitude);
+            }
+            
+            if (true === this._model.reflection) {
+                canvas.context.reflect.background.clearRect(0, 0, width, height);
+                canvas.context.reflect.background.drawImage(canvas.el.active.background, 0, 0);
+                
+                canvas.context.reflect.progress.clearRect(0, 0, width, height);
+                canvas.context.reflect.progress.drawImage(canvas.el.active.progress, 0, 0);
+            }
+        },
+        
+        
+        /**
+         *
+         */
+        startedPlaying: function() {
+            console.log('CONTROLLER::startedPlaying fired -- oh well.. started, not sure i want to keep this');
         },
         
         

@@ -152,8 +152,8 @@ define([
             
             // toggle features based on condition
             // @todo move toggles to a proper location.. else where, where it handdles all the other stuff related to these buttons
-            this._toggleIf(model.waveform, $('.groovy-scrubber'));
-            this._toggleIf(model.spectrum, $('.groovy-spectrum'));
+            this._toggleIf(model.waveform.enabled, $('.groovy-scrubber'));
+            this._toggleIf(model.spectrum.enabled, $('.groovy-spectrum'));
             
             if (900 <= width) {
                 elSize += namespace + '-size-lg';

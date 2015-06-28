@@ -9,7 +9,7 @@ define([
      *
      */
     var Channel = function(options) {
-        _.extend(options); // extend options with this.
+        $.extend(this, options); // extend options with this.
         
         this.init();
     };
@@ -179,7 +179,7 @@ define([
             
             //console.log(timeCurr, timeTotal);
             if (true === this.parent.isCrossfade()) {
-                if (0 < timeTotal && timeCurr >= (timeTotal - this.parent.options.crossfade.onBeforeEnd)) {
+                if (0 < timeTotal && timeCurr >= (timeTotal - this.parent._model.crossfade.onBeforeEnd)) {
                     if (true !== this.channelEndTriggered) {
                         console.log('CROSSFADE END TRIGGERED.', timeTotal);
                         this.channelEndTriggered = true;
@@ -227,7 +227,7 @@ define([
         _initLoaded: function() {
             this.audioCtx = null;
             
-            if (true === this.parent.options.spectrum.enabled) {
+            if (true === this.parent._model.spectrum.enabled) {
                 this.audioCtx = this.parent.getCtx();
                 
                 if (this.audioCtx) {

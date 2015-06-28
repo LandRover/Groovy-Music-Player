@@ -47,9 +47,32 @@ define([
             skin: 'grooveshark',
             
             // features
-            crossfade: false,
-            waveform: false,
-            spectrum: false,
+            reflection: true,
+            timerDynamic: true,
+            waveform: {
+                enabled: true
+            },
+            spectrum: {
+                enabled: true,
+                color: {
+                    bg: '4f4848',
+                    progress: 'ae1818'
+                }
+            },
+            crossfade: {
+                enabled: true,
+                onBeforeEnd: 3
+            },
+            repeat: {
+                enabled: false
+            },
+            shuffle: {
+                enabled: false
+            },
+            style: {
+                interactiveSelectOffset: 0,
+                interactiveRatio: 0.3
+            },
             
             // player settings
             state: States.IDLE,
