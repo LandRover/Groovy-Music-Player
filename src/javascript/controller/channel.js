@@ -69,7 +69,7 @@ define([
                 //console.log(this.audioCtx.currentTime, audioBuffer.duration);
                 //console.log(lasttime_inseconds);
                 ///==== on safari we need to wait a little for the sound to load
-                if (this.audioBuffer != 'placeholder') {
+                if (this.audioBuffer !== 'placeholder') {
                     if (margs.audioapi_setlasttime == true) {
                         this.lasttime_inseconds = this.audioCtx.currentTime;
                     }
@@ -108,7 +108,7 @@ define([
                     this.audioCtx.currentTime = this.lasttime_inseconds;
                     //console.info(this.lasttime_inseconds);
                     this.mediaPause({
-                        'audioapi_setlasttime': false
+                        audioapi_setlasttime: false
                     });
                  } else {
                     return;
@@ -123,7 +123,7 @@ define([
                         
                         try {
                             //alert(this.audioEl.seekable.length);
-                            // ios fix                            		                            		
+                            // ios fix
                             if (!this.audioEl.seekable || 'object' === typeof(this.audioEl.seekable) && 0 < this.audioEl.seekable.length) {
                                 this.audioEl.currentTime = time;
                                 this.audioEl.play();
@@ -157,6 +157,7 @@ define([
         setPlaying: function(isPlaying) {
             this.playing = isPlaying;
             this.parent.startedPlaying();
+            
             return this;
         },
         

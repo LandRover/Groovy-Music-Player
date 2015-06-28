@@ -270,7 +270,7 @@ define([
                     break;
                 
                 case 'click': 
-                    var timeTotal = channel.duration;
+                    var timeTotal = channel.audioEl.duration;
                     var position = ((e.pageX - (interactiveObj.offset().left)) / scrubberWidth * timeTotal);
                     channel.mediaPlay(position);
                     
