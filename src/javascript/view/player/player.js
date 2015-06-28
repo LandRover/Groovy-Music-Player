@@ -66,6 +66,8 @@ define([
                 self._view.getModel().classes
             )));
             
+            console.log(this.output);
+            
             return this;
         },
         
@@ -78,7 +80,42 @@ define([
          */
         bindActions: function(html) {
             var self = this,
-                namespace = this._view.getModel().classes.namespace;
+                namespace = this._view.getModel().classes.namespace,
+                el = {
+                    interactive: $(html).find('.groovy-interactive'),
+                    volume: $(html).find('.groovy-volume'),
+                    options: $(html).find('.groovy-options')
+                },
+                notify = {
+                    scrubber: function(e) {
+                        self.mouseScrubbar(e);
+                    },
+                    
+                    volume: function(e) {
+                        self.mouseVolumeControl(e);
+                    },
+                    
+                    mute: function(e) {
+                        self.setVolume(0);
+                    },
+                    
+                    unmute: function(e) {
+                        //instead of sending 1 as the volume, a @todo: keep the value before the MUTE state and retrive it.
+                        self.setVolume(1);
+                    },
+                    
+                    shuffle: function(e) {
+                        self.toggleShuffle();
+                    },
+                    
+                    repeat: function(e) {
+                        self.toggleRepeat();
+                    },
+                    
+                    crossfade: function(e) {
+                        self.toggleCrossfade();
+                    }
+                };
             
             $(html).find('.'+namespace +'-play').on('click', function() {
                 self.getNotifications().fire(Events.QUEUE_PLAY_ACTIVE);
@@ -95,6 +132,19 @@ define([
             $(html).find('.'+namespace +'-next').on('click', function() {
                 self.getNotifications().fire(Events.PLAY_NEXT);
             });
+            
+            el.interactive.bind('mousemove', notify.scrubber);
+            el.interactive.bind('mouseleave', notify.scrubber);
+            el.interactive.bind('click', notify.scrubber);
+            
+            el.volume.find('.'+namespace +'-volume-progress-bg').bind('click', notify.volume);
+            el.volume.find('.'+namespace +'-mute').bind('click', notify.mute);
+            el.volume.find('.'+namespace +'-unmute').bind('click', notify.unmute);
+            el.volume.find('.'+namespace +'-volume-max').bind('click', notify.unmute);
+            
+            el.options.find('.'+namespace +'-shuffle').bind('click', notify.shuffle);
+            el.options.find('.'+namespace +'-repeat').bind('click', notify.repeat);
+            el.options.find('.'+namespace +'-crossfade').bind('click', notify.crossfade);
             
             return html;
         },
@@ -176,6 +226,77 @@ define([
             $('.'+className).attr({'class': className + ' ' + elSize});
             
             //this.setDynamicElementsWidth(elSize); // @todo figure out.. move else where
+        },
+        
+        
+        /*
+         *
+         */
+        mouseVolumeControl: function(e) {
+            var mouseX = e.pageX,
+                volumeObj = $('.groovy-volume'),
+                volume = 0;
+            
+            switch(e.type) {
+                case 'mousemove':
+                case 'mouseleave':
+                    break;
+                
+                case 'click': 
+                    volume = (mouseX - (volumeObj.find('.groovy-volume-progress-bg').offset().left)) / (volumeObj.find('.groovy-volume-progress-bg').width());
+                    this.setVolume(volume);
+                    muted = false;
+                    
+                    break;
+            }
+        },
+        
+        
+        /**
+         *
+         */
+        mouseScrubbar: function(e) {
+            var mouseX = e.pageX,
+                interactiveObj = $('.groovy-interactive'),
+                scrubberWidth = this.getScrubberWidth(),
+                channel = this._view.getController().getActiveChannel();
+            
+            switch(e.type) {
+                case 'mousemove':
+                    interactiveObj.children('.groovy-scrubber-hover').css({
+                        left: (mouseX - interactiveObj.offset().left)
+                    });
+                    
+                    break;
+                
+                case 'click': 
+                    var timeTotal = channel.duration;
+                    var position = ((e.pageX - (interactiveObj.offset().left)) / scrubberWidth * timeTotal);
+                    channel.mediaPlay(position);
+                    
+                    // @todo figure this one out, could be a bug.. if isPlaying is false.. wont jump to the proper position.
+                    if (true !== this.isPlaying()) {
+                        channel.mediaPlay();
+                    }
+                    
+                    break;
+            }
+        },
+        
+        
+        /**
+         *
+         */
+        getScrubberWidth: function() {
+            return $('.groovy-interactive').width();
+        },
+        
+        
+        /**
+         *
+         */
+        getScrubberWidthMinimal: function() {
+            return $('.groovy-seek-bar').width();
         },
         
         

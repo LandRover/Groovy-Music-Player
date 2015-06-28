@@ -207,59 +207,6 @@ define([
         },
         
         
-        /*
-         *
-         */
-        mouseVolumeControl: function(e) {
-            var mouseX = e.pageX,
-                volumeObj = $('.groovy-volume'),
-                volume = 0;
-            
-            switch(e.type) {
-                case 'mousemove':
-                case 'mouseleave':
-                    break;
-                
-                case 'click': 
-                    volume = (mouseX - (volumeObj.find('.groovy-volume-progress-bg').offset().left)) / (volumeObj.find('.groovy-volume-progress-bg').width());
-                    this.setVolume(volume);
-                    muted = false;
-                    
-                    break;
-            }
-        },
-        
-        
-        /**
-         *
-         */
-        mouseScrubbar: function(e) {
-            var mouseX = e.pageX,
-                interactiveObj = $('.groovy-interactive'),
-                scrubberWidth = this._view.getScrubberWidth();
-            
-            switch(e.type) {
-                case 'mousemove':
-                    interactiveObj.children('.groovy-scrubber-hover').css({
-                        left: (mouseX - interactiveObj.offset().left)
-                    });
-                    
-                    break;
-                
-                case 'click': 
-                    var timeTotal = this.getActiveAudio().duration;
-                    var position = ((e.pageX - (interactiveObj.offset().left)) / scrubberWidth * timeTotal);
-                    this.getActiveChannel().mediaPlay(position);
-                    
-                    if (true !== this.isPlaying()) {
-                        this.getActiveChannel().mediaPlay();
-                    }
-                    
-                    break;
-            }
-        },
-        
-        
         /**
          *
          */

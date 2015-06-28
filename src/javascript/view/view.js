@@ -157,6 +157,15 @@ define([
         
         /**
          *
+         *
+         */
+        getController: function() {
+            return this._controller;
+        },
+        
+        
+        /**
+         *
          */
         getPlayerView: function() {
             return this.playerView;
