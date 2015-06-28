@@ -23,6 +23,7 @@ define([
         _view: null,
         _state: States.IDLE,
         
+        
         /**
          *
          */
@@ -122,15 +123,16 @@ define([
          * @return {Object} this aka. Player instance
          */
         setMediaProperties: function(item) {
-            var namespace = this._view.getModel().classes.namespace;
+            var namespace = this._view.getModel().classes.namespace,
+                model = item._model;
             
-            $('.'+ namespace +'-song-artist').html($(item._model.artist));
-            $('.'+ namespace +'-song-name').html(item._model.song);
-            $('.'+ namespace +'-thumbnail img').attr({src: item._model.thumbnail});
+            $('.'+ namespace +'-song-artist').html($(model.artist));
+            $('.'+ namespace +'-song-name').html(model.song);
+            $('.'+ namespace +'-thumbnail img').attr({src: model.thumbnail});
             
             // scrub
-            $('.'+ namespace +'-scrubber-bg img').attr({src: item._model.scrub.bg});
-           	$('.'+ namespace +'-scrubber-progress img').attr({src: item._model.scrub.progress});
+            $('.'+ namespace +'-scrubber-bg img').attr({src: model.scrub.bg});
+           	$('.'+ namespace +'-scrubber-progress img').attr({src: model.scrub.progress});
             
             return this;
         },
