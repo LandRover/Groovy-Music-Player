@@ -5,9 +5,10 @@ define([
     "queue/queue",
     "events/events",
     "events/states",
+    "utils/string",
     "utils/event",
     "utils/logger",
-], function(Channel, Model, View, Queue, Events, States, Event, Logger) {
+], function(Channel, Model, View, Queue, Events, States, String, Event, Logger) {
     /**
      * gPlayer main controller
      *
@@ -90,6 +91,7 @@ define([
         bootstrap: function(container) {
             this._model.setup(container);
             this._view.setup();
+            this.loop();
         },
         
         
@@ -216,7 +218,7 @@ define([
                 return this._runLoop();
             }
             
-            var scrubberWidth = this._view.getScrubberWidth(),
+            var scrubberWidth = this._view.getPlayerView().getScrubberWidth(),
                 currentTime = $('.groovy-current-time'),
                 duration = $('.groovy-duration'),
                 scrubberOffset = 0,
@@ -276,8 +278,8 @@ define([
             };
             
             //console.info(_currTime, timeCurr, this.formatTime(timeCurr))
-            currentTime.text(this.formatTime(timeCurr));
-            duration.text(this.formatTime(timeTotal));
+            currentTime.text(new String(timeCurr).formatTime().toString());
+            duration.text(new String(timeTotal).formatTime().toString());
             
             // notify channel
             for (var i = 0, len = this._channels.length; i < len; i++) {
@@ -345,7 +347,7 @@ define([
         **/
         drawSpectrum: function() {
             var frequencyByteData = this.getActiveChannel().frequencyByteData,
-                canvas = this._view.getCanvasReferances();
+                canvas = this._view.getPlayerView().getCanvasReferances();
             
             var width = canvas.el.active.background.width,
                 height = canvas.el.active.background.height;
@@ -404,6 +406,19 @@ define([
             return this.getActiveChannel().audioEl;
         }
     };
+    
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    
+    window.requestAnimFrame = (function() {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function(callback, el) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+    })();
     
     return Controller;
 });

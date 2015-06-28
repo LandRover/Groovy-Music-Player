@@ -52,7 +52,7 @@ define(function() {
          *
          * @return {string}
          */
-        output: function() {
+        toString: function() {
             return this.outputString;
         },
         

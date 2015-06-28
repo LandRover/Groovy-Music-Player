@@ -22,6 +22,7 @@ define([
     Player.prototype = _.extend(new BaseView(), {
         _view: null,
         _state: States.IDLE,
+        canvasReferances: null,
         
         
         /**
@@ -281,6 +282,39 @@ define([
                     
                     break;
             }
+        },
+        
+        
+        getCanvasReferances: function() {
+            if (null !== this.canvasReferances) return this.canvasReferances;
+            
+            this.canvasReferances = {
+                el: {
+                    active: {
+                        background: $('.spectrum-scrub-bg').get(0),
+                        progress: $('.spectrum-scrub-prog').get(0)
+                    },
+                    
+                    reflect: {
+                        background: $('.spectrum-scrub-bg-reflect').get(0),
+                        progress: $('.spectrum-scrub-prog-reflect').get(0)
+                    }
+                }
+            };
+            
+            this.canvasReferances.context = {
+                active: {
+                    background: this.canvasReferances.el.active.background.getContext('2d'),
+                    progress: this.canvasReferances.el.active.progress.getContext('2d')
+                },
+                
+                reflect: {
+                    background: this.canvasReferances.el.reflect.background.getContext('2d'),
+                    progress: this.canvasReferances.el.reflect.progress.getContext('2d')
+                }
+            };
+            
+            return this.canvasReferances;
         },
         
         
