@@ -125,6 +125,9 @@ define([
         },
         
         
+        /**
+         *
+         */
         isPlaying: function() {
             for (var i = 0, len = this._channels.length; i < len; i++) {
                 if ('undefined' !== typeof(this._channels[i]) && true === this._channels[i].isPlaying())
@@ -141,7 +144,7 @@ define([
         channelAdd: function (item) {
             var channelNew = new Channel({
                 parent: this,
-                item: item,
+                item: item
             });
             
             this._channels.push(channelNew);
