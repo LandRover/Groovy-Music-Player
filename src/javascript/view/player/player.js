@@ -261,9 +261,67 @@ define([
             //set the class property on the player to allow CSS alter the view
             $('.'+className).attr({'class': className + ' ' + elSize});
             
-            //this.setDynamicElementsWidth(elSize); // @todo figure out.. move else where
+            this.setDynamicElementsWidth(elSize); // @todo figure out.. move else where
         },
         
+        
+        getStaticElementsWidth: function() {
+            var els = $('ul.groovy-skin').children(':visible').not('.groovy-calc-ignore'),
+                width = 0;
+            
+            els.each(function(idx, el) {
+                width += $(el).outerWidth(true);
+            });
+            
+            return width;
+        },
+        
+        
+        /**
+         *
+         */
+        setDynamicElementsWidth: function(elSize) {
+            var model = this._view.getModel();
+            var namespace = model.classes.namespace;
+            var staticWidth = this.getStaticElementsWidth(),
+                width = this.getWidth(),
+                ratio = model.style.interactiveRatio,
+                availableWidth = 0,
+                dimenstions = {},
+                canvas = this.getCanvasReferances().el,
+                minimalInfoProgressBarOffset = 80,
+                progressBarSaftyOffset = 3;
+            
+            availableWidth = width - staticWidth;
+            
+            dimenstions = {
+                info: availableWidth - this.getWidthMargin('li.groovy-info') - progressBarSaftyOffset,
+                interactive: availableWidth * (1 - ratio) - progressBarSaftyOffset,
+                infoMinimal: availableWidth * ratio - this.getWidthMargin('li.groovy-info-minimal'),
+            };
+            
+            // xss small, diffrent layout option.
+            if (namespace + '-size-xxs' === elSize) {
+                dimenstions.infoMinimal = availableWidth - this.getWidthMargin('li.groovy-info-minimal');
+            }
+            
+            // info elemnt dynamic sizing.
+            $('li.groovy-info').width(dimenstions.info);
+            $('li.groovy-info div.groovy-progress-bar').width(dimenstions.info - minimalInfoProgressBarOffset);
+            $('.groovy-scrabber').width(dimenstions.interactive);
+            
+            if (null !== canvas) {
+                canvas.active.background.width = dimenstions.interactive;
+                canvas.active.progress.width = dimenstions.interactive;
+                
+                canvas.reflect.background.width = dimenstions.interactive;
+                canvas.reflect.progress.width = dimenstions.interactive;
+            }
+            
+            $('li.groovy-info-minimal').width(dimenstions.infoMinimal);
+            
+            return this;
+        },
         
         setVolumeBar: function() {
             var volumeObj = $('.groovy-volume'),

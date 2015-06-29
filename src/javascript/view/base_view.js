@@ -119,6 +119,17 @@ define([
         /**
          *
          */
+        getWidthMargin: function(el) {
+            var left = parseInt($(el).css('margin-left')) || 0,
+                right = parseInt($(el).css('margin-right')) || 0;
+            
+            return left + right;
+        },
+        
+        
+        /**
+         *
+         */
         _toggleIf: function(condition, el) {
             if (condition) { 
                 el.show(); 
