@@ -5,10 +5,10 @@ define([
     "queue/queue",
     "events/events",
     "events/states",
-    "utils/string",
+    "utils/strings",
     "utils/event",
     "utils/logger",
-], function(Channel, Model, View, Queue, Events, States, String, Event, Logger) {
+], function(Channel, Model, View, Queue, Events, States, Strings, Event, Logger) {
     /**
      * gPlayer main controller
      *
@@ -169,11 +169,33 @@ define([
         },
         
         
+        isCrossfade: function() {
+            return this._model.crossfade.enabled;
+        },
+        
+        
+        isMute: function() {
+            return this.mute;
+        },
+        
         /**
          *
          */
         getVolume: function() {
             return this.volume;
+        },
+        
+        
+        _onEnd: function(crossfade) {
+            if (true === crossfade) {
+                setTimeout($.proxy(function() {
+                    this.activeChannelCleanup();
+                }, this), this._model.crossfade.onBeforeEnd * 1000);
+            } else {
+                this.activeChannelCleanup();
+            }
+            
+            //api.onEnd();
         },
         
         
@@ -278,8 +300,8 @@ define([
             };
             
             //console.info(_currTime, timeCurr, this.formatTime(timeCurr))
-            currentTime.text(new String(timeCurr).formatTime().toString());
-            duration.text(new String(timeTotal).formatTime().toString());
+            currentTime.text(new Strings(timeCurr).formatTime());
+            duration.text(new Strings(timeTotal).formatTime());
             
             // notify channel
             for (var i = 0, len = this._channels.length; i < len; i++) {

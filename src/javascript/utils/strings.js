@@ -4,24 +4,21 @@ define(function() {
      * 
      * Enables chaning events, output must be called, else will return a chain
      */
-    var String = function(string) {
+    var Strings = function(string) {
         this.string = string; // store the original string, for any case
-        this.set(string);
     };
     
-    
-    String.prototype = {
+    Strings.prototype = {
         string: '', // inital string
-        outputString: '', // manipulated string
         
         
         /**
          *
          *
          */
-        formatTime: function(time) {
+        formatTime: function() {
             //formats the time
-            var s = Math.round(time),
+            var s = Math.round(this.string),
                 m = 0;
             
             if (0 < s) {
@@ -43,32 +40,11 @@ define(function() {
          * @return {string}
          */
         trim: function() {
-            return this.set(this.output().replace(/^\s+|\s+$/g, ''));
-        },
-        
-        
-        /**
-         * Result string, called externally to get the current result. After chains are complete.
-         *
-         * @return {string}
-         */
-        toString: function() {
-            return this.outputString;
-        },
-        
-        
-        /**
-         * Store the output value to be manipulated or returned.
-         * 
-         * @param {string} string
-         * @return {object} this String
-         */
-        set: function(string) {
-            this.outputString = string;
-            
-            return this;
+            return this.string.replace(/^\s+|\s+$/g, '');
         }
+        
+        
     };
     
-    return String;
+    return Strings;
 });
