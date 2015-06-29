@@ -30,6 +30,7 @@ define([
         _channels: [],
         _state: States.IDLE,
         
+        audioCtx: null,
         mute: false,
         volume: 1,
         

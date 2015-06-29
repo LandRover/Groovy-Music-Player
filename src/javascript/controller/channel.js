@@ -226,6 +226,7 @@ define([
          *
          */
         _initLoaded: function() {
+            var self = this;
             this.audioCtx = null;
             
             if (true === this.parent._model.spectrum.enabled) {
@@ -258,8 +259,9 @@ define([
                             this.audioBuffer = 'placeholder';
                         }
                         */
-                        
+                        console.log(Device.browser.chrome);
                         if (Device.browser.chrome || Device.browser.firefox) {
+                            
                             this.webAudioSource = this.audioCtx.createMediaElementSource(this.audioEl);
                             this.webAudioSource.connect(this.analyser);
                             this.analyser.connect(this.audioCtx.destination);
