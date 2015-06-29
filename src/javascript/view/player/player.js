@@ -95,12 +95,12 @@ define([
                     },
                     
                     mute: function(e) {
-                        self.setVolume(0);
+                        self._view.getController().setVolume(0);
                     },
                     
                     unmute: function(e) {
                         //instead of sending 1 as the volume, a @todo: keep the value before the MUTE state and retrive it.
-                        self.setVolume(1);
+                        self._view.getController().setVolume(1);
                     },
                     
                     shuffle: function(e) {
