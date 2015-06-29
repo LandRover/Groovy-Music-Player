@@ -208,7 +208,7 @@ define([
             this.mute = (0 >= volume) ? true : false;
             
             //update view.
-            this._view.setVolumeBar();
+            this._view.getPlayerView().setVolumeBar();
 
             //updates the channel with volume value.
             for (var i = 0, len = this._channels.length; i < len; i++) {

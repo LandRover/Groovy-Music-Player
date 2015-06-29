@@ -165,6 +165,43 @@ define([
         },
         
         
+        toggleRepeat: function() {
+            this._view.getModel().repeat.enabled = !this.isRepeat();
+            this._view.repeatStateToggle();
+            //api.onRepeat(this.isRepeat());
+            
+            return this;
+        },
+        
+        
+        isRepeat: function() {
+            return this._view.getModel().repeat.enabled;
+        },
+        
+        
+        toggleShuffle: function() {
+            this._view.getModel().shuffle.enabled = !this.isShuffle();
+            this._view.shuffleStateToggle();
+            //api.onShuffle(this.isShuffle());
+            
+            return this;
+        },
+        
+        
+        isShuffle: function() {
+            return this._view.getModel().shuffle.enabled;
+        },
+        
+        
+        toggleCrossfade: function() {
+            this._view.getModel().crossfade.enabled = !this.isCrossfade();
+            this._view.crossfadeStateToggle();
+            //api.onCrossfade(this.isCrossfade());
+            
+            return this;
+        },
+        
+        
         /**
          * Updates the view UI with Item's data such as artist, song and thumbnail
          * 
@@ -228,6 +265,23 @@ define([
         },
         
         
+        setVolumeBar: function() {
+            var volumeObj = $('.groovy-volume'),
+                volume = this._view.getController().getVolume(),
+                isMute = this._view.getController().isMute();
+            
+            // @todo: convert to percent instead of clear pixels width.
+            volumeObj.find('.groovy-volume-bar-value').css({
+                width: volumeObj.find('.groovy-volume-progress-bg').width() * volume
+            });
+            
+            this._toggleIf(!isMute, $('.groovy-mute'));
+            this._toggleIf(isMute, $('.groovy-unmute'));
+            
+            return this;
+        },
+        
+        
         /*
          *
          */
@@ -243,7 +297,7 @@ define([
                 
                 case 'click': 
                     volume = (mouseX - (volumeObj.find('.groovy-volume-progress-bg').offset().left)) / (volumeObj.find('.groovy-volume-progress-bg').width());
-                    this.setVolume(volume);
+                    this._view.getController().setVolume(volume);
                     muted = false;
                     
                     break;

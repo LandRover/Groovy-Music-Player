@@ -259,7 +259,6 @@ define([
                             this.audioBuffer = 'placeholder';
                         }
                         */
-                        console.log(Device.browser.chrome);
                         if (Device.browser.chrome || Device.browser.firefox) {
                             
                             this.webAudioSource = this.audioCtx.createMediaElementSource(this.audioEl);
@@ -282,7 +281,7 @@ define([
             this.mediaPlay();
         },
         
-
+        
         /*
          *
          */
