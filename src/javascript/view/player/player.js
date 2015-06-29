@@ -450,7 +450,7 @@ define([
          * @return {Number}
          */
         getWidth: function() {
-            return $(this._view.getModel().getContainer()).width();
+            return $(this._view.getModel().getContainer()).find('.'+ this._view.getModel().classes.player_wrapper).width();
         },
         
         
