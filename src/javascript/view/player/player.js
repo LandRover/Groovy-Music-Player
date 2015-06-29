@@ -67,8 +67,6 @@ define([
                 self._view.getModel().classes
             )));
             
-            console.log(this.output);
-            
             return this;
         },
         
