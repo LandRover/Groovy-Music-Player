@@ -196,6 +196,7 @@ define([
                 this.activeChannelCleanup();
             }
             
+            this.getNotifications().fire(Events.PLAY_NEXT);
             //api.onEnd();
         },
         
