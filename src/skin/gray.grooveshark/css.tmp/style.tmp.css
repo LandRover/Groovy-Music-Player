@@ -121,6 +121,10 @@ li.sortable-dragging {
 
 
 /*****************/
+.groovy-empty-notice { display: none; }
+.empty .groovy-empty-notice { display: block; }
+.empty .groovy-empty-notice hr { width: 75%; border: none; border-bottom: 1px solid #3c3c3c; margin-top: 20px; }
+.empty .groovy-gui { display: none; }
 
 .groovy-gui { margin-top: 2px; }
 .groovy-gui .groovy-icons em { background: transparent url('../images/groovy-player-controls.png') no-repeat 100px 100px; }

@@ -48,7 +48,7 @@ define([
                 self.setMediaProperties(item);
             });
             
-            this.getNotifications().on(Events.RESIZE, function() {
+            this.getNotifications().on([Events.RESIZE, Events.QUEUE_EMPTY_NOT], function() {
                 self.resizeComponents();
             });
         },
