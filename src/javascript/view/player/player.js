@@ -165,10 +165,62 @@ define([
         },
         
         
+        shuffleStateToggle: function() {
+            var isShuffle = this.isShuffle(),
+                el = $('.groovy-shuffle');
+            
+            el.removeClass('active');
+            if (true === isShuffle)
+                el.addClass('active');
+        },
+        
+        
+        repeatStateToggle: function() {
+            var isRepeat = this.isRepeat(),
+                el = $('.groovy-repeat');
+            
+            el.removeClass('active');
+            if (true === isRepeat)
+                el.addClass('active');
+
+            return this;
+        },
+        
+        
+        crossfadeStateToggle: function() {
+            var isCrossfade = this.isCrossfade(),
+                el = $('.groovy-crossfade');
+            
+            el.removeClass('active');
+            if (true === isCrossfade)
+                el.addClass('active');
+            
+            return this;
+        },
+        
+        
         toggleRepeat: function() {
             this._view.getModel().repeat.enabled = !this.isRepeat();
-            this._view.repeatStateToggle();
+            this.repeatStateToggle();
             //api.onRepeat(this.isRepeat());
+            
+            return this;
+        },
+        
+        
+        toggleShuffle: function() {
+            this._view.getModel().shuffle.enabled = !this.isShuffle();
+            this.shuffleStateToggle();
+            //api.onShuffle(this.isShuffle());
+            
+            return this;
+        },
+        
+        
+        toggleCrossfade: function() {
+            this._view.getModel().crossfade.enabled = !this.isCrossfade();
+            this.crossfadeStateToggle();
+            //api.onCrossfade(this.isCrossfade());
             
             return this;
         },
@@ -179,26 +231,13 @@ define([
         },
         
         
-        toggleShuffle: function() {
-            this._view.getModel().shuffle.enabled = !this.isShuffle();
-            this._view.shuffleStateToggle();
-            //api.onShuffle(this.isShuffle());
-            
-            return this;
-        },
-        
-        
         isShuffle: function() {
             return this._view.getModel().shuffle.enabled;
         },
         
         
-        toggleCrossfade: function() {
-            this._view.getModel().crossfade.enabled = !this.isCrossfade();
-            this._view.crossfadeStateToggle();
-            //api.onCrossfade(this.isCrossfade());
-            
-            return this;
+        isCrossfade: function() {
+            return this._view.getModel().crossfade.enabled;
         },
         
         
