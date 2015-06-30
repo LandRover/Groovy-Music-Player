@@ -76,6 +76,7 @@ define([
             
             this.getNotifications().on(Events.PAUSE, function() {
                 self.changeState(States.PAUSED);
+                self.pause();
             });
             
             $(window).bind('resize', function() {
