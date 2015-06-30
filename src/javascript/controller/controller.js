@@ -79,6 +79,12 @@ define([
                 self.pause();
             });
             
+            this.getNotifications().on(Events.QUEUE_EMPTY, function() {
+                self.changeState(States.IDLE);
+                self.pause();
+            });
+            
+            
             $(window).bind('resize', function() {
                 self.getNotifications().fire(Events.RESIZE);
             });
