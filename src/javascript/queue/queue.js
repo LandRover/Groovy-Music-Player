@@ -123,6 +123,8 @@ define([
             
             if (this.isEmpty()) {
                 this._notifications.fire(Events.QUEUE_EMPTY);
+            } else {
+                this._notifications.fire(Events.QUEUE_EMPTY_NOT);
             }
             
             //active song has been changed, set the next on active mode.

@@ -61,6 +61,16 @@ define([
                 
             });
             
+            this.getNotifications().on(Events.QUEUE_EMPTY, function() {
+                $(self.getModel().getContainer())
+                    .addClass(self.getModel().classes.empty);
+            });
+            
+            this.getNotifications().on(Events.QUEUE_EMPTY_NOT, function() {
+                $(self.getModel().getContainer())
+                    .removeClass(self.getModel().classes.empty);
+            });
+            
             return this;
         },
         
