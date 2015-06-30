@@ -77,11 +77,19 @@ define([
             });
             
             this._notifications.on(Events.PLAY_NEXT, function() {
-                self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, self.getActive(1));
+                var item = self.getActive(1);
+                
+                if (null === item) return;
+                
+                self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, item);
             });
             
             this._notifications.on(Events.PLAY_PREVIOUS, function() {
-                self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, self.getActive(-1));
+                var item = self.getActive(-1);
+                
+                if (null === item) return;
+                
+                self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, item);
             });
         },
         
