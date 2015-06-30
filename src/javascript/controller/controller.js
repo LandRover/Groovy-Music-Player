@@ -84,7 +84,7 @@ define([
                 self.pause();
             });
             
-            
+            // translate native event for resize, for internal event
             $(window).bind('resize', function() {
                 self.getNotifications().fire(Events.RESIZE);
             });
