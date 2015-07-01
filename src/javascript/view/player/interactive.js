@@ -85,7 +85,7 @@ define([
                     break;
                 
                 case 'click': 
-                    var timeTotal = channel.audioEl.duration;
+                    var timeTotal = channel.getDuration();
                     var secondSelected = ((mouseX - this.el.offset().left) / this.getWidth() * timeTotal);
                     this.getNotifications().fire(Events.JUMP_TO_SECOND, secondSelected);
                     

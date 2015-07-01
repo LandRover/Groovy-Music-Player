@@ -169,6 +169,14 @@ define([
         */
         
         
+        /*
+         *
+         */
+        getDuration: function() {
+            return this.audioEl.duration;
+        },
+        
+        
         /**
          *
          */
