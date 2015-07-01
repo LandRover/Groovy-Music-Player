@@ -1,7 +1,7 @@
 define([
     "view/base_view",
-    "view/player/volume",
-    "view/player/interactive",
+    "view/player/components/volume",
+    "view/player/components/interactive",
     "events/events",
     "events/states",
     "utils/logger",
