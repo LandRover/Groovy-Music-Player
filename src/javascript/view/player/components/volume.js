@@ -3,7 +3,7 @@ define([
     "events/events",
     "events/states",
     "utils/logger",
-    "html/layout/player/volume.html",
+    "html/layout/player/components/volume.html",
 ], function(BaseView, Events, States, Logger, volumeHTML) {
     /**
     * Controls

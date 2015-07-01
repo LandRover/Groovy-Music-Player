@@ -3,7 +3,7 @@ define([
     "events/events",
     "events/states",
     "utils/logger",
-    "html/layout/player/interactive.html",
+    "html/layout/player/components/interactive.html",
 ], function(BaseView, Events, States, Logger, interactiveHTML) {
     /**
     * Controls
