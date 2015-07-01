@@ -1,12 +1,16 @@
 define([
     "view/base_view",
-    "view/player/components/volume",
+    "view/player/components/controls",
+    "view/player/components/thumbnail",
+    "view/player/components/info_minimal",
+    "view/player/components/info",
     "view/player/components/interactive",
+    "view/player/components/volume",
     "events/events",
     "events/states",
     "utils/logger",
     "html/layout/player/player.html",
-], function(BaseView, Volume, Interactive, Events, States, Logger, playerHTML) {
+], function(BaseView, Controls, Thumbnail, InfoMinimal, Info, Interactive, Volume, Events, States, Logger, playerHTML) {
     /**
     * Controls
     *
@@ -34,6 +38,10 @@ define([
          */
         init: function() {
             this.components = {
+                controls: new Controls(this),
+                thumbnail: new Thumbnail(this),
+                infoMinimal: new InfoMinimal(this),
+                info: new Info(this),
                 interactive: new Interactive(this),
                 volume: new Volume(this)
             };
@@ -70,9 +78,9 @@ define([
          * @return this
          */
         render: function() {
-            this.output = this.bindActions($(_.template(playerHTML)(
+            this.output = $(_.template(playerHTML)(
                 this._view.getModel().classes
-            )));
+            ));
             
             _.each(this.components, function(component) {
                 component
@@ -83,41 +91,6 @@ define([
             console.log('OGXXXXXXXXXXXXXXX');
             
             return this;
-        },
-        
-        
-        /**
-         * Binds actions to the HTML view, attaching events on UI actions.
-         *
-         * @param {String} html
-         * @return {String} html with binds
-         */
-        bindActions: function(html) {
-            var self = this,
-                namespace = this._view.getModel().classes.namespace,
-                el = {
-                    options: html.find('.groovy-options')
-                };
-            
-            html.find('.'+namespace +'-play').on('click', function() {
-                self.getNotifications().fire(Events.QUEUE_PLAY_ACTIVE);
-            });
-            
-            html.find('.'+namespace +'-pause').on('click', function() {
-                self.getNotifications().fire(Events.PAUSE);
-            });
-            
-            html.find('.'+namespace +'-previous').on('click', function() {
-                self.getNotifications().fire(Events.PLAY_PREVIOUS);
-            });
-            
-            html.find('.'+namespace +'-next').on('click', function() {
-                self.getNotifications().fire(Events.PLAY_NEXT);
-            });
-            
-
-            
-            return html;
         },
         
         
