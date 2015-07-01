@@ -14,7 +14,6 @@ define([
         Logger.debug('VOLUME::CONSTRUCTOR FIRED');
         
         this._player = player;
-        
         this.init();
     };
     
@@ -27,6 +26,7 @@ define([
          */
         init: function() {
             var self = this;
+            
             this.getNotifications().on(Events.VOLUME_SET, function(volume) {
                 self.setVolumeBar(volume);
             });

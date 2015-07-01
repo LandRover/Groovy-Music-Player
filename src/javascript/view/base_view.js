@@ -73,6 +73,14 @@ define([
         /**
          *
          */
+        getWidth: function() {
+            return this.el.width();
+        },
+        
+        
+        /**
+         *
+         */
         toString: function() {
             return this.output;
         },

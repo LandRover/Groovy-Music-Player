@@ -1,11 +1,12 @@
 define([
     "view/base_view",
     "view/player/volume",
+    "view/player/interactive",
     "events/events",
     "events/states",
     "utils/logger",
     "html/layout/player/player.html",
-], function(BaseView, Volume, Events, States, Logger, playerHTML) {
+], function(BaseView, Volume, Interactive, Events, States, Logger, playerHTML) {
     /**
     * Controls
     *
@@ -25,11 +26,18 @@ define([
         _state: States.IDLE,
         canvasReferances: null,
         
+        components: {},
+        
         
         /**
          *
          */
         init: function() {
+            this.components = {
+                interactive: new Interactive(this),
+                volume: new Volume(this)
+            };
+            
             this.subscribe();
         },
         
@@ -68,8 +76,12 @@ define([
                 self._view.getModel().classes
             )));
             
-            var volume = new Volume(this);
-            volume.render().append(this.output.find('.groovy-skin'));
+            _.each(this.components, function(component) {
+                component
+                    .render()
+                    .append(this.output.find('.groovy-skin'));
+            }, this);
+            
             console.log('OGXXXXXXXXXXXXXXX');
             
             return this;
@@ -86,14 +98,9 @@ define([
             var self = this,
                 namespace = this._view.getModel().classes.namespace,
                 el = {
-                    interactive: html.find('.groovy-interactive'),
                     options: html.find('.groovy-options')
                 },
                 notify = {
-                    scrubber: function(e) {
-                        self.mouseScrubbar(e);
-                    },
-                    
                     shuffle: function(e) {
                         self.toggleShuffle();
                     },
@@ -122,10 +129,6 @@ define([
             html.find('.'+namespace +'-next').on('click', function() {
                 self.getNotifications().fire(Events.PLAY_NEXT);
             });
-            
-            el.interactive.bind('mousemove', notify.scrubber);
-            el.interactive.bind('mouseleave', notify.scrubber);
-            el.interactive.bind('click', notify.scrubber);
             
             el.options.find('.'+namespace +'-shuffle').bind('click', notify.shuffle);
             el.options.find('.'+namespace +'-repeat').bind('click', notify.repeat);
@@ -349,36 +352,7 @@ define([
         },
         
         
-        /**
-         *
-         */
-        mouseScrubbar: function(e) {
-            var mouseX = e.pageX,
-                interactiveObj = $('.groovy-interactive'),
-                scrubberWidth = this.getScrubberWidth(),
-                channel = this._view.getController().getActiveChannel();
-            
-            switch(e.type) {
-                case 'mousemove':
-                    interactiveObj.children('.groovy-scrubber-hover').css({
-                        left: (mouseX - interactiveObj.offset().left)
-                    });
-                    
-                    break;
-                
-                case 'click': 
-                    var timeTotal = channel.audioEl.duration;
-                    var position = ((e.pageX - (interactiveObj.offset().left)) / scrubberWidth * timeTotal);
-                    channel.mediaPlay(position);
-                    
-                    // @todo figure this one out, could be a bug.. if isPlaying is false.. wont jump to the proper position.
-                    if (true !== this.isPlaying()) {
-                        channel.mediaPlay();
-                    }
-                    
-                    break;
-            }
-        },
+
         
         
         getCanvasReferances: function() {
@@ -411,22 +385,6 @@ define([
             };
             
             return this.canvasReferances;
-        },
-        
-        
-        /**
-         *
-         */
-        getScrubberWidth: function() {
-            return $('.groovy-interactive').width();
-        },
-        
-        
-        /**
-         *
-         */
-        getScrubberWidthMinimal: function() {
-            return $('.groovy-seek-bar').width();
         },
         
         

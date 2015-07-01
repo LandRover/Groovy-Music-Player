@@ -250,7 +250,7 @@ define([
                 return this._runLoop();
             }
             
-            var scrubberWidth = this._view.getPlayerView().getScrubberWidth(),
+            var scrubberWidth = this._view.getPlayerView().components.interactive.getWidth(),
                 currentTime = $('.groovy-current-time'),
                 duration = $('.groovy-duration'),
                 scrubberOffset = 0,
