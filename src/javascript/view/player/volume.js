@@ -58,6 +58,7 @@ define([
          */
         bindActions: function(html) {
             var self = this,
+                options = html.find('.groovy-options'),
                 namespace = this._player._view.getModel().classes.namespace;
             
             html.find('.'+namespace +'-volume-progress-bg').bind('click', function(e) {
@@ -75,6 +76,18 @@ define([
             
             html.find('.'+namespace +'-volume-max').bind('click', function() {
                 self.getNotifications().fire(Events.VOLUME_SET, 1);
+            });
+            
+            options.find('.'+namespace +'-shuffle').bind('click', function(e) {
+                self.toggleShuffle();
+            });
+            
+            options.find('.'+namespace +'-repeat').bind('click', function(e) {
+                self.toggleRepeat();
+            });
+            
+            options.find('.'+namespace +'-crossfade').bind('click', function(e) {
+                self.toggleCrossfade();
             });
             
             return html;
@@ -122,12 +135,88 @@ define([
         },
         
         
+        toggleRepeat: function() {
+            this._player._view.getModel().repeat.enabled = !this.isRepeat();
+            this.repeatStateToggle();
+            //api.onRepeat(this.isRepeat());
+            
+            return this;
+        },
+        
+        
+        toggleShuffle: function() {
+            this._player._view.getModel().shuffle.enabled = !this.isShuffle();
+            this.shuffleStateToggle();
+            //api.onShuffle(this.isShuffle());
+            
+            return this;
+        },
+        
+        
+        toggleCrossfade: function() {
+            this._player._view.getModel().crossfade.enabled = !this.isCrossfade();
+            this.crossfadeStateToggle();
+            //api.onCrossfade(this.isCrossfade());
+            
+            return this;
+        },
+        
+        
+        isRepeat: function() {
+            return this._player._view.getModel().repeat.enabled;
+        },
+        
+        
+        isShuffle: function() {
+            return this._player._view.getModel().shuffle.enabled;
+        },
+        
+        
+        isCrossfade: function() {
+            return this._player._view.getModel().crossfade.enabled;
+        },
+        
+        
+        shuffleStateToggle: function() {
+            var isShuffle = this.isShuffle(),
+                el = $('.groovy-shuffle');
+            
+            el.removeClass('active');
+            if (true === isShuffle)
+                el.addClass('active');
+        },
+        
+        
+        repeatStateToggle: function() {
+            var isRepeat = this.isRepeat(),
+                el = $('.groovy-repeat');
+            
+            el.removeClass('active');
+            if (true === isRepeat)
+                el.addClass('active');
+
+            return this;
+        },
+        
+        
+        crossfadeStateToggle: function() {
+            var isCrossfade = this.isCrossfade(),
+                el = $('.groovy-crossfade');
+            
+            el.removeClass('active');
+            if (true === isCrossfade)
+                el.addClass('active');
+            
+            return this;
+        },
+        
+        
         /**
          *
          */
         getNotifications: function() {
             return this._player._view.getNotifications();
-        },
+        }
     });
     
     return Volume;

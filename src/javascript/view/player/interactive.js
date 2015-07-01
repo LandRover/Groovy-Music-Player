@@ -54,13 +54,10 @@ define([
          */
         bindActions: function(html) {
             var self = this;
-            var scrubber = function(e) {
-                self.mouseScrubbar(e);
-            };
             
-            html.bind('mousemove', scrubber);
-            html.bind('mouseleave', scrubber);
-            html.bind('click', scrubber);
+            html.bind('mousemove mouseleave click', function(e) {
+                self.mouseScrubbar(e);
+            });
             
             return html;
         },

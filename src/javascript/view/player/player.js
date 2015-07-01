@@ -70,10 +70,8 @@ define([
          * @return this
          */
         render: function() {
-            var self = this;
-            
             this.output = this.bindActions($(_.template(playerHTML)(
-                self._view.getModel().classes
+                this._view.getModel().classes
             )));
             
             _.each(this.components, function(component) {
@@ -99,19 +97,6 @@ define([
                 namespace = this._view.getModel().classes.namespace,
                 el = {
                     options: html.find('.groovy-options')
-                },
-                notify = {
-                    shuffle: function(e) {
-                        self.toggleShuffle();
-                    },
-                    
-                    repeat: function(e) {
-                        self.toggleRepeat();
-                    },
-                    
-                    crossfade: function(e) {
-                        self.toggleCrossfade();
-                    }
                 };
             
             html.find('.'+namespace +'-play').on('click', function() {
@@ -130,9 +115,7 @@ define([
                 self.getNotifications().fire(Events.PLAY_NEXT);
             });
             
-            el.options.find('.'+namespace +'-shuffle').bind('click', notify.shuffle);
-            el.options.find('.'+namespace +'-repeat').bind('click', notify.repeat);
-            el.options.find('.'+namespace +'-crossfade').bind('click', notify.crossfade);
+
             
             return html;
         },
@@ -151,82 +134,6 @@ define([
             this._toggleIf(this.isPlaying(), $('.'+ namespace +'-pause'));
             
             return this;
-        },
-        
-        
-        shuffleStateToggle: function() {
-            var isShuffle = this.isShuffle(),
-                el = $('.groovy-shuffle');
-            
-            el.removeClass('active');
-            if (true === isShuffle)
-                el.addClass('active');
-        },
-        
-        
-        repeatStateToggle: function() {
-            var isRepeat = this.isRepeat(),
-                el = $('.groovy-repeat');
-            
-            el.removeClass('active');
-            if (true === isRepeat)
-                el.addClass('active');
-
-            return this;
-        },
-        
-        
-        crossfadeStateToggle: function() {
-            var isCrossfade = this.isCrossfade(),
-                el = $('.groovy-crossfade');
-            
-            el.removeClass('active');
-            if (true === isCrossfade)
-                el.addClass('active');
-            
-            return this;
-        },
-        
-        
-        toggleRepeat: function() {
-            this._view.getModel().repeat.enabled = !this.isRepeat();
-            this.repeatStateToggle();
-            //api.onRepeat(this.isRepeat());
-            
-            return this;
-        },
-        
-        
-        toggleShuffle: function() {
-            this._view.getModel().shuffle.enabled = !this.isShuffle();
-            this.shuffleStateToggle();
-            //api.onShuffle(this.isShuffle());
-            
-            return this;
-        },
-        
-        
-        toggleCrossfade: function() {
-            this._view.getModel().crossfade.enabled = !this.isCrossfade();
-            this.crossfadeStateToggle();
-            //api.onCrossfade(this.isCrossfade());
-            
-            return this;
-        },
-        
-        
-        isRepeat: function() {
-            return this._view.getModel().repeat.enabled;
-        },
-        
-        
-        isShuffle: function() {
-            return this._view.getModel().shuffle.enabled;
-        },
-        
-        
-        isCrossfade: function() {
-            return this._view.getModel().crossfade.enabled;
         },
         
         
