@@ -1,10 +1,11 @@
 define([
     "view/base_view",
+    "view/player/volume",
     "events/events",
     "events/states",
     "utils/logger",
     "html/layout/player/player.html",
-], function(BaseView, Events, States, Logger, playerHTML) {
+], function(BaseView, Volume, Events, States, Logger, playerHTML) {
     /**
     * Controls
     *
@@ -67,6 +68,10 @@ define([
                 self._view.getModel().classes
             )));
             
+            var volume = new Volume(this);
+            volume.render().append(this.output.find('.groovy-skin'));
+            console.log('OGXXXXXXXXXXXXXXX');
+            
             return this;
         },
         
@@ -81,26 +86,12 @@ define([
             var self = this,
                 namespace = this._view.getModel().classes.namespace,
                 el = {
-                    interactive: $(html).find('.groovy-interactive'),
-                    volume: $(html).find('.groovy-volume'),
-                    options: $(html).find('.groovy-options')
+                    interactive: html.find('.groovy-interactive'),
+                    options: html.find('.groovy-options')
                 },
                 notify = {
                     scrubber: function(e) {
                         self.mouseScrubbar(e);
-                    },
-                    
-                    volume: function(e) {
-                        self.mouseVolumeControl(e);
-                    },
-                    
-                    mute: function(e) {
-                        self._view.getController().setVolume(0);
-                    },
-                    
-                    unmute: function(e) {
-                        //instead of sending 1 as the volume, a @todo: keep the value before the MUTE state and retrive it.
-                        self._view.getController().setVolume(1);
                     },
                     
                     shuffle: function(e) {
@@ -116,30 +107,25 @@ define([
                     }
                 };
             
-            $(html).find('.'+namespace +'-play').on('click', function() {
+            html.find('.'+namespace +'-play').on('click', function() {
                 self.getNotifications().fire(Events.QUEUE_PLAY_ACTIVE);
             });
             
-            $(html).find('.'+namespace +'-pause').on('click', function() {
+            html.find('.'+namespace +'-pause').on('click', function() {
                 self.getNotifications().fire(Events.PAUSE);
             });
             
-            $(html).find('.'+namespace +'-previous').on('click', function() {
+            html.find('.'+namespace +'-previous').on('click', function() {
                 self.getNotifications().fire(Events.PLAY_PREVIOUS);
             });
             
-            $(html).find('.'+namespace +'-next').on('click', function() {
+            html.find('.'+namespace +'-next').on('click', function() {
                 self.getNotifications().fire(Events.PLAY_NEXT);
             });
             
             el.interactive.bind('mousemove', notify.scrubber);
             el.interactive.bind('mouseleave', notify.scrubber);
             el.interactive.bind('click', notify.scrubber);
-            
-            el.volume.find('.'+namespace +'-volume-progress-bg').bind('click', notify.volume);
-            el.volume.find('.'+namespace +'-mute').bind('click', notify.mute);
-            el.volume.find('.'+namespace +'-unmute').bind('click', notify.unmute);
-            el.volume.find('.'+namespace +'-volume-max').bind('click', notify.unmute);
             
             el.options.find('.'+namespace +'-shuffle').bind('click', notify.shuffle);
             el.options.find('.'+namespace +'-repeat').bind('click', notify.repeat);
@@ -360,45 +346,6 @@ define([
             $('li.groovy-info-minimal').width(dimenstions.infoMinimal);
             
             return this;
-        },
-        
-        setVolumeBar: function() {
-            var volumeObj = $('.groovy-volume'),
-                volume = this._view.getController().getVolume(),
-                isMute = this._view.getController().isMute();
-            
-            // @todo: convert to percent instead of clear pixels width.
-            volumeObj.find('.groovy-volume-bar-value').css({
-                width: volumeObj.find('.groovy-volume-progress-bg').width() * volume
-            });
-            
-            this._toggleIf(!isMute, $('.groovy-mute'));
-            this._toggleIf(isMute, $('.groovy-unmute'));
-            
-            return this;
-        },
-        
-        
-        /*
-         *
-         */
-        mouseVolumeControl: function(e) {
-            var mouseX = e.pageX,
-                volumeObj = $('.groovy-volume'),
-                volume = 0;
-            
-            switch(e.type) {
-                case 'mousemove':
-                case 'mouseleave':
-                    break;
-                
-                case 'click': 
-                    volume = (mouseX - (volumeObj.find('.groovy-volume-progress-bg').offset().left)) / (volumeObj.find('.groovy-volume-progress-bg').width());
-                    this._view.getController().setVolume(volume);
-                    muted = false;
-                    
-                    break;
-            }
         },
         
         

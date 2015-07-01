@@ -89,6 +89,10 @@ define([
                 self.getNotifications().fire(Events.RESIZE);
             });
             
+            this.getNotifications().on(Events.VOLUME_SET, function(volume) {
+                self.setVolume(volume);
+            });
+            
             return this;
         },
         
@@ -215,14 +219,11 @@ define([
             this.volume = (1 <= volume) ? 1 : volume; // can not be greater than 1
             this.mute = (0 >= volume) ? true : false;
             
-            //update view.
-            this._view.getPlayerView().setVolumeBar();
-
             //updates the channel with volume value.
             for (var i = 0, len = this._channels.length; i < len; i++) {
                 if ('undefined' !== typeof(this._channels[i]))
                     this._channels[i].setVolume();
-            } 
+            }
             
             /*
             var interactiveObj = $('.groovy-interactive');

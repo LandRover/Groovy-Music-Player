@@ -10,6 +10,7 @@ define(function() {
         PLAY_NEXT: "PLAY_NEXT",
         PLAY_PREVIOUS: "PLAY_PREVIOUS",
         PAUSE: "PAUSE",
+        VOLUME_SET: "VOLUME_SET",
         
         QUEUE_EMPTY: "QUEUE_EMPTY",
         QUEUE_EMPTY_NOT: "QUEUE_EMPTY_NOT",
