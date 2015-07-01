@@ -39,7 +39,7 @@ define([
             var self = this;
             
             this.output = this.bindActions($(_.template(interactiveHTML)(
-                self._player._view.getModel().classes
+                this._player._view.getModel().classes
             )));
             
             return this;
@@ -86,13 +86,8 @@ define([
                 
                 case 'click': 
                     var timeTotal = channel.audioEl.duration;
-                    var position = ((mouseX - (this.el.offset().left)) / this.getWidth() * timeTotal);
-                    channel.mediaPlay(position);
-                    
-                    // @todo figure this one out, could be a bug.. if isPlaying is false.. wont jump to the proper position.
-                    //if (true !== this.isPlaying()) {
-                    //    channel.mediaPlay();
-                    //}
+                    var secondSelected = ((mouseX - this.el.offset().left) / this.getWidth() * timeTotal);
+                    this.getNotifications().fire(Events.JUMP_TO_SECOND, secondSelected);
                     
                     break;
             }

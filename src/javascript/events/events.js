@@ -11,6 +11,7 @@ define(function() {
         PLAY_PREVIOUS: "PLAY_PREVIOUS",
         PAUSE: "PAUSE",
         VOLUME_SET: "VOLUME_SET",
+        JUMP_TO_SECOND: "JUMP_TO_SECOND",
         
         QUEUE_EMPTY: "QUEUE_EMPTY",
         QUEUE_EMPTY_NOT: "QUEUE_EMPTY_NOT",

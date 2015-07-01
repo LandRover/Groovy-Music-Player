@@ -93,6 +93,10 @@ define([
                 self.setVolume(volume);
             });
             
+            this.getNotifications().on(Events.JUMP_TO_SECOND, function(second) {
+                self.getActiveChannel().mediaPlay(second);
+            });
+            
             return this;
         },
         
