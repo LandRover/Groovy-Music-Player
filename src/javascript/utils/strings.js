@@ -14,7 +14,8 @@ define(function() {
         
         /**
          * Converts seconds input to string structure format like 00:10
-         * 
+         *
+         * @todo Change the name of the method to something more descriptive
          * @return {String}
          */
         formatTime: function() {
