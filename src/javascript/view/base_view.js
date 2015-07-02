@@ -51,7 +51,7 @@ define([
          *
          */
         getPosition: function() {
-            return (null !== this._position) ? this._position : this.el.index();
+            return (null !== this._position) ? this._position : this.getEl().index();
         },
 
         
@@ -59,7 +59,7 @@ define([
          *
          */
         cachePosition: function() {
-            this._position = this.getEl().index();
+            this._position = this.getPosition();
             
             return this;
         },
