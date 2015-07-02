@@ -31,14 +31,15 @@ define(function() {
         /**
         * Attach a callback to an EventName
         * 
-        * @param {string/array} name
-        * @param {function} callback
+        * @param {String/array} name
+        * @param {Function} callback
+        * @param {Object} context
         */
-        on: function(name, callback) {
+        on: function(name, callback, context) {
             // allows to subscribe multiple events for the same callback as single events. Clears the syntax on the other end.
             if (_.isArray(name)) {
                 return _.each(name, function(eventName) {
-                    this.on(eventName, callback);
+                    this.on(eventName, callback, context);
                 }, this);
             }
             
@@ -49,13 +50,13 @@ define(function() {
                 self = this;
             
             // return back a clean remove function with the params encaspulated
-            return (function(name, callback) {
+            return (function(name, callback, context) {
                 return {
                     off: function() {
-                        return self.off(name, callback);
+                        return self.off(name, callback, context);
                     }
                 };
-            })(name, callback);
+            })(name, callback, context);
         },
         
         
@@ -64,18 +65,19 @@ define(function() {
         * 
         * @param {string} name
         * @param {function} callback
+        * @param {Object} context
         */
-        once: function(name, callback) {
+        once: function(name, callback, context) {
             var self = this,
                 onceCallback = function() {
-                    self.off(name, onceCallback);
+                    self.off(name, onceCallback, context);
                     callback.apply(this, arguments);
                 };
             
             // preserve the original callback to allow subscribe once method to be removed later if needed.
             onceCallback._originalCallback = callback;
             
-            this.on(name, onceCallback);
+            this.on(name, onceCallback, context);
         },
         
         
@@ -101,8 +103,9 @@ define(function() {
         * 
         * @param {string} name
         * @param {function} callback
+        * @param {Object} context
         */
-        off: function(name, callback) {
+        off: function(name, callback, context) {
             var callbacks = this._subscriptions[name],
                 matchCallback = function(cb) {
                     return (cb === callback || cb._originalCallback === callback)
