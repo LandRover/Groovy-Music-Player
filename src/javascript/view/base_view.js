@@ -24,7 +24,7 @@ define([
             Logger.debug('BASEVIEW::APPEND FIRED '+ to);
             
             this.el = this.output;
-            $(to).append(this.el);
+            $(to).append(this.getEl());
             
             this.onAppend();
             
@@ -36,17 +36,20 @@ define([
          * Removes element from the dom.
          */
         remove: function() {
-            if (null === this.el) {
+            if (null === this.getEl()) {
                 Logger.debug('el is null, never added, probably.');
                 return;
             }
             
-            Logger.debug('REMOVING EL', this.el);
+            Logger.debug('REMOVING EL', this.getEl());
             
-            this.el.remove();
+            this.getEl().remove();
         },
         
         
+        /**
+         *
+         */
         getPosition: function() {
             return (null !== this._position) ? this._position : this.el.index();
         },
@@ -56,7 +59,7 @@ define([
          *
          */
         cachePosition: function() {
-            this._position = this.el.index();
+            this._position = this.getEl().index();
             
             return this;
         },
@@ -71,10 +74,11 @@ define([
         
         
         /**
-         *
+         * Getter for the width of the current El
+         * @return {Number} width
          */
         getWidth: function() {
-            return this.el.width();
+            return this.getEl().width();
         },
         
         
@@ -125,7 +129,9 @@ define([
         
         
         /**
+         * Getter for the width of an element including the margins
          *
+         * @param {String} el Selector
          */
         getWidthMargin: function(el) {
             var left = parseInt($(el).css('margin-left')) || 0,
@@ -136,7 +142,11 @@ define([
         
         
         /**
+         * Toggle visibility by condition
          *
+         * @param {Bool} condition
+         * @param {HTMLElement}
+         * @return {Object} this for chaining
          */
         _toggleIf: function(condition, el) {
             if (condition) { 

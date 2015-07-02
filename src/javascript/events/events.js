@@ -1,6 +1,6 @@
 define(function() {
     /**
-     * Events list
+     * Events list consts
      */
     var Events = {
         CHANGE: "CHANGE:",

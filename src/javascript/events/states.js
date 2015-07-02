@@ -1,6 +1,6 @@
 define(function() {
     /**
-     * Player states list
+     * Player states consts
      */
     var States = {
         LOADING: "LOADING",
