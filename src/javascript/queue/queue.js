@@ -9,7 +9,9 @@ define([
      * Main queue controller
      *
      * Acts as the view controller, fetching and adding models and causing changes to the UI
-     * from this object.
+     * from this object. Everything Queue related
+     *
+     * DOM acts as the model for the data and Queue as the View Controller
      */
     var Queue = function(notifications) {
         this._notifications = notifications;
@@ -21,8 +23,9 @@ define([
         _notifications: null,
         _lastActiveItem: null,
         
+        
         /**
-         *
+         * Constructor method, called during creation
          */
         init: function() {
             Logger.debug('QUEUE::INIT FIRED');
@@ -32,7 +35,9 @@ define([
         
         
         /**
-         *
+         * Subscribe to interesting events for the Queue.
+         * Able to listen to events related to the activites that may require change the queue UI and do some event based actions
+         * Called during construction
          */
         subscribe: function() {
             this._notifications.on([Events.QUEUE_ITEM_ADDED, Events.QUEUE_ITEM_REMOVED], function(item) {
@@ -93,9 +98,12 @@ define([
         
         
         /**
-         *
+         * Adds item to the queue. Able to add in bulk to one by one.
+         * 
+         * @param {Array} items
+         * @return {Object} this for chaining
          */
-        add: function(items, to) {
+        add: function(items) {
             var itemObj;
             
             _.each(items, function(item) {
@@ -113,19 +121,24 @@ define([
         
         
         /**
+         * Update queue list is called each time the DOM(model) changes. When new item added or removed.
+         * Not triggered when sort order is change, only when the content actually changes.
+         * Responsible also for resetting the active item if removed from the queue.
          *
+         * @param {Object} Item
          */
         updateQueueList: function(item) {
             var size = this.getSize(),
                 position = item.getPosition();
             
+            // Broadcast relevant event regarding the queue state
             if (this.isEmpty()) {
                 this._notifications.fire(Events.QUEUE_EMPTY);
             } else {
                 this._notifications.fire(Events.QUEUE_EMPTY_NOT);
             }
             
-            //active song has been changed, set the next on active mode.
+            // Active song has been changed, set the next on active mode.
             if (null === this.getActive()) {
                 //the active was the last on the playlist, select the new last.
                 if (position === size)
@@ -133,7 +146,6 @@ define([
                 
                 if (!this.isEmpty()) {
                     this.setActive(position);
-                    //this._onPlay(this._getItemByIndex(position)); //@todo activate.
                 }
             }
         },
@@ -192,9 +204,9 @@ define([
         
         
         /**
-         * Check the state of the song, if playing or not.
+         * Check the state of the song, if playing or not. Check is UI based.
          *
-         * @return {bool} 
+         * @return {Bool}
          */
         isPlaying: function () {
             var playing = this.getDomParent().find('li.active').find('.play.hide').index();
@@ -204,11 +216,15 @@ define([
         
         
         /**
+         * Set play/pause mode on queue items. Called each time the active item changes
          *
+         * @param {Number} playMode (1 - play, 0 - pause)
+         * @param {Bool} revert
+         * @param {Object} Item
          */
         setPlayPauseMode: function (playMode, revert, item) {
             var activeItem = item || this.getActive(),
-                mode = playMode || 0, // 1 - play, 0 - pause
+                mode = playMode || 0, 
                 revertMode = revert || false;
 
             if (null !== this._lastActiveItem && true === revertMode) {
@@ -241,7 +257,9 @@ define([
         
         
         /**
+         * Is queue empty?
          *
+         * @return {Bool}
          */
         isEmpty: function() {
             return (0 >= this.getSize());
@@ -249,7 +267,9 @@ define([
         
         
         /**
+         * Getter for the dom element of the Queue UI.
          *
+         * @return {HTMLElement}
          */
         getDomParent: function() {
             return $('.' + this.getController()
@@ -260,7 +280,9 @@ define([
         
         
         /**
+         * Getter for the main Controller
          *
+         * @return {Object} Controller instance
          */
         getController: function() {
             return gPlayer()
@@ -269,13 +291,15 @@ define([
         
         
         /**
+         * Able to get item by indexID from the queue.
          *
+         * @return {Object} Item
          */
         _getItemByIndex: function (index) {
             var item = this.getDomParent()
                 .find('li:not(.cancel)')
                 .eq(index);
-        
+            
             return (0 > item.index()) ? null : item.data('object');
         }
     };
