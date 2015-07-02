@@ -73,7 +73,7 @@ define([
             this.getNotifications().on(Events.PLAY, function(item) {
                 console.log(['CONTROLLER::ITEM ARRIVED', item]);
                 self.channelAdd(item)
-                    .mediaPlay();
+                    .play();
                 
                 self.changeState(States.PLAYING);
             });
@@ -98,7 +98,7 @@ define([
             });
             
             this.getNotifications().on(Events.JUMP_TO_SECOND, function(second) {
-                self.getActiveChannel().mediaPlay(second);
+                self.getActiveChannel().play(second);
             });
         },
         

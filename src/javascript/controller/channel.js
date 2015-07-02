@@ -6,7 +6,10 @@ define([
     "utils/logger",
 ], function(Events, States, Event, Device, Logger) {
     /**
-     *
+     * Channel
+     * 
+     * The channel object is responsible for actually playing the media
+     * and extracting the spectrum data, as well as loading the media via XHR
      */
     var Channel = function(options) {
         $.extend(this, options); // extend options with this.
@@ -21,30 +24,33 @@ define([
         audioCtx: null,
         lasttime_inseconds: 0,
         audioBuffer: null,
+        
         frequencyByteData: [],
         webAudioSource: null,
         javascriptNode: null,
+        
+        audioEl: null,
         loaded: false,
         playing: false,
-        audioEl: undefined,
+        
         isReadyInterval: null,
         channelEndTriggered: false,
         
         
         /**
-         *
+         * Constructor method, called during creation
          */
-        init: function() {
-            console.log(this.item);
-        },
+        init: function() {},
         
         
         /**
-         *
+         * Stop the current audio element
+         * 
+         * Changes the state of the channel to not playing.
          */
-        mediaStop: function() {
+        stop: function() {
             if (this.audioEl) {
-                if (this.audioEl.pause != undefined){
+                if ('function' === typeof(this.audioEl.pause)){
                     this.audioEl.pause();
                 }
             }
@@ -54,9 +60,11 @@ define([
         
         
         /**
+         * Pause the current channel
          *
+         * @param {Object} pargs
          */
-        mediaPause: function(pargs) {
+        pause: function(pargs) {
             var margs = {
                 audioapi_setlasttime: true
             };
@@ -79,18 +87,21 @@ define([
                     this.setPlaying(false);
                 }
             } else {
-                this.mediaStop();
+                this.stop();
             }
         },
         
         
         /**
-         *
+         * Play
+         * Begins playing current channel, triggered extranlly - usually when the channel is added or crossfade started
+         * 
+         * @param {Number} time (second)
          */
-        mediaPlay: function(time) {
+        play: function(time) {
             time || (time = 0);
             
-            this._mediaSetup();
+            this.setup();
             if (this.audioBuffer != null) {
                 ///==== on safari we need to wait a little for the sound to load
                 if (this.audioBuffer != 'placeholder') {
@@ -107,7 +118,7 @@ define([
                     this.lasttime_inseconds = time;
                     this.audioCtx.currentTime = this.lasttime_inseconds;
                     //console.info(this.lasttime_inseconds);
-                    this.mediaPause({
+                    this.pause({
                         audioapi_setlasttime: false
                     });
                  } else {
@@ -132,7 +143,7 @@ define([
                             }
                         } catch(e) {
                             this.isReadyInterval = setTimeout($.proxy(function() {
-                                this.mediaPlay(time);
+                                this.play(time);
                             }, this), 250);
                         }
                     }
@@ -143,8 +154,10 @@ define([
         },
         
         
-        /*
+        /**
+         * IsPlayed? The state of the player, for a basic check playing or not
          *
+         * @return {Bool}
          */
         isPlaying: function() {
             return this.playing;
@@ -152,25 +165,34 @@ define([
         
         
         /**
+         * Setter for changing the state of the channel. Called when pause/play called, used internally
+         * only to keep track of the channel
          *
+         * @param {Bool} state
          */
-        setPlaying: function(isPlaying) {
-            this.playing = isPlaying;
-            this.parent._onStartedPlaying();
-            
-            return this;
+        setPlaying: function(state) {
+            this.playing = state;
+            this.parent._onStartedPlaying(); // @todo Figure this one out, when state false also firing event and causing a bug
         },
-        
-        /*
-        seekToPercent: function(percent) {
-            var totalTime = this.getActiveAudio().duration;
-            return this.mediaPlay(percent * totalTime);
-        },
-        */
         
         
         /**
+         * Seek to % is much better way of skipping to a specific second. Since the % is the same as the view %
+         * When will be used again, will deteach the view from the information about the track length and % will be used instead.
          *
+         * Will keep the view cleaner and better
+         * @todo Start using this method instead of skip to second as an API to the VIEW SCRUBER
+         */
+        //seekToPercent: function(percent) {
+        //    var totalTime = this.getActiveAudio().getDuration();
+        //    return this.play(percent * totalTime);
+        //},
+        
+        
+        /**
+         * Get the length of the track, extracted from the audio object
+         *
+         * @return {Number}
          */
         getDuration: function() {
             return this.audioEl.duration;
@@ -178,7 +200,9 @@ define([
         
         
         /**
-         *
+         * Get current time of the track, in seconds, extracted from the audio object
+         * 
+         * @return {Number}
          */
         getCurrentTime: function() {
             return this.audioEl.currentTime;
@@ -186,7 +210,8 @@ define([
         
         
         /**
-         *
+         * Loop is called from the controller (parent) of Channel.
+         * Is responsible for tracking the time, and calculating the right moment to detect a crossfade feature
          */
         loop: function() {
             if ('undefined' === typeof(this.audioEl)) return;
@@ -207,7 +232,12 @@ define([
         },
         
         
-        //xhr used only for iphone igger loading.
+        /**
+         * loadSound by XHR used only for iphone igger loading the media
+         * Audio element just failing to load properly via iPhones at the moment.
+         *
+         * @param {String} url
+         */
         loadSound: function(url) {
             var request = new XMLHttpRequest();
             
@@ -239,69 +269,11 @@ define([
         
         
         /**
-         *
+         * Sets up the channel
+         * 
+         * Creates the audio element, attaches the file and begins loading.
          */
-        _initLoaded: function() {
-            var self = this;
-            this.audioCtx = null;
-            
-            if (true === this.parent._model.spectrum.enabled) {
-                this.audioCtx = this.parent.getCtx();
-                
-                if (this.audioCtx) {
-                    if ('undefined' !== typeof(this.audioCtx.createJavaScriptNode)) {
-                        this.javascriptNode = this.audioCtx.createJavaScriptNode(2048, 1, 1);
-                    }
-                    
-                    if ('undefined' !== typeof(this.audioCtx.createScriptProcessor)) {
-                        this.javascriptNode = this.audioCtx.createScriptProcessor(2048, 1, 1);
-                    }
-                    
-                    if ('undefined' !== typeof(this.audioCtx.createScriptProcessor) || 'undefined' !== typeof(this.audioCtx.createScriptProcessor)) {
-                        this.javascriptNode.connect(this.audioCtx.destination);
-                        
-                        // setup a analyzer
-                        this.analyser = this.audioCtx.createAnalyser();
-                        this.analyser.smoothingTimeConstant = 0.3;
-                        this.analyser.fftSize = 512;
-                        
-                        // create a buffer source node
-                        //Steps 3 and 4
-                        //console.log('hmm');
-                        
-                        /*
-                        if (Device.mobile() && (Device.browser.safari || isDevice.os.iOS)) {
-                            this.loadSound(this.fileMeta.file);
-                            this.audioBuffer = 'placeholder';
-                        }
-                        */
-                        if (Device.browser.chrome || Device.browser.firefox) {
-                            
-                            this.webAudioSource = this.audioCtx.createMediaElementSource(this.audioEl);
-                            this.webAudioSource.connect(this.analyser);
-                            this.analyser.connect(this.audioCtx.destination);
-                        }
-                        
-                        this.javascriptNode.onaudioprocess = $.proxy(function() {
-                            // get the average for the first channel
-                            var frequencyByteData = new Uint8Array(this.analyser.frequencyBinCount);
-                            this.analyser.getByteFrequencyData(frequencyByteData);
-                            
-                            this.frequencyByteData = frequencyByteData;
-                        }, this);
-                    }
-                }
-            }
-            
-            this.loaded = true;
-            this.mediaPlay();
-        },
-        
-        
-        /*
-         *
-         */
-        _mediaSetup: function() {
+        setup: function() {
             if (true === this.loaded) {
                 return;
             }
@@ -340,27 +312,91 @@ define([
                 }
             }, this));
             
-            this._initLoaded();
+            this._initSpektrum();
+            
+            this.loaded = true;
+            this.play();
         },
         
         
         /**
+         * Init spektrum wires the parent context.
          *
+         * (if Spektrum feature is used)
+         */
+        _initSpektrum: function() {
+            var self = this;
+            this.audioCtx = null;
+            
+            if (true === this.parent._model.spectrum.enabled) {
+                this.audioCtx = this.parent.getCtx();
+                
+                if (this.audioCtx) {
+                    if ('undefined' !== typeof(this.audioCtx.createJavaScriptNode)) {
+                        this.javascriptNode = this.audioCtx.createJavaScriptNode(2048, 1, 1);
+                    }
+                    
+                    if ('undefined' !== typeof(this.audioCtx.createScriptProcessor)) {
+                        this.javascriptNode = this.audioCtx.createScriptProcessor(2048, 1, 1);
+                    }
+                    
+                    if ('undefined' !== typeof(this.audioCtx.createScriptProcessor) || 'undefined' !== typeof(this.audioCtx.createScriptProcessor)) {
+                        this.javascriptNode.connect(this.audioCtx.destination);
+                        
+                        // setup a analyzer
+                        this.analyser = this.audioCtx.createAnalyser();
+                        this.analyser.smoothingTimeConstant = 0.3;
+                        this.analyser.fftSize = 512;
+                        
+                        // create a buffer source node
+                        //Steps 4
+                        //console.log('mmm');
+                        
+                        /*
+                        if (Device.mobile() && (Device.browser.safari || isDevice.os.iOS)) {
+                            this.loadSound(this.fileMeta.file);
+                            this.audioBuffer = 'placeholder';
+                        }
+                        */
+                        if (Device.browser.chrome || Device.browser.firefox) {
+                            
+                            this.webAudioSource = this.audioCtx.createMediaElementSource(this.audioEl);
+                            this.webAudioSource.connect(this.analyser);
+                            this.analyser.connect(this.audioCtx.destination);
+                        }
+                        
+                        this.javascriptNode.onaudioprocess = $.proxy(function() {
+                            // get the average for the first channel
+                            var frequencyByteData = new Uint8Array(this.analyser.frequencyBinCount);
+                            this.analyser.getByteFrequencyData(frequencyByteData);
+                            
+                            this.frequencyByteData = frequencyByteData;
+                        }, this);
+                    }
+                }
+            }
+        },
+        
+        
+        /**
+         * Sets the volume on the current channel.
+         *
+         * Data is provided and stored on the parent (Controller)
          */
         setVolume: function() {
             var volume = this.parent.getVolume();
             
             this.audioEl.volume = volume;
-            
-            return this;
         },
         
         
         /**
+         * Destroy is called extranlly (usually) and responsible to treaing down the channel.
          *
+         * Called when track is done playing and no longer needed.
          */
         destory: function() {
-            this.mediaStop();
+            this.stop();
             this.audioEl = null;
             
             delete this.audioEl;
