@@ -67,7 +67,5 @@ define([
         }
     };
     
-    console.log(gPlayer);
-    
     return gPlayer;
 });
