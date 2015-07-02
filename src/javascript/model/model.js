@@ -140,7 +140,7 @@ define([
         
         
         /**
-         *
+         * Getter for the HTML Element that the gPlayer object is appended to
          */
         getContainer: function() {
             return this._container;
