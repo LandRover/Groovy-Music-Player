@@ -8,7 +8,7 @@ define([
      * Provides basic render and appenders for the view.
      */
     var BaseView = function() {
-        Logger.debug('BASEVIEW::CONSTRUCTOR FIRED');
+        //Logger.debug('BASEVIEW::CONSTRUCTOR FIRED');
     };
     
     
