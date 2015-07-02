@@ -13,6 +13,7 @@ define([
      * gPlayer main controller
      *
      * Responsible for the general flow and creation of the view and models
+     * as well as all the events related to the actual wiring of the player logic and channel management.
      */
     var Controller = function(config) {
         this.init(config);
@@ -59,7 +60,8 @@ define([
         
         
         /**
-         *
+         * Subscribe to interesting actions during creation
+         * Called during construction
          */
         subscribe: function() {
             var self = this;
@@ -70,7 +72,9 @@ define([
             
             this.getNotifications().on(Events.PLAY, function(item) {
                 console.log(['CONTROLLER::ITEM ARRIVED', item]);
-                self.channelAdd(item);
+                self.channelAdd(item)
+                    .mediaPlay();
+                
                 self.changeState(States.PLAYING);
             });
             
@@ -96,13 +100,13 @@ define([
             this.getNotifications().on(Events.JUMP_TO_SECOND, function(second) {
                 self.getActiveChannel().mediaPlay(second);
             });
-            
-            return this;
         },
         
         
         /**
-         * Bootstraps the main controller
+         * Bootstraps the main controller, setups objects and beings the animation loop.
+         * 
+         * @param {HTMLElement} container
          */
         bootstrap: function(container) {
             this._model.setup(container);
@@ -113,6 +117,8 @@ define([
         
         /**
          * Getter for the Queue object, set on constructor
+         *
+         * @return {Object} Queue instance
          */
         getQueue: function() {
             return this._queue;
@@ -121,6 +127,8 @@ define([
         
         /**
          * Getter for the Model object, set on constructor
+         *
+         * @return {Object} Model instance
          */
         getModel: function() {
             return this._model;
@@ -129,6 +137,8 @@ define([
         
         /**
          * Getter for the Notifications object, set on constructor
+         *
+         * @return {Object} Notifications instance
          */
         getNotifications: function() {
             return this._notifications;
@@ -142,6 +152,7 @@ define([
          * @param {String} newState (ENUM from States object)
          */
         changeState: function(newState) {
+            // verify state is diffrent to avoid setting the same state
             if (newState === this._state) return;
             
             this.getNotifications().fire(Events.STATE_CHANGED, newState);
@@ -149,20 +160,31 @@ define([
         
         
         /**
+         * Playing? Returns by checking each indevidual channel to prevent errors.
+         * This is a protective check, rather than player state based.
          *
+         * Can be used to check the real state of the player regardless the state, might be helpful for debuging issues
+         *
+         * @return {Bool}
          */
         isPlaying: function() {
             for (var i = 0, len = this._channels.length; i < len; i++) {
                 if ('undefined' !== typeof(this._channels[i]) && true === this._channels[i].isPlaying())
                     return true;
             }
-        
+            
             return false;
         },
         
         
         /**
+         * Adds new channel, called when song is changed or started.
+         * Stacks the instances of the channels in an array.
+         * Each channel is indevidual and can be played more than 1 at once. The current only
+         * state more than once channel is playing is during crossfading but more features may come, like mixin etc.
          *
+         * @param {Object} item
+         * @return {Object} channel instance
          */
         channelAdd: function (item) {
             var channelNew = new Channel({
@@ -171,37 +193,40 @@ define([
             });
             
             this._channels.push(channelNew);
-            channelNew.mediaPlay();
             
-            return this;
+            return channelNew;
         },
         
         
         /**
+         * Getter for the current active audio channel.
+         * Fetched from the array of all channels. Channel 0 is the active..
+         * Channel 1 is usually created only while crossfading and even then.. 0 is the active during the current usecases.
          *
+         * Logic also can be changed later depending on features
+         *
+         * @return {Object} active channel instance
          */
         getActiveChannel: function() {
-            return this._channels[0]; //channel 0 is the active.. 1 is usually created only while crossfading and even then.. 0 is the active.
+            return this._channels[0];
         },
         
-        
-        isCrossfade: function() {
-            return this._model.crossfade.enabled;
-        },
-        
-        
-        isMute: function() {
-            return this.mute;
-        },
         
         /**
-         *
+         * Getter for the active Audio element instance
          */
-        getVolume: function() {
-            return this.volume;
+        getActiveAudio: function() {
+            return this.getActiveChannel().audioEl;
         },
         
         
+        /**
+         * onEnd is fired by one of the channels when it reaches the end of the track
+         * or crossfade onBeforeEnd time triggered.
+         *
+         * @todo Wire by 2 events, for crossfade and regular ITEM_END. Drop the direct function call from channel to _onEnd
+         * @param {Bool} crossfade
+         */
         _onEnd: function(crossfade) {
             if (true === crossfade) {
                 setTimeout($.proxy(function() {
@@ -217,7 +242,40 @@ define([
         
         
         /**
+         * Is player muted, or volume = 0
+         * 
+         * @return {Bool}
+         */
+        isMute: function() {
+            return this.mute;
+        },
+        
+        
+        /**
+         * Is crossfade feature enabled?
          *
+         * @return {Bool}
+         */
+        isCrossfade: function() {
+            return this._model.crossfade.enabled;
+        },
+        
+        
+        /**
+         * Getter for the volume
+         * Volume ranges from 0 to 1
+         *
+         * @return {Number} volume
+         */
+        getVolume: function() {
+            return this.volume;
+        },
+        
+        
+        /**
+         * Sets the volume and updates all channels
+         *
+         * @param {Number} volume - ranges from 0 to 1 only.
          */
         setVolume: function(volume) {
             this.volume = (1 <= volume) ? 1 : volume; // can not be greater than 1
@@ -246,7 +304,9 @@ define([
         
         
         /**
-         *
+         * Loop for tracking the audio and moving progress of the UI.
+         * @todo Split into smaller chunks
+         * @todo Move from here, not really related.
          */
         loop: function() {
             // verify everything needed for the loop exists. Run loop only when playing.
@@ -260,8 +320,8 @@ define([
                 scrubberOffset = 0,
                 scrubberOffsetPercent = 0,
                 scrubberOffsetPixels = 0,
-                timeTotal = this.getActiveAudio().duration,
-                timeCurr = this.getActiveAudio().currentTime,
+                timeTotal = this.getActiveChannel().getDuration(),
+                timeCurr = this.getActiveChannel().getCurrentTime(),
                 timeOffset = 3;
             
             /*
@@ -331,19 +391,18 @@ define([
         
         
         /**
-         *
+         * Animation tick, keep track of the main loop via requestAnimFrame (optimial)
          */
         _runLoop: function() {
-            requestAnimFrame($.proxy(function() {
+            window.requestAnimFrame($.proxy(function() {
                 this.loop();
             }, this));
-            
-            return this;
         },
         
         
         /**
-         *
+         * Cleans up the current channel when track ends, or paused.
+         * Shifts the array, removing the current active and progressing the crossfaded track to the 0 position in the array
          */
         activeChannelCleanup: function() {
             if ('undefined' !== typeof(this.getActiveChannel())) {
@@ -351,13 +410,13 @@ define([
                 console.log(this._channels);
                 this._channels.shift();
             }
-
-            return this;
         },
         
         
         /**
+         * Pauses the current track by destroying the channel.
          *
+         * @todo Fix the pause, it's acting like STOP rather than pause - doesnt keep the position in the track
          */
         pause: function() {
             this.activeChannelCleanup();
@@ -367,10 +426,16 @@ define([
         
         
         /**
+         * Lazy getter for AudioContext
+         * Keeps track of 1 audio context and used by all the channels.
          *
+         * @return {Object} AudioContext singleton
          */
         getCtx: function() {
             if (null === this.audioCtx) {
+                // normalize AudioContext, if not supported binds webkit
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                
                 this.audioCtx = new window.AudioContext;
             }
             
@@ -379,7 +444,10 @@ define([
         
         
         /**
-         * Based on a Fiddle I wrote: http://jsfiddle.net/Fc8Jr/
+         * Spectrum rendering, called from the animation loop and draws nice spektrum of the audio.
+         * 
+         * @see http://jsfiddle.net/delz/yy01kxen/ - Based on a jsFiddle I wrote
+         * @todo Move from here, not the best place to be here.. a lot of view related stuff
         **/
         drawSpectrum: function() {
             var frequencyByteData = this.getActiveChannel().frequencyByteData,
@@ -428,23 +496,23 @@ define([
         
         
         /**
+         * On started playing event is fired from the channel, when the item is actually began playing.
          *
+         * @todo Figure out what to do with this, maybe consider removing or changing
+         *       the state of the player.. event is also an option
          */
-        startedPlaying: function() {
-            console.log('CONTROLLER::startedPlaying fired -- oh well.. started, not sure i want to keep this');
-        },
-        
-        
-        /**
-         *
-         */
-        getActiveAudio: function() {
-            return this.getActiveChannel().audioEl;
+        _onStartedPlaying: function() {
+            console.log('CONTROLLER::_onStartedPlaying fired');
         }
     };
     
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    
+    /**
+     * Normalizes the request animation frame method, depending on env. Based on webAPI
+     * Optimized and replaces the timer loop, should be used for all the loops
+     * 
+     * @todo move from here, to more global point, not directly related to this Controller.
+     * @return {Function} ticker
+     */
     window.requestAnimFrame = (function() {
         return window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||

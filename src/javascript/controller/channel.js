@@ -156,7 +156,7 @@ define([
          */
         setPlaying: function(isPlaying) {
             this.playing = isPlaying;
-            this.parent.startedPlaying();
+            this.parent._onStartedPlaying();
             
             return this;
         },
@@ -169,7 +169,7 @@ define([
         */
         
         
-        /*
+        /**
          *
          */
         getDuration: function() {
@@ -180,11 +180,19 @@ define([
         /**
          *
          */
+        getCurrentTime: function() {
+            return this.audioEl.currentTime;
+        },
+        
+        
+        /**
+         *
+         */
         loop: function() {
             if ('undefined' === typeof(this.audioEl)) return;
             
-            var timeTotal = this.audioEl.duration,
-                timeCurr = this.audioEl.currentTime;
+            var timeTotal = this.getDuration(),
+                timeCurr = this.getCurrentTime();
             
             //console.log(timeCurr, timeTotal);
             if (true === this.parent.isCrossfade()) {
@@ -325,7 +333,7 @@ define([
             this.audioEl = document.createElement('audio');
             this.audioEl.src = this.item._model.file;
             this.setVolume();
-           
+            
             _.each(eventsList, $.proxy(function(id, callback) {
                 if ('function' === typeof(callback)) {
                     this.audioEl.addEventListener(id, callback, false);
