@@ -40,10 +40,8 @@ define([
          * @return this
          */
         render: function() {
-            var self = this;
-            
             this.output = this.bindActions($(_.template(volumeHTML)(
-                self._player._view.getModel().classes
+                this._player._view.getModel().classes
             )));
             
             return this;
