@@ -36,6 +36,8 @@ define(function() {
         * @param {Object} context
         */
         on: function(name, callback, context) {
+            context = context || this;
+            
             // allows to subscribe multiple events for the same callback as single events. Clears the syntax on the other end.
             if (_.isArray(name)) {
                 return _.each(name, function(eventName) {
