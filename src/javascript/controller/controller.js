@@ -444,7 +444,8 @@ define([
         
         
         /**
-         * Spectrum rendering, called from the animation loop and draws nice spektrum of the audio.
+         * Spectrum rendering
+         * Called from the animation loop and draws nice spektrum of the audio.
          * 
          * @see http://jsfiddle.net/delz/yy01kxen/ - Based on a jsFiddle I wrote
          * @todo Move from here, not the best place to be here.. a lot of view related stuff
