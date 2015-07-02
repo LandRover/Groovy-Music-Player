@@ -46,7 +46,10 @@ define(function() {
             if ('undefined' === typeof(this._subscriptions[name]))
                 this._subscriptions[name] = [];
             
-            var index = this._subscriptions[name].push(callback) - 1,
+            var index = this._subscriptions[name].push({
+                    method: callback,
+                    context: context
+                }) - 1,
                 self = this;
             
             // return back a clean remove function with the params encaspulated
@@ -93,7 +96,7 @@ define(function() {
             console.log(['EVENT::FIRE', name, params]);
             
             _.each(callbacks, function(callback) {
-                callback(params);
+                callback.method(params);
             });
         },
         
@@ -112,7 +115,7 @@ define(function() {
                 };
             
             _.each(callbacks, function(eventCallback, i) {
-                if (matchCallback(eventCallback)) {
+                if (matchCallback(eventCallback.method)) {
                     callbacks.splice(i, 1);
                 }
             });
