@@ -13,8 +13,9 @@ define(function() {
         
         
         /**
-         *
-         *
+         * Converts seconds input to string structure format like 00:10
+         * 
+         * @return {String}
          */
         formatTime: function() {
             //formats the time
