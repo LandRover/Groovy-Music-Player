@@ -12,6 +12,7 @@ define(function() {
         PAUSE: "PAUSE",
         VOLUME_SET: "VOLUME_SET",
         JUMP_TO_SECOND: "JUMP_TO_SECOND",
+        JUMP_TO_PERCENT: "JUMP_TO_PERCENT",
         
         QUEUE_EMPTY: "QUEUE_EMPTY",
         QUEUE_EMPTY_NOT: "QUEUE_EMPTY_NOT",
