@@ -31,7 +31,7 @@ define(function() {
         /**
         * Attach a callback to an EventName
         * 
-        * @param {String/array} name
+        * @param {String/Array} name
         * @param {Function} callback
         * @param {Object} context
         */
@@ -49,9 +49,9 @@ define(function() {
                 this._subscriptions[name] = [];
             
             var index = this._subscriptions[name].push({
-                    method: callback,
+                    callback: callback,
                     context: context
-                }) - 1,
+                })-1,
                 self = this;
             
             // return back a clean remove function with the params encaspulated
@@ -68,8 +68,8 @@ define(function() {
         /**
         * Attach a callback to an name, but once only. Will disapear after first execution.
         * 
-        * @param {string} name
-        * @param {function} callback
+        * @param {String} name
+        * @param {Function} callback
         * @param {Object} context
         */
         once: function(name, callback, context) {
@@ -89,16 +89,16 @@ define(function() {
         /**
         * Notify subscriptions by calling their name
         * 
-        * @param {string} name
-        * @param {object} params
+        * @param {String} name
+        * @param {Object} params
         */
         fire: function(name, params) {
-            var callbacks = this._subscriptions[name] || [];
+            var events = this._subscriptions[name] || [];
             
             console.log(['EVENT::FIRE', name, params]);
             
-            _.each(callbacks, function(callback) {
-                callback.method(params);
+            _.each(events, function(event) {
+                event.callback.call(event.context, params);
             });
         },
         
@@ -106,24 +106,26 @@ define(function() {
         /**
         * Remove a specific name callback from the stack
         * 
-        * @param {string} name
-        * @param {function} callback
+        * @param {String} name
+        * @param {Function} callback
         * @param {Object} context
         */
         off: function(name, callback, context) {
-            var callbacks = this._subscriptions[name],
+            context = context || this;
+            
+            var events = this._subscriptions[name],
                 matchCallback = function(cb) {
                     return (cb === callback || cb._originalCallback === callback)
                 };
             
-            _.each(callbacks, function(eventCallback, i) {
-                if (matchCallback(eventCallback.method)) {
-                    callbacks.splice(i, 1);
+            _.each(events, function(event, i) {
+                if (matchCallback(event.callback)) {
+                    events.splice(i, 1);
                 }
             });
             
             // if no callbacks left remove the event name from the tree completly.
-            if (0 === callbacks.length) {
+            if (0 === events.length) {
                 delete this._subscriptions[name];
             }
         },

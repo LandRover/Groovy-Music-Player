@@ -35,62 +35,60 @@ define([
          *
          */
         subscribe: function() {
-            var self = this;
-            
             this._notifications.on([Events.QUEUE_ITEM_ADDED, Events.QUEUE_ITEM_REMOVED], function(item) {
-                self._notifications.fire(Events.QUEUE_ITEM_UPDATED, item);
-            });
+                this._notifications.fire(Events.QUEUE_ITEM_UPDATED, item);
+            }, this);
             
             this._notifications.on(Events.QUEUE_ITEM_UPDATED, function(item) {
-                self.updateQueueList(item);
-            });
+                this.updateQueueList(item);
+            }, this);
             
             this._notifications.on(Events.QUEUE_ITEM_CLICK_PLAY, function(item) {
-                self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, item);
-            });
+                this._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, item);
+            }, this);
             
             this._notifications.on(Events.QUEUE_PLAY_ACTIVE, function() {
-                var item = self.getActive();
-                self.setPlayPauseMode(1, false, item);
-                self._notifications.fire(Events.PLAY, item);
-            });
+                var item = this.getActive();
+                this.setPlayPauseMode(1, false, item);
+                this._notifications.fire(Events.PLAY, item);
+            }, this);
             
             this._notifications.on(Events.QUEUE_ITEM_CLICK_PAUSE, function(item) {
-                self._notifications.fire(Events.PAUSE);
-            });
+                this._notifications.fire(Events.PAUSE);
+            }, this);
             
             this._notifications.on(Events.PAUSE, function() {
-                self.setPlayPauseMode(0, false);
-            });
+                this.setPlayPauseMode(0, false);
+            }, this);
             
             this._notifications.on(Events.QUEUE_ITEM_SET_ACTIVE, function(item) {
-                self.setActive(item.getPosition());
-            });
+                this.setActive(item.getPosition());
+            }, this);
             
             this._notifications.on(Events.QUEUE_ITEM_CHANGED_ACTIVE, function(item) {
-                var activeItem = item || self.getActive();
+                var activeItem = item || this.getActive();
                 
-                self.setPlayPauseMode(0, true, activeItem); //clears from the lastActiveItem the play / pause modes for default UI.
-                self._lastActiveItem = activeItem;
+                this.setPlayPauseMode(0, true, activeItem); //clears from the lastActiveItem the play / pause modes for default UI.
+                this._lastActiveItem = activeItem;
                 
-                self._notifications.fire(Events.QUEUE_PLAY_ACTIVE);
-            });
+                this._notifications.fire(Events.QUEUE_PLAY_ACTIVE);
+            }, this);
             
             this._notifications.on(Events.PLAY_NEXT, function() {
-                var item = self.getActive(1);
+                var item = this.getActive(1);
                 
                 if (null === item) return;
                 
-                self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, item);
-            });
+                this._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, item);
+            }, this);
             
             this._notifications.on(Events.PLAY_PREVIOUS, function() {
-                var item = self.getActive(-1);
+                var item = this.getActive(-1);
                 
                 if (null === item) return;
                 
-                self._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, item);
-            });
+                this._notifications.fire(Events.QUEUE_ITEM_SET_ACTIVE, item);
+            }, this);
         },
         
         
