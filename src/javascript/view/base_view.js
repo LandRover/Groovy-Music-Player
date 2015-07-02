@@ -48,7 +48,9 @@ define([
         
         
         /**
+         * Get the position of the element in the DOM, unless the position is cached so will return it.
          *
+         * @return {Number}
          */
         getPosition: function() {
             return (null !== this._position) ? this._position : this.getEl().index();
@@ -56,7 +58,9 @@ define([
 
         
         /**
-         * 
+         * Caches the current position, to prevent travling to DOM when not needed.
+         *
+         * @return {Object} this for chaining
          */
         cachePosition: function() {
             this._position = this.getPosition();
@@ -66,7 +70,10 @@ define([
         
         
         /**
+         * Getter for the output object
          *
+         * @todo Stop using this.output - internally, all objects should use this.el instead.
+         * @return {HTMLElement}
          */
         getEl: function() {
             return this.el;
@@ -75,6 +82,7 @@ define([
         
         /**
          * Getter for the width of the current El
+         * 
          * @return {Number} width
          */
         getWidth: function() {
@@ -83,7 +91,9 @@ define([
         
         
         /**
+         * Returns the HTMLElement
          *
+         * @return {HTMLElement}
          */
         toString: function() {
             return this.output;
@@ -91,7 +101,9 @@ define([
         
         
         /**
+         * Getter for getting the controller. Via the main gPlayer object.
          *
+         * @return {Object} Controller
          */
         getController: function() {
             return gPlayer().getController();
@@ -99,7 +111,9 @@ define([
         
         
         /**
+         * Getter for getting the main model
          *
+         * @return {Object} Model
          */
         getModel: function() {
             return this.getController().getModel();
@@ -107,7 +121,9 @@ define([
         
         
         /**
+         * Getter for getting the main Notifications object
          *
+         * @return {Object} Notification
          */
         getNotifications: function() {
             return this.getController().getNotifications();
