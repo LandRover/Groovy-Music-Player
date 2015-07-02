@@ -56,7 +56,7 @@ define([
 
         
         /**
-         *
+         * 
          */
         cachePosition: function() {
             this._position = this.getPosition();
