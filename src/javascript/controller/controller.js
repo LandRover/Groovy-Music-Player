@@ -64,6 +64,8 @@ define([
          * Called during construction
          */
         subscribe: function() {
+            var self = this;
+            
             this.getNotifications().on(Events.STATE_CHANGED, function(state) {
                 this._state = state;
             }, this);
@@ -90,7 +92,7 @@ define([
             
             // translate native event for resize, for internal event
             $(window).bind('resize', function() {
-                this.getNotifications().fire(Events.RESIZE);
+                self.getNotifications().fire(Events.RESIZE);
             });
             
             this.getNotifications().on(Events.VOLUME_SET, function(volume) {
