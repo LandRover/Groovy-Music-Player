@@ -102,7 +102,11 @@ define([
         },
         
         
-        // @todo move this out.. to queue as it should append itself
+        /**
+         * Init horizontal scroll library.
+         * 
+         * @todo move this out.. to queue as it should append itself
+         */
         horizontalScrollInit: function() {
             mCustomScrollbar($); // @todo Figure what's the deal with the mouseheel plugin.. 
             
@@ -123,7 +127,12 @@ define([
             this.horizontalScrollUpdate();
         },
         
-        // @todo move this out.. to queue as it should append itself
+        
+        /**
+         * Subscribe to scroll events for the queue.
+         * 
+         * @todo move this out.. to queue as it should append itself
+         */
         horizontalScrollUpdate: function() {
             $('.'+this.getModel().classes.queue_container).mCustomScrollbar('update');
             
@@ -189,8 +198,6 @@ define([
          */
         _appender: function(source, target) {
             Logger.debug('VIEW::_APPEND FIRED');
-            
-            console.log(arguments);
             
             return $(source).appendTo(target);
         }
