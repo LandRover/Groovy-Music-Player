@@ -72,6 +72,9 @@ define([
             
             this.getNotifications().on(Events.PLAY, function(item) {
                 console.log(['CONTROLLER::ITEM ARRIVED', item]);
+                
+                this.pause();
+                
                 this.channelAdd(item)
                     .play();
                 
@@ -79,7 +82,7 @@ define([
             }, this);
             
             this.getNotifications().on([Events.PLAY_PREVIOUS, Events.PLAY_NEXT], function() {
-                this.pause();
+                //??
             }, this);
             
             this.getNotifications().on(Events.PAUSE, function() {
