@@ -52,32 +52,25 @@ define([
         
         
         /**
+         * View's subscribed events are placed here. Called during the creation process, before the 'setup', draw itself.
          *
+         * All the view related events that cause a UI change placed here.
          */
         subscribe: function() {
-            var self = this;
-            
-            this.getNotifications().on(Events.RESIZE, function() {
-                
-            });
-            
             this.getNotifications().on(Events.QUEUE_EMPTY, function() {
-                $(self.getModel().getContainer())
-                    .addClass(self.getModel().classes.empty);
-            });
+                $(this.getModel().getContainer())
+                    .addClass(this.getModel().classes.empty);
+            }, this);
             
             this.getNotifications().on(Events.QUEUE_EMPTY_NOT, function() {
-                $(self.getModel().getContainer())
-                    .removeClass(self.getModel().classes.empty);
-            });
-            
-            return this;
+                $(this.getModel().getContainer())
+                    .removeClass(this.getModel().classes.empty);
+            }, this);
         },
         
         
         /**
-         * 
-         *
+         * Layout is the main UI function that draws the View to the DOM
          */
         layout: function() {
             Logger.debug('VIEW::LAYOUT FIRED');
@@ -106,8 +99,6 @@ define([
             });
             
             this.horizontalScrollInit();
-            
-            return this;
         },
         
         
@@ -148,8 +139,9 @@ define([
         
         
         /**
-         *
-         *
+         * Getter for the Model
+         * 
+         * @return {Object} Model instance
          */
         getModel: function() {
             return this._controller.getModel();
@@ -157,8 +149,9 @@ define([
         
         
         /**
-         *
-         *
+         * Getter for the Notification
+         * 
+         * @return {Object} Notification instance
          */
         getNotifications: function() {
             return this._notifications;
@@ -166,8 +159,9 @@ define([
         
         
         /**
-         *
-         *
+         * Getter for the Controller
+         * 
+         * @return {Object} Controller instance
          */
         getController: function() {
             return this._controller;
@@ -175,7 +169,10 @@ define([
         
         
         /**
-         *
+         * Getter for the PlayerView
+         * Responsible for the view of the player itself, with all the internal components
+         * 
+         * @return {Object} PlayerView instance
          */
         getPlayerView: function() {
             return this.playerView;
