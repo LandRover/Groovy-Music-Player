@@ -64,44 +64,42 @@ define([
          * Called during construction
          */
         subscribe: function() {
-            var self = this;
-            
             this.getNotifications().on(Events.STATE_CHANGED, function(state) {
-                self._state = state;
-            });
+                this._state = state;
+            }, this);
             
             this.getNotifications().on(Events.PLAY, function(item) {
                 console.log(['CONTROLLER::ITEM ARRIVED', item]);
-                self.pause();
+                this.pause();
                 
-                self.channelAdd(item)
+                this.channelAdd(item)
                     .play();
                 
-                self.changeState(States.PLAYING);
-            });
+                this.changeState(States.PLAYING);
+            }, this);
             
             this.getNotifications().on(Events.PAUSE, function() {
-                self.changeState(States.PAUSED);
-                self.pause();
-            });
+                this.changeState(States.PAUSED);
+                this.pause();
+            }, this);
             
             this.getNotifications().on(Events.QUEUE_EMPTY, function() {
-                self.changeState(States.IDLE);
-                self.pause();
-            });
+                this.changeState(States.IDLE);
+                this.pause();
+            }, this);
             
             // translate native event for resize, for internal event
             $(window).bind('resize', function() {
-                self.getNotifications().fire(Events.RESIZE);
+                this.getNotifications().fire(Events.RESIZE);
             });
             
             this.getNotifications().on(Events.VOLUME_SET, function(volume) {
-                self.setVolume(volume);
-            });
+                this.setVolume(volume);
+            }, this);
             
             this.getNotifications().on(Events.JUMP_TO_SECOND, function(second) {
-                self.getActiveChannel().play(second);
-            });
+                this.getActiveChannel().play(second);
+            }, this);
         },
         
         
