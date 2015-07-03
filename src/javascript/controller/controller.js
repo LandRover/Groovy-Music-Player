@@ -72,6 +72,8 @@ define([
             
             this.getNotifications().on(Events.PLAY, function(item) {
                 console.log(['CONTROLLER::ITEM ARRIVED', item]);
+                self.pause();
+                
                 self.channelAdd(item)
                     .play();
                 
