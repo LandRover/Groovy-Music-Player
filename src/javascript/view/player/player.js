@@ -54,20 +54,18 @@ define([
          * Called during construction, subscribe to Events that interest the Player
          */
         subscribe: function() {
-            var self = this;
-            
             this.getNotifications().on(Events.STATE_CHANGED, function(state) {
-                self._state = state;
-                self.playPauseButtonToggle();
-            });
+                this._state = state;
+                this.playPauseButtonToggle();
+            }, this);
             
             this.getNotifications().on(Events.PLAY, function(item) {
-                self.setMediaProperties(item);
-            });
+                this.setMediaProperties(item);
+            }, this);
             
             this.getNotifications().on([Events.RESIZE, Events.QUEUE_EMPTY_NOT], function() {
-                self.resizeComponents();
-            });
+                this.resizeComponents();
+            }, this);
         },
         
         
