@@ -41,8 +41,8 @@ define([
                 controls: new Controls(this),
                 thumbnail: new Thumbnail(this),
                 infoMinimal: new InfoMinimal(this),
-                info: new Info(this),
-                interactive: new Interactive(this),
+                info: new Info(this), // smaller scrub - @todo find proper name
+                interactive: new Interactive(this), // fully featured scrub - @todo find proper name
                 volume: new Volume(this)
             };
             
